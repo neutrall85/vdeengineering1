@@ -69,8 +69,9 @@ class ModalManager {
     const overlay = document.getElementById(config.overlayId);
     if (!overlay) return false;
 
+    const scrollY = window.scrollY;
+
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
     this.activeModal = key;
 
     if (config.shouldFocus) {
@@ -100,7 +101,6 @@ class ModalManager {
     if (!overlay) return false;
 
     overlay.classList.remove('active');
-    document.body.style.overflow = '';
     
     if (this.activeModal === key) {
       this.activeModal = null;

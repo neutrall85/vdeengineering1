@@ -7,6 +7,7 @@ class NewsRenderer {
   constructor(newsData) {
     this.newsData = newsData;
     this.loadedYears = new Set();
+    this.cardStaggerMs = window.CONFIG?.ANIMATION?.CARD_STAGGER_MS || 50;
   }
 
   render(year, container, options = {}) {
@@ -50,7 +51,7 @@ class NewsRenderer {
   _createNewsCard(news, index) {
     const article = document.createElement('article');
     article.classList.add('news-card');
-    article.style.animationDelay = `${index * 50}ms`;
+    article.style.animationDelay = `${index * this.cardStaggerMs}ms`;
     
     const imageHtml = this._createImageHtml(news);
     const contentHtml = this._createContentHtml(news);
@@ -107,11 +108,30 @@ class NewsRenderer {
     `;
     
     let expanded = false;
+    let isAnimating = false;
+    
     button.addEventListener('click', () => {
+      if (isAnimating) return;
+      isAnimating = true;
+      
       const hiddenNews = container.querySelectorAll('.news-card.hidden-news');
       
       if (!expanded) {
-        hiddenNews.forEach(card => card.classList.remove('hidden-news'));
+        // Плавное появление скрытых новостей
+        hiddenNews.forEach((card, idx) => {
+          setTimeout(() => {
+            card.classList.remove('hidden-news');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+              card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+          }, idx * 50);
+        });
+        
         button.innerHTML = `
           Свернуть
           <svg class="accordion-icon" viewBox="0 0 24 24">
@@ -121,12 +141,22 @@ class NewsRenderer {
         button.classList.add('expanded');
         expanded = true;
       } else {
+        // Плавное скрытие
         const cards = container.querySelectorAll('.news-card');
         cards.forEach((card, idx) => {
           if (idx >= defaultVisible) {
-            card.classList.add('hidden-news');
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+              card.classList.add('hidden-news');
+              card.style.opacity = '';
+              card.style.transform = '';
+            }, 300);
           }
         });
+        
         button.innerHTML = `
           Показать все (${totalNews - defaultVisible})
           <svg class="accordion-icon" viewBox="0 0 24 24">
@@ -136,6 +166,10 @@ class NewsRenderer {
         button.classList.remove('expanded');
         expanded = false;
       }
+      
+      setTimeout(() => {
+        isAnimating = false;
+      }, 350);
     });
     
     wrapper.appendChild(button);
@@ -177,7 +211,7 @@ class NewsRenderer {
     cards.forEach((card, index) => {
       setTimeout(() => {
         card.classList.add('loaded');
-      }, index * 50);
+      }, index * this.cardStaggerMs);
     });
   }
 

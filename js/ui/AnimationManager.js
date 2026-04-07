@@ -24,7 +24,6 @@ class AnimationManager {
     this.fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Используем Utils.DOM вместо DOMHelper
           if (window.Utils && window.Utils.DOM) {
             window.Utils.DOM.addClass(entry.target, 'visible');
           } else {
@@ -35,7 +34,6 @@ class AnimationManager {
       });
     }, options);
 
-    // Используем Utils.DOM.queryAll вместо DOMHelper.queryAll
     const elements = window.Utils && window.Utils.DOM 
       ? window.Utils.DOM.queryAll('.fade-in')
       : document.querySelectorAll('.fade-in');

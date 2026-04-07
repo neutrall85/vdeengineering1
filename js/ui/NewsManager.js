@@ -113,14 +113,24 @@ class NewsManager {
     const image = document.getElementById('newsModalImage');
     const content = document.getElementById('newsModalContent');
     
-    if (title) title.textContent = news.title;
-    if (date) date.textContent = news.date;
-    if (category) category.textContent = news.category;
+    // Используем санитизацию для безопасности
+    const sanitizer = window.Utils?.Sanitizer;
+    
+    if (title) title.textContent = sanitizer ? sanitizer.escapeHtml(news.title) : news.title;
+    if (date) date.textContent = sanitizer ? sanitizer.escapeHtml(news.date) : news.date;
+    if (category) category.textContent = sanitizer ? sanitizer.escapeHtml(news.category) : news.category;
     if (image) {
-      image.src = news.image;
-      image.alt = news.title;
+      const imageUrl = sanitizer ? (sanitizer.isValidUrl(news.image) ? news.image : 'assets/images/placeholder.jpg') : news.image;
+      image.src = imageUrl;
+      image.alt = sanitizer ? sanitizer.escapeHtml(news.title) : news.title;
     }
-    if (content) content.innerHTML = news.content;
+    if (content) {
+      // Санитизируем HTML контент
+      const safeContent = sanitizer ? sanitizer.sanitizeHtml(news.content, {
+        allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'a', 'span', 'div']
+      }) : news.content;
+      content.innerHTML = safeContent;
+    }
   }
 
   _resetModalContent() {

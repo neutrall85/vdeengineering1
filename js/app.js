@@ -29,13 +29,18 @@ class Application {
           const errorMsg = `Module ${module.constructor?.name || 'unknown'} init failed: ${err.message}`;
           console.warn(errorMsg, err);
           this.errors.push(errorMsg);
+          
+          // Отправляем событие об ошибке
+          if (window.Services?.eventBus) {
+            window.Services.eventBus.emit('module:error', { module: module.constructor?.name, error: err.message });
+          }
         }
       }
       
       this._initFloatingCTA();
       this._initFadeInObserver();
-      this._initCounters();
       this._initImageLazyLoading();
+      this._initPrefersReducedMotion();
       
       this.initialized = true;
       console.log('Application initialized successfully');
@@ -123,8 +128,9 @@ class Application {
       const modalList = document.getElementById('detailsModalList');
       
       if (modalTitle && modalList) {
-        modalTitle.textContent = title;
-        modalList.innerHTML = details.map(item => `<li>${Utils.DOM.escapeHtml(item)}</li>`).join('');
+        const sanitizer = window.Utils?.Sanitizer;
+        modalTitle.textContent = sanitizer ? sanitizer.escapeHtml(title) : title;
+        modalList.innerHTML = details.map(item => `<li>${sanitizer ? sanitizer.escapeHtml(item) : item}</li>`).join('');
         if (typeof modalManager !== 'undefined') modalManager.open('details');
       }
     };
@@ -139,16 +145,26 @@ class Application {
 
   _initFloatingCTA() {
     const floatingBtn = document.querySelector('.floating-cta-btn');
+    const contactBtn = document.querySelector('#contact .btn-primary'); // или другой селектор
+
     if (!floatingBtn) return;
-    
+
     const toggleButton = () => {
-      if (window.scrollY > 300) {
-        floatingBtn.classList.add('visible');
-      } else {
+      const scrollY = window.scrollY;
+      let isContactBtnVisible = false;
+
+      if (contactBtn) {
+        const rect = contactBtn.getBoundingClientRect();
+        isContactBtnVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      }
+
+      if (scrollY <= 350 || isContactBtnVisible) {
         floatingBtn.classList.remove('visible');
+      } else {
+        floatingBtn.classList.add('visible');
       }
     };
-    
+
     toggleButton();
     window.addEventListener('scroll', toggleButton, { passive: true });
   }
@@ -166,38 +182,6 @@ class Application {
     document.querySelectorAll('.fade-in').forEach(el => {
       observer.observe(el);
     });
-  }
-
-  _initCounters() {
-    const counters = document.querySelectorAll('.stat-number[data-target]');
-    
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const element = entry.target;
-          const target = parseInt(element.getAttribute('data-target'), 10);
-          if (!target || isNaN(target)) return;
-          
-          let current = 0;
-          const step = target / 50;
-          
-          const updateCounter = () => {
-            current += step;
-            if (current < target) {
-              element.textContent = Math.floor(current);
-              requestAnimationFrame(updateCounter);
-            } else {
-              element.textContent = target;
-            }
-          };
-          
-          updateCounter();
-          counterObserver.unobserve(element);
-        }
-      });
-    }, { threshold: 0.5 });
-    
-    counters.forEach(counter => counterObserver.observe(counter));
   }
 
   _initImageLazyLoading() {
@@ -231,6 +215,39 @@ class Application {
         }
       });
     }
+  }
+
+  _initPrefersReducedMotion() {
+    // Проверяем, не хочет ли пользователь отключить анимацию
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    if (prefersReducedMotion.matches) {
+      // Добавляем класс на body для отключения анимаций
+      document.body.classList.add('reduced-motion');
+      
+      // Отключаем все анимации через CSS класс
+      const style = document.createElement('style');
+      style.textContent = `
+        .reduced-motion *,
+        .reduced-motion *::before,
+        .reduced-motion *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // Следим за изменением настроек
+    prefersReducedMotion.addEventListener('change', (e) => {
+      if (e.matches) {
+        document.body.classList.add('reduced-motion');
+      } else {
+        document.body.classList.remove('reduced-motion');
+      }
+    });
   }
 
   _showError(error) {

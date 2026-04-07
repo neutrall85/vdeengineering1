@@ -55,13 +55,28 @@ class NavigationManager {
   }
 
   _initScrollHandler() {
-    let timeout;
+    let scrollTimeout;
+    let resizeTimeout;
+    
     this.scrollHandler = () => {
-      if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(() => this._handleScroll(), window.CONFIG?.PERFORMANCE?.SCROLL_DEBOUNCE_MS || 10);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => this._handleScroll(), window.CONFIG?.PERFORMANCE?.SCROLL_DEBOUNCE_MS || 10);
+    };
+    
+    this.resizeHandler = () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => this._handleResize(), window.CONFIG?.PERFORMANCE?.RESIZE_DEBOUNCE_MS || 150);
     };
     
     window.addEventListener('scroll', this.scrollHandler, { passive: true });
+    window.addEventListener('resize', this.resizeHandler);
+  }
+
+  _handleResize() {
+    // Обработка изменения размера окна
+    if (window.innerWidth > 1048 && this.mobileMenu && this.mobileMenu.classList.contains('active')) {
+      this.closeMobileMenu();
+    }
   }
 
   _handleScroll() {

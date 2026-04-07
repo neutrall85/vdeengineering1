@@ -91,7 +91,15 @@ const Utils = (function() {
     },
 
     toggleBodyScroll(disable) {
-      document.body.style.overflow = disable ? 'hidden' : '';
+      if (disable) {
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+      } else {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+      }
     },
 
     setAttributes(element, attributes) {
@@ -119,6 +127,95 @@ const Utils = (function() {
         element.classList.toggle(className, force);
       } else {
         element.classList.toggle(className);
+      }
+    }
+  };
+
+  // ========== Санитизация HTML ==========
+  const Sanitizer = {
+    // Базовое экранирование HTML
+    escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    },
+
+    // Разрешенные теги и атрибуты для безопасного рендеринга
+    sanitizeHtml(html, options = {}) {
+      if (!html) return '';
+      
+      const allowedTags = options.allowedTags || [
+        'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'h1', 'h2', 'h3', 'h4',
+        'ul', 'ol', 'li', 'a', 'span', 'div', 'img', 'table', 'tr', 'td', 'th'
+      ];
+      
+      const allowedAttributes = options.allowedAttributes || {
+        'a': ['href', 'target', 'rel'],
+        'img': ['src', 'alt', 'width', 'height'],
+        '*': ['class', 'id']
+      };
+      
+      // Создаем временный DOM элемент
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+      
+      // Рекурсивная очистка узлов
+      const cleanNode = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          return;
+        }
+        
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const tagName = node.tagName.toLowerCase();
+          
+          // Удаляем неразрешенные теги
+          if (!allowedTags.includes(tagName)) {
+            const parent = node.parentNode;
+            while (node.firstChild) {
+              parent.insertBefore(node.firstChild, node);
+            }
+            parent.removeChild(node);
+            return;
+          }
+          
+          // Очищаем атрибуты
+          const attributes = Array.from(node.attributes);
+          attributes.forEach(attr => {
+            const attrName = attr.name.toLowerCase();
+            const allowedForTag = allowedAttributes[tagName] || allowedAttributes['*'] || [];
+            
+            if (!allowedForTag.includes(attrName)) {
+              node.removeAttribute(attrName);
+            } else if (attrName === 'href' || attrName === 'src') {
+              // Проверка на опасные протоколы
+              const value = attr.value.toLowerCase();
+              if (value.startsWith('javascript:') || value.startsWith('data:') || value.startsWith('vbscript:')) {
+                node.removeAttribute(attrName);
+              }
+            }
+          });
+          
+          // Рекурсивно очищаем дочерние узлы
+          Array.from(node.childNodes).forEach(child => cleanNode(child));
+        }
+      };
+      
+      Array.from(tempDiv.childNodes).forEach(child => cleanNode(child));
+      return tempDiv.innerHTML;
+    },
+
+    // Проверка URL на безопасность
+    isValidUrl(url) {
+      if (!url) return false;
+      try {
+        const parsed = new URL(url, window.location.origin);
+        return ['http:', 'https:'].includes(parsed.protocol);
+      } catch {
+        return false;
       }
     }
   };
@@ -245,12 +342,13 @@ const Utils = (function() {
     }
   }
 
-  return { DOM, Validator, PhoneFormatter, RateLimiter };
+  return { DOM, Sanitizer, Validator, PhoneFormatter, RateLimiter };
 })();
 
 // Экспортируем в глобальную область
 window.Utils = Utils;
 window.DOM = Utils.DOM;
+window.Sanitizer = Utils.Sanitizer;
 window.Validator = Utils.Validator;
 window.PhoneFormatter = Utils.PhoneFormatter;
 window.RateLimiter = Utils.RateLimiter;
