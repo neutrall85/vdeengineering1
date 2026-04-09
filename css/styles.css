@@ -163,8 +163,14 @@ body {
 }
 
 .mobile-menu a:hover {
-  color: var(--vd-light-blue);
-  transform: translateX(8px);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    transform: translateX(8px);
+    border-bottom-color: transparent;
 }
 
 .mobile-menu-close {
@@ -1164,6 +1170,14 @@ body {
   transform: translateY(-2px);
 }
 
+.form-file.has-file input {
+  pointer-events: none;
+}
+
+.form-file-name svg {
+  pointer-events: auto !important;
+}
+
 .form-file.has-file {
   border-style: solid;
   border-color: var(--success-color);
@@ -1178,6 +1192,11 @@ body {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 10;
+}
+
+.form-file-name svg:hover {
+  fill: #c62828;
 }
 
 .form-file-icon {
@@ -1233,6 +1252,62 @@ body {
   height: 18px;
   fill: var(--error-color);
   cursor: pointer;
+}
+
+/* Список файлов для множественной загрузки */
+.form-file-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  background: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-file-item-name {
+  flex: 1;
+  color: var(--text-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+}
+
+.form-file-item-size {
+  color: var(--metallic);
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.form-file-item-remove {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background var(--duration-normal) var(--ease-smooth);
+}
+
+.form-file-item-remove:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.form-file-item-remove svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--error-color);
 }
 
 .form-agreement {

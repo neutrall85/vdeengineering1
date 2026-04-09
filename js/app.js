@@ -95,6 +95,10 @@ class Application {
     };
     
     window.removeFile = (event) => {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
       if (formManager && typeof formManager.removeFile === 'function') {
         formManager.removeFile();
       }
@@ -326,6 +330,8 @@ function initApp() {
         formRateLimiter, 
         window.Utils.Validator
       );
+      formManager.init();
+      window.formManager = formManager;
       console.log('FormManager initialized');
     } catch (err) {
       console.error('FormManager initialization failed:', err);

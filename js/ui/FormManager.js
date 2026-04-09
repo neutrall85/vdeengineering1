@@ -8,7 +8,9 @@ class FormManager {
     this.apiClient = apiClient;
     this.rateLimiter = rateLimiter;
     this.validator = validator;
-    this.currentFile = null;
+    this.currentFiles = [];
+    this.maxFiles = 5;
+    this.maxFileSize = 10 * 1024 * 1024; // 10MB
   }
 
   init() {
@@ -26,22 +28,24 @@ class FormManager {
   _initFileUpload() {
     const fileInput = DOM.getElement('fileAttachment');
     const fileDrop = DOM.getElement('fileDrop');
-    
+
     if (!fileInput || !fileDrop) return;
-    
+
+    // Добавляем атрибут multiple для поддержки нескольких файлов
+    fileInput.setAttribute('multiple', 'multiple');
     fileInput.addEventListener('change', (e) => this._handleFileSelect(e.target.files));
-    
+
     fileDrop.addEventListener('dragover', (e) => {
       e.preventDefault();
       fileDrop.style.borderColor = 'var(--vd-blue)';
       fileDrop.style.background = 'rgba(0, 51, 160, 0.05)';
     });
-    
+
     fileDrop.addEventListener('dragleave', () => {
       fileDrop.style.borderColor = '';
       fileDrop.style.background = '';
     });
-    
+
     fileDrop.addEventListener('drop', (e) => {
       e.preventDefault();
       fileDrop.style.borderColor = '';
@@ -52,25 +56,94 @@ class FormManager {
 
   _handleFileSelect(files) {
     if (!files || files.length === 0) return;
-    
-    const file = files[0];
-    const validation = this.validator.file(file);
-    
-    if (!validation.valid) {
-      this._showError(validation.error);
-      const fileInput = DOM.getElement('fileAttachment');
-      if (fileInput) fileInput.value = '';
+
+    const newFiles = Array.from(files).filter(file => {
+      // Проверка размера файла
+      if (file.size > this.maxFileSize) {
+        this._showError(`Файл "${file.name}" превышает максимальный размер 10MB`);
+        return false;
+      }
+
+      // Проверка типа файла
+      const validation = this.validator.file(file);
+      if (!validation.valid) {
+        this._showError(validation.error);
+        return false;
+      }
+
+      // Проверка на дубликаты
+      const isDuplicate = this.currentFiles.some(f => f.name === file.name && f.size === file.size);
+      if (isDuplicate) {
+        this._showError(`Файл "${file.name}" уже выбран`);
+        return false;
+      }
+
+      return true;
+    });
+
+    // Добавляем новые файлы к существующим
+    this.currentFiles = [...this.currentFiles, ...newFiles];
+
+    // Ограничиваем количество файлов
+    if (this.currentFiles.length > this.maxFiles) {
+      this.currentFiles = this.currentFiles.slice(0, this.maxFiles);
+      this._showError(`Максимальное количество файлов: ${this.maxFiles}`);
+    }
+
+    this._renderFileList();
+  }
+
+  _renderFileList() {
+    const fileListContainer = DOM.getElement('fileList');
+
+    // Если контейнер списка файлов не существует, создаём его
+    if (!fileListContainer) {
+      const fileDrop = DOM.getElement('fileDrop');
+      if (!fileDrop) return;
+
+      const container = document.createElement('div');
+      container.id = 'fileList';
+      container.className = 'form-file-list';
+      fileDrop.appendChild(container);
+    }
+
+    const container = DOM.getElement('fileList');
+    if (!container) return;
+
+    if (this.currentFiles.length === 0) {
+      container.innerHTML = '';
       return;
     }
-    
-    this.currentFile = file;
-    const fileNameText = DOM.getElement('fileNameText');
-    const fileName = DOM.getElement('fileName');
-    const fileDrop = DOM.getElement('fileDrop');
-    
-    if (fileNameText) fileNameText.textContent = file.name;
-    if (fileName) DOM.addClass(fileName, 'show');
-    if (fileDrop) DOM.addClass(fileDrop, 'has-file');
+
+    container.innerHTML = this.currentFiles.map((file, index) => `
+      <div class="form-file-item" data-index="${index}">
+        <span class="form-file-item-name">${this._escapeHtml(file.name)}</span>
+        <span class="form-file-item-size">${this._formatFileSize(file.size)}</span>
+        <button type="button" class="form-file-item-remove" onclick="window.formManager && window.formManager.removeFile(${index})" aria-label="Удалить файл">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+    `).join('');
+
+    // Обновляем текст в зоне загрузки
+    const fileDropText = DOM.query('.form-file-text');
+    if (fileDropText) {
+      fileDropText.textContent = `Выбрано файлов: ${this.currentFiles.length}`;
+    }
+  }
+
+  _escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  _formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   }
 
   _showError(message) {
@@ -85,15 +158,19 @@ class FormManager {
     }
   }
 
-  removeFile() {
+  removeFile(index) {
+    if (index === undefined || index === null) {
+      // Удаляем все файлы
+      this.currentFiles = [];
+    } else {
+      // Удаляем файл по индексу
+      this.currentFiles.splice(index, 1);
+    }
+
     const fileInput = DOM.getElement('fileAttachment');
-    const fileName = DOM.getElement('fileName');
-    const fileDrop = DOM.getElement('fileDrop');
-    
-    this.currentFile = null;
     if (fileInput) fileInput.value = '';
-    if (fileName) DOM.removeClass(fileName, 'show');
-    if (fileDrop) DOM.removeClass(fileDrop, 'has-file');
+
+    this._renderFileList();
   }
 
   _initPhoneMask() {
@@ -108,7 +185,7 @@ class FormManager {
     if (form) {
       form.addEventListener('submit', (e) => this._handleSubmit(e));
     }
-    
+
     const removeBtn = DOM.query('#fileName svg');
     if (removeBtn) {
       removeBtn.addEventListener('click', (e) => {
@@ -134,10 +211,10 @@ class FormManager {
       }
       return;
     }
-    
+
     const warning = DOM.getElement('rateLimitWarning');
     if (warning) DOM.removeClass(warning, 'show');
-    
+
     if (typeof modalManager !== 'undefined') {
       modalManager.open('form');
     } else {
@@ -155,14 +232,14 @@ class FormManager {
       { id: 'serviceType', validate: (v) => this.validator.required(v) },
       { id: 'taskDescription', validate: (v) => this.validator.required(v) && this.validator.minLength(v, 10) }
     ];
-    
+
     let isValid = true;
-    
+
     fields.forEach(field => {
       const element = DOM.getElement(field.id);
       const errorEl = DOM.getElement(`${field.id}Error`);
       const value = element?.value?.trim() || '';
-      
+
       if (!field.validate(value)) {
         if (element) DOM.addClass(element, 'error');
         if (errorEl) DOM.addClass(errorEl, 'show');
@@ -172,34 +249,34 @@ class FormManager {
         if (errorEl) DOM.removeClass(errorEl, 'show');
       }
     });
-    
+
     const honeypot = DOM.getElement('hp_website');
     if (honeypot && honeypot.value) {
       return false;
     }
-    
+
     return isValid;
   }
 
   async _handleSubmit(e) {
     e.preventDefault();
-    
+
     if (!this._validateForm()) return;
-    
+
     if (!this.rateLimiter.canProceed()) {
       const warning = DOM.getElement('rateLimitWarning');
       if (warning) DOM.addClass(warning, 'show');
       return;
     }
-    
+
     this.rateLimiter.record();
-    
+
     const submitBtn = DOM.getElement('submitBtn');
     const originalContent = submitBtn.innerHTML;
-    
+
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<div class="spinner"></div><span>Отправка...</span>';
-    
+
     try {
       const formData = {
         companyName: DOM.getElement('companyName')?.value.trim() || '',
@@ -208,18 +285,29 @@ class FormManager {
         phone: DOM.getElement('phone')?.value.trim() || '',
         aircraftType: DOM.getElement('aircraftType')?.value || '',
         serviceType: DOM.getElement('serviceType')?.value || '',
-        taskDescription: DOM.getElement('taskDescription')?.value.trim() || ''
+        taskDescription: DOM.getElement('taskDescription')?.value.trim() || '',
+        files: this.currentFiles.map(file => ({
+          name: file.name,
+          size: file.size,
+          type: file.type
+        }))
       };
-      
+
+      // Для реальной отправки файлов нужно использовать FormData
+      // const formDataWithFiles = new FormData();
+      // Object.keys(formData).forEach(key => formDataWithFiles.append(key, formData[key]));
+      // this.currentFiles.forEach(file => formDataWithFiles.append('attachments', file));
+      // const result = await this.apiClient.submitFormWithFiles(formDataWithFiles);
+
       const result = await this.apiClient.submitForm(formData);
-      
+
       if (result.success) {
         const form = DOM.getElement('proposalForm');
         const successMessage = DOM.getElement('successMessage');
-        
+
         if (form) form.style.display = 'none';
         if (successMessage) DOM.addClass(successMessage, 'show');
-        
+
         setTimeout(() => {
           if (typeof modalManager !== 'undefined') {
             modalManager.close('form');
@@ -241,25 +329,25 @@ class FormManager {
   _resetForm() {
     const form = DOM.getElement('proposalForm');
     const successMessage = DOM.getElement('successMessage');
-    const fileName = DOM.getElement('fileName');
-    
+    const fileList = DOM.getElement('fileList');
+
     if (form) {
       form.reset();
       form.style.display = 'block';
     }
-    
+
     if (successMessage) DOM.removeClass(successMessage, 'show');
-    if (fileName) DOM.removeClass(fileName, 'show');
-    
+
     DOM.queryAll('.form-input, .form-select, .form-textarea').forEach(el => {
       DOM.removeClass(el, 'error');
     });
-    
+
     DOM.queryAll('.error-message').forEach(el => {
       DOM.removeClass(el, 'show');
     });
-    
-    this.currentFile = null;
+
+    this.currentFiles = [];
+    this._renderFileList();
   }
 }
 
