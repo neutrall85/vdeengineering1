@@ -1170,13 +1170,7 @@ body {
   transform: translateY(-2px);
 }
 
-.form-file.has-file input {
-  pointer-events: none;
-}
 
-.form-file-name svg {
-  pointer-events: auto !important;
-}
 
 .form-file.has-file {
   border-style: solid;
@@ -1193,11 +1187,6 @@ body {
   opacity: 0;
   cursor: pointer;
   z-index: 10;
-  pointer-events: none;
-}
-
-.form-file.has-file input {
-  pointer-events: none;
 }
 
 .form-file-name svg:hover {
