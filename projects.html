@@ -165,34 +165,6 @@
   </div>
 </div>
 
-<script>
-function openProjectModal(title, details, image, category) {
-  const modalTitle = document.getElementById('projectModalTitle');
-  const modalContent = document.getElementById('projectModalContent');
-  const modalImage = document.getElementById('projectModalImage');
-  const modalCategory = document.getElementById('projectModalCategory');
-
-  if (modalTitle && modalContent) {
-    const sanitizer = window.Utils?.Sanitizer;
-    modalTitle.textContent = sanitizer ? sanitizer.escapeHtml(title) : title;
-    modalCategory.textContent = sanitizer ? sanitizer.escapeHtml(category || '') : (category || '');
-    modalContent.innerHTML = '<ul style="padding-left: 1.5rem; margin-top: 1rem;">' + details.map(item => '<li style="margin-bottom: 0.5rem;">' + (sanitizer ? sanitizer.escapeHtml(item) : item) + '</li>').join('') + '</ul>';
-
-    if (modalImage && image) {
-      const imageUrl = sanitizer ? (sanitizer.isValidUrl(image) ? image : 'assets/images/placeholder.jpg') : image;
-      modalImage.src = imageUrl;
-      modalImage.alt = sanitizer ? sanitizer.escapeHtml(title) : title;
-    } else if (modalImage) {
-      modalImage.src = '';
-    }
-
-    if (typeof modalManager !== 'undefined') modalManager.open('project');
-  }
-}
-
-function closeProjectModal() {
-  if (typeof modalManager !== 'undefined') modalManager.close('project');
-}
 </script>
 
 <!-- Modal (same as before) -->
