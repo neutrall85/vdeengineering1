@@ -127,6 +127,10 @@ class FormManager {
     
     if (!container) return;
 
+    // Удаляем старые обработчики перед перерисовкой
+    const oldButtons = container.querySelectorAll('.form-file-item-remove');
+    oldButtons.forEach(btn => btn.removeEventListener('click', this._handleFileRemove));
+
     if (this.currentFiles.length === 0) {
       container.innerHTML = '';
       // Обновляем текст в зоне загрузки
@@ -145,13 +149,15 @@ class FormManager {
         </div>
       `).join('');
 
-      container.querySelectorAll('.form-file-item-remove').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+      // Используем делегирование событий для кнопок удаления
+      container.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.form-file-item-remove');
+        if (removeBtn) {
           e.preventDefault();
           e.stopPropagation();
-          const index = parseInt(btn.getAttribute('data-index'), 10);
-          this.removeFile(index);
-        });
+          const index = parseInt(removeBtn.getAttribute('data-index'), 10);
+          this.removeFile(index, fileDrop);
+        }
       });
       
       // Обновляем текст в зоне загрузки
@@ -188,7 +194,7 @@ class FormManager {
     }
   }
 
-  removeFile(index) {
+  removeFile(index, fileDrop) {
     if (index === undefined || index === null) {
       // Удаляем все файлы
       this.currentFiles = [];
@@ -200,8 +206,11 @@ class FormManager {
     const fileInput = DOM.getElement('fileAttachment');
     if (fileInput) fileInput.value = '';
 
-    // Находим активную зону загрузки для обновления текста
-    const fileDrop = document.querySelector('#fileDrop');
+    // Если fileDrop не передан, пытаемся найти его
+    if (!fileDrop) {
+      fileDrop = document.querySelector('#fileDrop');
+    }
+    
     this._renderFileList(fileDrop);
   }
 
