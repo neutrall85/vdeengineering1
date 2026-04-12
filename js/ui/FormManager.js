@@ -198,10 +198,8 @@ class FormManager {
     
     if (!container) return;
 
-    // Очищаем контейнер перед перерисовкой и удаляем старый обработчик кликов
+    // Очищаем контейнер перед перерисовкой
     container.innerHTML = '';
-    // Снимаем флаг обработчика, чтобы при следующей перерисовке он добавился заново
-    delete container._clickHandlerAttached;
 
     if (this.currentFiles.length === 0) {
       // Обновляем текст в зоне загрузки
@@ -220,19 +218,25 @@ class FormManager {
         </div>
       `).join('');
 
-      // Используем делегирование событий для кнопок удаления - вешаем обработчик только один раз
-      if (!container._clickHandlerAttached) {
-        container.addEventListener('click', (e) => {
-          const removeBtn = e.target.closest('.form-file-item-remove');
-          if (removeBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const index = parseInt(removeBtn.getAttribute('data-index'), 10);
-            this.removeFile(index, fileDrop);
-          }
-        });
-        container._clickHandlerAttached = true;
+      // Используем делегирование событий для кнопок удаления - вешаем обработчик только один раз на контейнер
+      // Удаляем старый обработчик если он был, чтобы избежать дублирования при перерисовке
+      const oldHandler = container._clickHandler;
+      if (oldHandler) {
+        container.removeEventListener('click', oldHandler);
       }
+      
+      const clickHandler = (e) => {
+        const removeBtn = e.target.closest('.form-file-item-remove');
+        if (removeBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const index = parseInt(removeBtn.getAttribute('data-index'), 10);
+          this.removeFile(index, fileDrop);
+        }
+      };
+      
+      container.addEventListener('click', clickHandler);
+      container._clickHandler = clickHandler;
       
       // Обновляем текст в зоне загрузки
       const fileDropText = fileDrop?.querySelector('.form-file-text');
@@ -315,13 +319,14 @@ class FormManager {
   }
 
   removeFile(index, fileDrop) {
-    // Если index не является числом (NaN после parseInt), удаляем все файлы
+    // Удаляем файл по индексу
     const indexNum = parseInt(index, 10);
-    if (isNaN(indexNum)) {
-      this.currentFiles = [];
-    } else {
-      // Удаляем файл по индексу
+    
+    if (!isNaN(indexNum) && indexNum >= 0 && indexNum < this.currentFiles.length) {
       this.currentFiles.splice(indexNum, 1);
+    } else {
+      console.error('Invalid file index:', index);
+      return;
     }
 
     // Сбрасываем value у input в переданном fileDrop, чтобы можно было добавить тот же файл снова
