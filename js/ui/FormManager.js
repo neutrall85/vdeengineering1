@@ -62,25 +62,27 @@ class FormManager {
     
     // Находим контейнер списка файлов для этой зоны загрузки
     const fileListContainer = fileDrop?.querySelector('#fileList') || DOM.getElement('fileList');
+    // Находим элемент предупреждения о лимитах для этой зоны загрузки
+    const fileLimitWarning = fileDrop?.querySelector('.form-file-limit-warning');
 
     const newFiles = Array.from(files).filter(file => {
       // Проверка размера файла
       if (file.size > this.maxFileSize) {
-        this._showError(`Файл "${file.name}" превышает максимальный размер 10MB`);
+        this._showError(`Файл "${file.name}" превышает максимальный размер 10MB`, fileLimitWarning);
         return false;
       }
 
       // Проверка типа файла
       const validation = this.validator.file(file);
       if (!validation.valid) {
-        this._showError(validation.error);
+        this._showError(validation.error, fileLimitWarning);
         return false;
       }
 
       // Проверка на дубликаты
       const isDuplicate = this.currentFiles.some(f => f.name === file.name && f.size === file.size);
       if (isDuplicate) {
-        this._showError(`Файл "${file.name}" уже выбран`);
+        this._showError(`Файл "${file.name}" уже выбран`, fileLimitWarning);
         return false;
       }
 
@@ -93,7 +95,7 @@ class FormManager {
     // Ограничиваем количество файлов
     if (this.currentFiles.length > this.maxFiles) {
       this.currentFiles = this.currentFiles.slice(0, this.maxFiles);
-      this._showError(`Максимальное количество файлов: ${this.maxFiles}`);
+      this._showError(`Максимальное количество файлов: ${this.maxFiles}`, fileLimitWarning);
     }
 
     this._renderFileList(fileDrop);
@@ -185,8 +187,20 @@ class FormManager {
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   }
 
-  _showError(message) {
+  _showError(message, fileLimitWarning) {
     console.error('Form error:', message);
+    
+    // Если передан элемент предупреждения о лимитах файлов, используем его
+    if (fileLimitWarning) {
+      fileLimitWarning.innerHTML = `<p>⚠️ ${message}</p>`;
+      fileLimitWarning.style.display = 'block';
+      setTimeout(() => {
+        fileLimitWarning.style.display = 'none';
+      }, 5000);
+      return;
+    }
+    
+    // Иначе используем стандартное предупреждение
     const warning = DOM.getElement('rateLimitWarning');
     if (warning) {
       warning.innerHTML = `<p>⚠️ ${message}</p>`;
