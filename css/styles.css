@@ -2723,3 +2723,55 @@ body:has(.details-modal-overlay.active) {
 .news-excerpt-p { color: var(--metallic); line-height: 1.5; font-size: 0.9rem; }
 .news-link-btn { background: none; border: none; color: var(--vd); text-decoration: none; font-weight: 600; margin-top: 1rem; display: inline-block; cursor: pointer; padding: 0; }
 .display-none { display: none; }
+
+/* ==================== УТИЛИТАРНЫЕ КЛАССЫ ДЛЯ СТРАНИЦ ==================== */
+.page-header-bg { background: var(--vd-light-blue); padding: 120px 5% 60px; text-align: center; color: #004E96; }
+.page-header-title { font-size: 2.5rem; margin-bottom: 1rem; }
+.page-header-desc { font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+
+.certificate-section-bg { padding: 60px 5%; background: var(--vd-light-gray); }
+.certificate-widgets-container { max-width: 900px; margin: 0 auto; }
+
+.features-section-padding { padding: 60px 5%; }
+.features-grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; }
+.feature-card-box { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; }
+.feature-icon-circle { width: 60px; height: 60px; background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+.feature-icon-svg { width: 30px; height: 30px; fill: white; }
+.feature-title { color: var(--vd); margin-bottom: 1rem; }
+.feature-desc { color: var(--metallic); line-height: 1.6; }
+
+.contact-cta-bg { background: var(--vd-light-blue); padding: 60px 5%; text-align: center; color: #004E96; }
+.contact-cta-title { font-size: 2rem; margin-bottom: 1rem; }
+.contact-cta-desc { margin-bottom: 2rem; font-size: 1.1rem; }
+
+.services-full-padding { padding: 60px 5%; }
+.services-grid-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+.service-card-box { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+.service-card-static { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+.service-title-h3 { font-size: 1.3rem; color: var(--vd); margin-bottom: 1rem; }
+.service-desc-p { color: var(--metallic); line-height: 1.6; margin-bottom: 1.5rem; }
+.btn-secondary-sm { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+
+.process-section-bg { padding: 60px 5%; background: var(--vd-light-gray); }
+.process-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+.step-box { text-align: center; }
+.step-number-circle { width: 80px; height: 80px; background: var(--vd); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem; font-weight: bold; }
+.step-title { color: var(--vd); margin-bottom: 0.5rem; }
+.step-desc { color: var(--metallic); }
+
+.projects-full-padding { padding: 60px 5%; }
+.projects-grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; }
+.project-card-box { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.project-image-container { height: 250px; overflow: hidden; }
+.project-img-cover { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.project-content-padding { padding: 1.5rem; }
+.project-category-badge { display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem; }
+.project-title-h3 { font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem; }
+.project-desc-p { color: var(--metallic); line-height: 1.6; margin-bottom: 1rem; }
+
+.news-full-padding { padding: 60px 5%; }
+.news-tabs-container { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+.news-grid-auto { max-width: 1400px; margin: 0 auto; }
+
+.modal-list-ul { padding-left: 1.5rem; margin-top: 1rem; }
+.modal-list-li { margin-bottom: 0.5rem; }
