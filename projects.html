@@ -29,93 +29,93 @@
 </head>
 <body>
 
-<div id="appError" style="display: none;"></div>
+<div id="appError" class="display-none"></div>
 
 <!-- Компоненты загружаются через ComponentLoader -->
 <nav class="navbar" id="navbar"></nav>
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
 <!-- page-header: убран градиент -->
-<section class="page-header" style="background: var(--vd-light-blue); padding: 120px 5% 60px; text-align: center; color: #004E96;">
-  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Наши проекты</h1>
-  <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto;">Реализованные работы в области модификации авиационной техники</p>
+<section class="page-header page-header-bg">
+  <h1 class="page-header-title">Наши проекты</h1>
+  <p class="page-header-desc">Реализованные работы в области модификации авиационной техники</p>
 </section>
 
-<section class="projects-full" style="padding: 60px 5%;">
-  <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto;">
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+<section class="projects-full projects-full-padding">
+  <div class="projects-grid-container">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/An-124-100.jpeg" alt="Модернизация Ан-124-100" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Транспортная авиация</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Модернизация грузового отсека Ан-124-100</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Разработка и внедрение усиленной системы крепления для негабаритных грузов. Полный цикл проектирования, испытаний и сертификации.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Модернизация грузового отсека Ан-124-100', ['Разработка усиленной системы крепления', 'Модернизация конструкции грузового отсека', 'Испытания и сертификация по нормам АП-25', 'Увеличение грузоподъемности до 150 тонн', 'Совместимость с различными типами грузов'], 'assets/images/An-124-100.jpeg', 'Транспортная авиация')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Транспортная авиация</span>
+        <h3 class="project-title-h3">Модернизация грузового отсека Ан-124-100</h3>
+        <p class="project-desc-p">Разработка и внедрение усиленной системы крепления для негабаритных грузов. Полный цикл проектирования, испытаний и сертификации.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Модернизация грузового отсека Ан-124-100', ['Разработка усиленной системы крепления', 'Модернизация конструкции грузового отсека', 'Испытания и сертификация по нормам АП-25', 'Увеличение грузоподъемности до 150 тонн', 'Совместимость с различными типами грузов'], 'assets/images/An-124-100.jpeg', 'Транспортная авиация')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/about.jpg" alt="Система навигации" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Авионика</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Установка современной навигационной системы</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Интеграция цифровых навигационных комплексов нового поколения для повышения точности и безопасности полетов.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Установка современной навигационной системы', ['Интеграция комплекса К-НВС-10', 'Повышение точности навигации до 0.1 NM', 'Соответствие требованиям RNAV/RNP', 'Автоматическое планирование маршрута', 'Совместимость с существующими системами'], 'assets/images/about.jpg', 'Авионика')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Авионика</span>
+        <h3 class="project-title-h3">Установка современной навигационной системы</h3>
+        <p class="project-desc-p">Интеграция цифровых навигационных комплексов нового поколения для повышения точности и безопасности полетов.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Установка современной навигационной системы', ['Интеграция комплекса К-НВС-10', 'Повышение точности навигации до 0.1 NM', 'Соответствие требованиям RNAV/RNP', 'Автоматическое планирование маршрута', 'Совместимость с существующими системами'], 'assets/images/about.jpg', 'Авионика')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/Rossiya.jpg" alt="Двигатель" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Двигательные системы</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Модернизация газотурбинного двигателя</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Увеличение ресурса и повышение топливной эффективности двигателей за счет внедрения современных технологий.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Модернизация газотурбинного двигателя', ['Увеличение межремонтного ресурса на 30%', 'Снижение расхода топлива на 5%', 'Внедрение новых материалов турбины', 'Улучшение системы охлаждения', 'Сертификация по нормам ИКАО'], 'assets/images/Rossiya.jpg', 'Двигательные системы')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Двигательные системы</span>
+        <h3 class="project-title-h3">Модернизация газотурбинного двигателя</h3>
+        <p class="project-desc-p">Увеличение ресурса и повышение топливной эффективности двигателей за счет внедрения современных технологий.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Модернизация газотурбинного двигателя', ['Увеличение межремонтного ресурса на 30%', 'Снижение расхода топлива на 5%', 'Внедрение новых материалов турбины', 'Улучшение системы охлаждения', 'Сертификация по нормам ИКАО'], 'assets/images/Rossiya.jpg', 'Двигательные системы')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/An-124-100.jpeg" alt="Сертификация Ил-76ТД" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Сертификация</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Сертификация модификаций Ил-76ТД</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Получение сертификатов на комплекс модификаций для самолетов Ил-76ТД, включая навигационное и связное оборудование.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Сертификация модификаций Ил-76ТД', ['Комплексная модернизация навигационного оборудования', 'Установка нового связного оборудования', 'Получение сертификата типа', 'Соответствие требованиям ЕАС АВ', 'Поддержка эксплуатации'], 'assets/images/An-124-100.jpeg', 'Сертификация')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Сертификация</span>
+        <h3 class="project-title-h3">Сертификация модификаций Ил-76ТД</h3>
+        <p class="project-desc-p">Получение сертификатов на комплекс модификаций для самолетов Ил-76ТД, включая навигационное и связное оборудование.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Сертификация модификаций Ил-76ТД', ['Комплексная модернизация навигационного оборудования', 'Установка нового связного оборудования', 'Получение сертификата типа', 'Соответствие требованиям ЕАС АВ', 'Поддержка эксплуатации'], 'assets/images/An-124-100.jpeg', 'Сертификация')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/about.jpg" alt="Цифровая кабина" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Цифровизация</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Внедрение цифровой кабины пилота</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Замена аналоговых приборов на современные цифровые дисплеи с интеграцией в существующие системы.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Внедрение цифровой кабины пилота', ['Установка 6 LCD-дисплеев', 'Интеграция с бортовыми системами', 'Резервирование критических систем', 'Эргономичное расположение приборов', 'Снижение нагрузки на экипаж'], 'assets/images/about.jpg', 'Цифровизация')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Цифровизация</span>
+        <h3 class="project-title-h3">Внедрение цифровой кабины пилота</h3>
+        <p class="project-desc-p">Замена аналоговых приборов на современные цифровые дисплеи с интеграцией в существующие системы.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Внедрение цифровой кабины пилота', ['Установка 6 LCD-дисплеев', 'Интеграция с бортовыми системами', 'Резервирование критических систем', 'Эргономичное расположение приборов', 'Снижение нагрузки на экипаж'], 'assets/images/about.jpg', 'Цифровизация')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
-    <div class="project-card fade-in" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-      <div class="project-image" style="height: 250px; overflow: hidden;">
+    <div class="project-card project-card-box fade-in">
+      <div class="project-image-container">
         <img src="assets/images/Rossiya.jpg" alt="Ремонтная документация" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <div class="project-content" style="padding: 1.5rem;">
-        <span class="project-category" style="display: inline-block; background: var(--vd-light-blue); color: var(--vd); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem;">Документация</span>
-        <h3 style="font-size: 1.3rem; color: var(--vd); margin-bottom: 0.75rem;">Разработка ремонтной документации</h3>
-        <p style="color: var(--metallic); line-height: 1.6; margin-bottom: 1rem;">Создание полного комплекта документации для выполнения капитального ремонта ВС с внесенными изменениями.</p>
-        <button class="btn-secondary" onclick="openProjectModal('Разработка ремонтной документации', ['Разработка РЭ и Формуляра', 'Карты дефектации и контроля', 'Технологические инструкции', 'Каталоги деталей и сборочных единиц', 'Согласование с заказчиком и.cert органами'], 'assets/images/Rossiya.jpg', 'Документация')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Подробнее →</button>
+      <div class="project-content-padding">
+        <span class="project-category-badge">Документация</span>
+        <h3 class="project-title-h3">Разработка ремонтной документации</h3>
+        <p class="project-desc-p">Создание полного комплекта документации для выполнения капитального ремонта ВС с внесенными изменениями.</p>
+        <button class="btn-secondary" onclick="openProjectModal('Разработка ремонтной документации', ['Разработка РЭ и Формуляра', 'Карты дефектации и контроля', 'Технологические инструкции', 'Каталоги деталей и сборочных единиц', 'Согласование с заказчиком и.cert органами'], 'assets/images/Rossiya.jpg', 'Документация')" class="btn-secondary-sm">Подробнее →</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- contact-cta: убран градиент -->
-<section class="contact-cta" style="background: var(--vd-light-blue); padding: 60px 5%; text-align: center; color: #004E96;">
-  <h2 style="font-size: 2rem; margin-bottom: 1rem;">Хотите реализовать похожий проект?</h2>
-  <p style="margin-bottom: 2rem; font-size: 1.1rem;">Свяжитесь с нами для обсуждения ваших задач</p>
+<section class="contact-cta contact-cta-bg">
+  <h2 class="contact-cta-title">Хотите реализовать похожий проект?</h2>
+  <p class="contact-cta-desc">Свяжитесь с нами для обсуждения ваших задач</p>
   <button class="btn-primary" onclick="window.openModal && window.openModal()">Запросить коммерческое предложение</button>
 </section>
 
@@ -148,7 +148,7 @@ function openProjectModal(title, details, image, category) {
     modalCategory.textContent = sanitizer ? sanitizer.escapeHtml(category) : category;
     modalImage.src = sanitizer ? (sanitizer.isValidUrl(image) ? image : 'assets/images/placeholder.jpg') : image;
     modalImage.alt = sanitizer ? sanitizer.escapeHtml(title) : title;
-    modalContent.innerHTML = '<ul style="padding-left: 1.5rem; margin-top: 1rem;">' + details.map(item => '<li style="margin-bottom: 0.5rem;">' + (sanitizer ? sanitizer.escapeHtml(item) : item) + '</li>').join('') + '</ul>';
+    modalContent.innerHTML = '<ul class="modal-list-ul">' + details.map(item => '<li class="modal-list-li">' + (sanitizer ? sanitizer.escapeHtml(item) : item) + '</li>').join('') + '</ul>';
 
     if (typeof modalManager !== 'undefined') modalManager.open('project');
   }

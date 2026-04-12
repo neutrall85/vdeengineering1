@@ -71,20 +71,20 @@
 </head>
 <body>
 
-<div id="appError" style="display: none;"></div>
+<div id="appError" class="display-none"></div>
 <nav class="navbar" id="navbar"></nav>
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-<section class="page-header" style="background: var(--vd-light-blue); padding: 120px 5% 60px; text-align: center; color: #004E96;">
-  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">О компании</h1>
-  <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto;">Разработчик модификаций и ремонта авиационной техники, СНО и погрузочно-разгрузочного оборудования.</p>
+<section class="page-header page-header-bg">
+  <h1 class="page-header-title">О компании</h1>
+  <p class="page-header-desc">Разработчик модификаций и ремонта авиационной техники, СНО и погрузочно-разгрузочного оборудования.</p>
 </section>
-<section class="certificate-section" style="padding: 60px 5%; background: var(--vd-light-gray);">
+<section class="certificate-section certificate-section-bg">
   <div class="section-header fade-in">
     <div class="section-tag">Сертификация</div>
     <h2>Область действия сертификата</h2>
     <p>Наши компетенции подтверждены официальными документами</p>
   </div>
-  <div class="certificate-widgets" style="max-width: 900px; margin: 0 auto;">
+  <div class="certificate-widgets-container">
     <div class="certificate-widget">
       <div class="widget-header" onclick="window.toggleWidget && window.toggleWidget(this)">
         <span class="widget-title">Ограничения летной годности компонентов II и III класса</span>
@@ -143,39 +143,39 @@
   </div>
 </section>
 
-<section class="features-section" style="padding: 60px 5%;">
+<section class="features-section features-section-padding">
   <div class="section-header fade-in">
     <h2>Почему выбирают нас</h2>
     <p>Ключевые преимущества работы с нами</p>
   </div>
-  <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto;">
-    <div class="feature-card fade-in" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;">
-      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+  <div class="features-grid-container">
+    <div class="feature-card feature-card-box fade-in">
+      <div class="feature-icon-circle">
+        <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
       </div>
-      <h3 style="color: var(--vd); margin-bottom: 1rem;">Опыт и экспертиза</h3>
-      <p style="color: var(--metallic); line-height: 1.6;">Более 7 лет успешной работы в области модификации авиационной техники</p>
+      <h3 class="feature-title">Опыт и экспертиза</h3>
+      <p class="feature-desc">Более 7 лет успешной работы в области модификации авиационной техники</p>
     </div>
-    <div class="feature-card fade-in" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;">
-      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    <div class="feature-card feature-card-box fade-in">
+      <div class="feature-icon-circle">
+        <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
       </div>
-      <h3 style="color: var(--vd); margin-bottom: 1rem;">Сертифицированные решения</h3>
-      <p style="color: var(--metallic); line-height: 1.6;">Все наши разработки соответствуют требованиям ФАП и имеют необходимые сертификаты</p>
+      <h3 class="feature-title">Сертифицированные решения</h3>
+      <p class="feature-desc">Все наши разработки соответствуют требованиям ФАП и имеют необходимые сертификаты</p>
     </div>
-    <div class="feature-card fade-in" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;">
-      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+    <div class="feature-card feature-card-box fade-in">
+      <div class="feature-icon-circle">
+        <svg class="feature-icon-svg" viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
       </div>
-      <h3 style="color: var(--vd); margin-bottom: 1rem;">Индивидуальный подход</h3>
-      <p style="color: var(--metallic); line-height: 1.6;">Разрабатываем решения под конкретные задачи каждого клиента</p>
+      <h3 class="feature-title">Индивидуальный подход</h3>
+      <p class="feature-desc">Разрабатываем решения под конкретные задачи каждого клиента</p>
     </div>
   </div>
 </section>
 
-<section class="contact-cta" style="background: var(--vd-light-blue); padding: 60px 5%; text-align: center; color: #004E96;">
-  <h2 style="font-size: 2rem; margin-bottom: 1rem;">Готовы к сотрудничеству?</h2>
-  <p style="margin-bottom: 2rem; font-size: 1.1rem;">Свяжитесь с нами для обсуждения вашего проекта</p>
+<section class="contact-cta contact-cta-bg">
+  <h2 class="contact-cta-title">Готовы к сотрудничеству?</h2>
+  <p class="contact-cta-desc">Свяжитесь с нами для обсуждения вашего проекта</p>
   <button class="btn-primary" onclick="window.openModal && window.openModal()">Запросить коммерческое предложение</button>
 </section>
 
