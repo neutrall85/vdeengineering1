@@ -1186,11 +1186,6 @@ body:has(.details-modal-overlay.active) {
   min-height: 120px;
 }
 
-.form-file:hover {
-  border-color: var(--vd);
-  background: rgba(0, 78, 150, 0.05);
-  transform: translateY(-2px);
-}
 
 .form-file.has-file {
   border-style: solid;
@@ -1225,9 +1220,6 @@ body:has(.details-modal-overlay.active) {
   transition: transform var(--duration-normal) var(--ease-elastic);
 }
 
-.form-file:hover .form-file-icon {
-  transform: scale(1.1);
-}
 
 .form-file-icon svg {
   width: 16px;
