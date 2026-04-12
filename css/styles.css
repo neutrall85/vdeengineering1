@@ -268,12 +268,17 @@ body:has(.details-modal-overlay.active) {
   z-index: 1;
 }
 
+.hero-text {
+  max-width: 800px;
+}
+
 .hero-text h1 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 800;
   color: var(--vd);
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
 }
 
 .hero-text h1 span {
@@ -281,10 +286,11 @@ body:has(.details-modal-overlay.active) {
 }
 
 .hero-text p {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
   color: var(--metallic);
-  line-height: 1.6;
-  margin-bottom: 2rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 650px;
 }
 
 .hero-buttons {
