@@ -372,12 +372,13 @@ function initApp() {
   // 3. Регистрация модальных окон
   if (typeof modalManager !== 'undefined') {
     const modalsToRegister = [
-      { key: 'about', overlayId: 'aboutModalOverlay' },
-      { key: 'details', overlayId: 'detailsModalOverlay' },
-      { key: 'form', overlayId: 'modalOverlay' },
+      { key: 'about', overlayId: 'aboutModalOverlay', required: false },
+      { key: 'details', overlayId: 'detailsModalOverlay', required: false },
+      { key: 'form', overlayId: 'modalOverlay', required: true },
       { 
         key: 'news', 
         overlayId: 'newsModalOverlay',
+        required: false,
         onClose: () => {
           // Восстанавливаем базовый URL при закрытии любым способом
           if (window.NewsNavigation) {
@@ -385,13 +386,16 @@ function initApp() {
           }
         }
       },
-      { key: 'project', overlayId: 'projectModalOverlay' },
-      { key: 'service', overlayId: 'serviceModalOverlay' }
+      { key: 'project', overlayId: 'projectModalOverlay', required: false },
+      { key: 'service', overlayId: 'serviceModalOverlay', required: false }
     ];
     
     modalsToRegister.forEach(modal => {
       if (!modalManager.modals.has(modal.key)) {
-        modalManager.register(modal.key, { overlayId: modal.overlayId, onClose: modal.onClose });
+        const overlay = document.getElementById(modal.overlayId);
+        if (overlay || modal.required !== false) {
+          modalManager.register(modal.key, { overlayId: modal.overlayId, onClose: modal.onClose });
+        }
       }
     });
     console.log('Modals registered');
