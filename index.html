@@ -241,7 +241,7 @@
 
     <!-- ЕДИНАЯ ФОРМА (DRY подход) -->
     <div class="commercial-offer-container fade-in" id="commercial-offer">
-      <h2 class="section-title" id="commercial-offer-title">Запросить коммерческое предложение</h2>
+      <h2 class="section-title" id="commercial-offer-title">Запрос коммерческого предложения</h2>
       <div class="rate-limit-warning" id="rateLimitWarning">
         <p>⚠️ Слишком много запросов. Пожалуйста, подождите 60 секунд перед следующей отправкой.</p>
       </div>
@@ -267,7 +267,7 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="contactPerson">Контактное лицо <span class="required">*</span></label>
-          <input type="text" class="form-input" id="contactPerson" name="contactPerson" placeholder="Ваше полное имя" required minlength="2" maxlength="100" autocomplete="name">
+          <input type="text" class="form-input" id="contactPerson" name="contactPerson" placeholder="Ваш имя и фамилия" required minlength="2" maxlength="100" autocomplete="name">
           <p class="error-message" id="contactPersonError">Пожалуйста, введите ваше имя</p>
         </div>
         <div class="form-group">
@@ -291,6 +291,9 @@
             <option value="">Выберите тип услуги</option>
             <option value="design">Проектирование модификаций</option>
             <option value="repair">Разработка ремонтной КД</option>
+            <option value="repair">Разработка СНО</option>
+            <option value="repair">Разработка погрузочно-разгрузочного оборудования</option>
+            <option value="repair">Оформление разрешения на допуск</option>
             <option value="other">Другое</option>
           </select>
           <p class="error-message" id="serviceTypeError">Пожалуйста, выберите тип услуги</p>
@@ -358,12 +361,7 @@
     <button class="modal-close" onclick="window.closeModal && window.closeModal()" aria-label="Закрыть">
       <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
-    <div class="modal-header">
-      <h2 class="modal-title">Запрос коммерческого предложения</h2>
-      <p class="modal-subtitle">Заполните форму ниже, и мы свяжемся с вами в течение 24 часов</p>
-    </div>
     <div class="modal-body" id="modalBodyContainer">
-      <!-- Сюда будет склонирована форма из #commercial-offer -->
     </div>
   </div>
 </div>
@@ -397,34 +395,29 @@
 </button>
 
 <script>
-  // Клонирование формы для модального окна (DRY подход - форма в единственном экземпляре)
   document.addEventListener('DOMContentLoaded', function() {
-    // Клонируем форму из основного блока в модальное окно
     const originalFormContainer = document.getElementById('commercial-offer');
     const modalBodyContainer = document.getElementById('modalBodyContainer');
     
     if (originalFormContainer && modalBodyContainer) {
+
       const formClone = originalFormContainer.cloneNode(true);
-      // Удаляем дублирующиеся ID, чтобы избежать конфликтов
+      
       formClone.removeAttribute('id');
-      // Очищаем контейнер и добавляем клон
       modalBodyContainer.innerHTML = '';
       modalBodyContainer.appendChild(formClone);
       
-      // Удаляем id у вложенных элементов клона, чтобы не конфликтовать с оригинальной формой
       const cloneElements = modalBodyContainer.querySelectorAll('[id]');
+      
       cloneElements.forEach(el => {
-        // Сохраняем id только для критических элементов формы, добавляя суффикс _modal
+      
         if (el.id && (el.id === 'proposalForm' || el.id === 'submitBtn' || 
             el.id === 'fileAttachment' || el.id === 'fileDrop' || el.id === 'fileList')) {
-          // Эти id останутся, FormManager ищет их по id
-          // Но чтобы не было конфликта с оригинальной формой, FormManager должен инициализироваться для каждой формы отдельно
         } else if (el.id) {
           el.removeAttribute('id');
         }
       });
       
-      // Удаляем предупреждения о лимитах, которые могли быть показаны
       const rateLimitWarning = modalBodyContainer.querySelector('.rate-limit-warning');
       if (rateLimitWarning) rateLimitWarning.classList.remove('show');
       
@@ -432,7 +425,6 @@
       if (successMessage) successMessage.classList.remove('show');
     }
     
-    // Загрузка новостей
     const previewGrid = document.getElementById('previewNewsGrid');
     if (previewGrid && typeof NEWS_DATA !== 'undefined') {
       const allNews = [];
