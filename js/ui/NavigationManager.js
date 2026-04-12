@@ -116,12 +116,13 @@ class NavigationManager {
     
     const closeBtn = DOM.getElement('mobileMenuClose');
     
-    if (this.mobileMenuBtn) {
-      this.mobileMenuBtn.addEventListener('click', (e) => {
+    // Используем делегирование событий для кнопки меню
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#mobileMenuBtn')) {
         e.stopPropagation();
         this.openMobileMenu();
-      });
-    }
+      }
+    });
     
     if (closeBtn) {
       closeBtn.addEventListener('click', () => this.closeMobileMenu());
@@ -130,6 +131,13 @@ class NavigationManager {
     if (this.mobileMenuOverlay) {
       this.mobileMenuOverlay.addEventListener('click', () => this.closeMobileMenu());
     }
+    
+    // Закрытие по ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.mobileMenu.classList.contains('active')) {
+        this.closeMobileMenu();
+      }
+    });
     
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1048 && this.mobileMenu.classList.contains('active')) {
