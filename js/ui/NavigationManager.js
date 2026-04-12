@@ -144,7 +144,7 @@ class NavigationManager {
     DOM.addClass(this.mobileMenu, 'active');
     if (this.mobileMenuOverlay) DOM.addClass(this.mobileMenuOverlay, 'active');
     if (this.mobileMenuBtn) DOM.addClass(this.mobileMenuBtn, 'active');
-    DOM.toggleBodyScroll(true);
+    document.body.classList.add('no-scroll');
   }
 
   closeMobileMenu() {
@@ -153,7 +153,7 @@ class NavigationManager {
     DOM.removeClass(this.mobileMenu, 'active');
     if (this.mobileMenuOverlay) DOM.removeClass(this.mobileMenuOverlay, 'active');
     if (this.mobileMenuBtn) DOM.removeClass(this.mobileMenuBtn, 'active');
-    DOM.toggleBodyScroll(false);
+    document.body.classList.remove('no-scroll');
   }
 
   toggleMobileMenu() {
