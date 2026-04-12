@@ -244,7 +244,7 @@ body:has(.details-modal-overlay.active) {
   display: flex;
   align-items: center;
   justify-content: left;
-  padding: 100px 5% 60px;
+  padding: clamp(60px, 8vh, 100px) 5% clamp(40px, 6vh, 60px);
   position: relative;
   overflow: hidden;
   text-align: left;
@@ -268,7 +268,7 @@ body:has(.details-modal-overlay.active) {
 }
 
 .hero-text h1 {
-  font-size: 3rem;
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 800;
   color: var(--vd);
   line-height: 1.2;
@@ -280,7 +280,7 @@ body:has(.details-modal-overlay.active) {
 }
 
 .hero-text p {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--metallic);
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -296,18 +296,18 @@ body:has(.details-modal-overlay.active) {
 .hero-stats {
   display: flex;
   justify-content: left;
-  gap: 3rem;
-  margin-top: 3rem;
-  padding-top: 2rem;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-top: clamp(1.5rem, 3vh, 3rem);
+  padding-top: clamp(1rem, 2vh, 2rem);
   border-top: 1px solid rgba(0, 78, 150, 0.15);
 }
 
 .hero-stats .stat-number {
-    font-size: 1.8rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   }
 
   .hero-stats .stat-label {
-    font-size: 0.75rem;
+    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
   }
 
 .stat-number {
