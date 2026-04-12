@@ -79,10 +79,7 @@ class ModalManager {
 
       // Если это модальное окно формы, инициализируем загрузку файлов
       if (key === 'form' && window.formManager) {
-        // Даем время на рендеринг модального окна
-        setTimeout(() => {
-          window.formManager.initFileUploadOnModalOpen();
-        }, 50);
+        window.formManager.initFileUploadOnModalOpen();
       }
 
       if (config.shouldFocus) {

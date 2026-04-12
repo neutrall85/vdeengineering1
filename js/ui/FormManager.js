@@ -24,11 +24,34 @@ class FormManager {
     }
   }
   
+  openModal() {
+    if (!this.rateLimiter.canProceed()) {
+      const warning = DOM.getElement('rateLimitWarning');
+      if (warning) {
+        DOM.addClass(warning, 'show');
+        setTimeout(() => DOM.removeClass(warning, 'show'), 5000);
+      }
+      return;
+    }
+
+    const warning = DOM.getElement('rateLimitWarning');
+    if (warning) DOM.removeClass(warning, 'show');
+
+    if (typeof modalManager !== 'undefined') {
+      modalManager.open('form');
+    } else {
+      console.error('ModalManager not available');
+    }
+  }
+
   /**
    * Инициализация загрузки файлов - вызывается при открытии модального окна
    */
   initFileUploadOnModalOpen() {
-    this._initFileUpload();
+    // Даем время на рендеринг модального окна перед инициализацией
+    setTimeout(() => {
+      this._initFileUpload();
+    }, 50);
   }
 
   _initFileUpload() {
@@ -71,32 +94,37 @@ class FormManager {
     // Находим элемент предупреждения о лимитах для этой зоны загрузки
     const fileLimitWarning = fileDrop?.querySelector('.form-file-limit-warning');
 
-    const newFiles = Array.from(files).filter(file => {
+    // Собираем имена уже загруженных файлов для быстрой проверки дубликатов
+    const existingFileNames = new Set(this.currentFiles.map(f => `${f.name}:${f.size}`));
+    const validNewFiles = [];
+
+    for (const file of Array.from(files)) {
       // Проверка размера файла
       if (file.size > this.maxFileSize) {
         this._showUploadWarning(`Файл "${file.name}" превышает максимальный размер 10MB`, fileDrop);
-        return false;
+        continue;
       }
 
       // Проверка типа файла
       const validation = this.validator.file(file);
       if (!validation.valid) {
         this._showUploadWarning(validation.error, fileDrop);
-        return false;
+        continue;
       }
 
-      // Проверка на дубликаты
-      const isDuplicate = this.currentFiles.some(f => f.name === file.name && f.size === file.size);
-      if (isDuplicate) {
+      // Проверка на дубликаты (среди уже загруженных и новых в текущей партии)
+      const fileKey = `${file.name}:${file.size}`;
+      if (existingFileNames.has(fileKey)) {
         this._showUploadWarning(`Файл "${file.name}" уже выбран`, fileDrop);
-        return false;
+        continue;
       }
 
-      return true;
-    });
+      existingFileNames.add(fileKey);
+      validNewFiles.push(file);
+    }
 
     // Добавляем новые файлы к существующим
-    this.currentFiles = [...this.currentFiles, ...newFiles];
+    this.currentFiles = [...this.currentFiles, ...validNewFiles];
 
     // Ограничиваем количество файлов
     if (this.currentFiles.length > this.maxFiles) {
