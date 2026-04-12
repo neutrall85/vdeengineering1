@@ -98,11 +98,6 @@ class Application {
     };
     
     window.openModal = () => {
-      // Сначала загружаем форму в модальном окне если нужно
-      if (formManager && typeof formManager.initFileUploadOnModalOpen === 'function') {
-        formManager.initFileUploadOnModalOpen();
-      }
-      
       if (formManager && typeof formManager.openModal === 'function') {
         formManager.openModal();
       } else if (typeof modalManager !== 'undefined') {
