@@ -296,10 +296,8 @@ const ComponentLoader = {
     setActiveLink(activePage) {
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.classList.remove('active');
-            const href = link.getAttribute('href');
-            if (href === 'index.html' && activePage === 'index') {
-                link.classList.add('active');
-            } else if (href === activePage || href === `${activePage}.html`) {
+            if (link.getAttribute('href') === activePage || 
+                link.getAttribute('href') === `${activePage}.html`) {
                 link.classList.add('active');
             }
         });

@@ -21,7 +21,7 @@ class Application {
           loadNavbar: true, 
           loadFooter: true, 
           loadModal: true,
-          activePage: currentPage === 'index' ? 'index' : currentPage
+          activePage: currentPage === 'index' ? '' : currentPage
         });
         console.log('ComponentLoader initialized');
       }
@@ -30,7 +30,7 @@ class Application {
       this._setCurrentYear();
       
       // Задержка чтобы DOM обновился после вставки компонентов навигации, футера и модального окна
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 50));
       
       // Повторная регистрация модулей после загрузки компонентов
       this._registerModules();
