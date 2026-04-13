@@ -71,6 +71,14 @@ const ComponentLoader = {
       </ul>
     </div>
   </div>
+  <div class="footer-legal">
+    <ul>
+      <li><a href="#terms">Условия обслуживания</a></li>
+      <li><a href="#privacy">Политика конфиденциальности</a></li>
+      <li><a href="#personal-data">Политика обработки персональных данных</a></li>
+      <li><a href="#cookies">Политика в отношении файлов cookie</a></li>
+    </ul>
+  </div>
   <div class="footer-bottom">
     <p>© <span id="currentYear"></span> ООО "Волга-Днепр Инжиниринг". Все права защищены.</p>
   </div>

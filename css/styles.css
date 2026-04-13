@@ -345,19 +345,19 @@ body:has(.details-modal-overlay.active) {
 
 @media (max-width: 1048px) {
   .hero {
-    text-align: center;
+    text-align: left;
   }
   .hero-text {
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
   }
   .hero-text p {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
   .hero-buttons,
   .hero-stats {
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 
@@ -929,6 +929,35 @@ body:has(.details-modal-overlay.active) {
 }
 
 .footer-links a:hover {
+  color: var(--vd-light-blue);
+}
+
+.footer-legal {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-legal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-legal a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  transition: color var(--duration-normal) var(--ease-smooth);
+}
+
+.footer-legal a:hover {
   color: var(--vd-light-blue);
 }
 
@@ -2436,7 +2465,7 @@ body:has(.details-modal-overlay.active) {
 
   .hero-content {
     left: 0;
-    text-align: center;
+    text-align: left;
   }
 
   .hero-text p {
@@ -2444,11 +2473,11 @@ body:has(.details-modal-overlay.active) {
   }
 
   .hero-buttons {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .hero-stats {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .services-grid {
@@ -2540,6 +2569,12 @@ body:has(.details-modal-overlay.active) {
 
   .footer-brand .logo {
     justify-content: flex-start;
+  }
+
+  .footer-legal ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .modal-container {
