@@ -9,7 +9,7 @@ class FormManager {
     this.rateLimiter = rateLimiter;
     this.validator = validator;
     this.currentFiles = [];
-    this.maxFiles = 5;
+    this.maxFiles = 10;
     this.maxFileSize = 10 * 1024 * 1024; // 10MB
   }
 

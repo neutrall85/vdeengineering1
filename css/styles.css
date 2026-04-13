@@ -2534,13 +2534,17 @@ body:has(.details-modal-overlay.active) {
   }
 
   .footer-content {
-    grid-template-columns: 1fr;
-    text-align: left;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
   }
 
-  .footer-brand .logo {
+  /* .footer-brand .logo {
     justify-content: flex-start;
   }
+
+  .footer-brand p {
+    text-align: left;
+  } */
 
   .modal-container {
     max-height: 95vh;
