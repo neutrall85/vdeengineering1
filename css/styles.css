@@ -6,7 +6,6 @@
 
 :root {
   /* Основные цвета */
-  --vd-blue: #004E96;
   --vd-orange: #FF6600;
   --vd-orange-light: #FF8533;
   --vd: #004E96;
@@ -22,7 +21,6 @@
   --bg-gradient-start: #f8f9fa;
   --hero-overlay: rgba(0, 78, 150, 0.05);
   --error-bg: #FEF2F2;
-  --vd-blue-rgb: 0, 78, 150;
   --vd-orange-rgb: 255, 102, 0;
 
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1110,7 +1108,7 @@ body:has(.details-modal-overlay.active) {
   right: -20px;
   width: 44px;
   height: 44px;
-  background: var(--error-color);
+  background: var(--vd-light-gray);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border: none;
   border-radius: 50%;
@@ -1124,7 +1122,7 @@ body:has(.details-modal-overlay.active) {
 
 .modal-close:hover {
   transform: rotate(90deg) scale(1.05);
-  background: #B91C1C;
+  background: var(--vd);
 }
 .modal-close:hover svg {
   fill: white;
@@ -2627,7 +2625,7 @@ body:has(.details-modal-overlay.active) {
     right: 0.25rem;
     width: 28px;
     height: 28px;
-    background: var(--error-color);
+    background: var(--vd-light-gray);
     box-shadow: none;
   }
 
