@@ -718,6 +718,8 @@ body:has(.details-modal-overlay.active) {
 .partners-slider {
   position: relative;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   overflow: hidden;
   padding: 2rem 0;
 }
@@ -876,7 +878,7 @@ body:has(.details-modal-overlay.active) {
 }
 
 .commercial-offer-container h2 {
-  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-size: clamp(1.3rem, 3vw, 2rem);
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--vd);
