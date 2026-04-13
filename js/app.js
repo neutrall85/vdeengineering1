@@ -173,47 +173,35 @@ class Application {
 
   _initFloatingCTA() {
     const floatingBtn = document.querySelector('.floating-cta-btn');
-    const commercialOfferTitle = document.querySelector('#commercial-offer-title');
+    // Поддержка разных селекторов для заголовка contact-cta-title
+    const contactCtaTitle = document.querySelector('.contact-cta-title');
 
     if (!floatingBtn) return;
-
-    let hasPassedTitle = false;
 
     const toggleButton = () => {
       const scrollY = window.scrollY;
 
       if (scrollY <= 350) {
         floatingBtn.classList.remove('visible');
-        hasPassedTitle = false;
         return;
       }
 
-      if (!commercialOfferTitle) {
+      if (!contactCtaTitle) {
         floatingBtn.classList.add('visible');
         return;
       }
 
-      const rect = commercialOfferTitle.getBoundingClientRect();
+      const rect = contactCtaTitle.getBoundingClientRect();
       const isTitleVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      const isTitleAbove = rect.bottom <= 0; // Заголовок ушел выше экрана
 
+      // Скрываем кнопку, когда заголовок виден на экране
       if (isTitleVisible) {
         floatingBtn.classList.remove('visible');
-        hasPassedTitle = false;
         return;
       }
 
-      if (isTitleAbove) {
-        hasPassedTitle = true;
-        floatingBtn.classList.remove('visible'); // Не показываем кнопку после заголовка
-        return;
-      }
-
-      if (!hasPassedTitle) {
-        floatingBtn.classList.add('visible');
-      } else {
-        floatingBtn.classList.remove('visible');
-      }
+      // Показываем кнопку, когда заголовок ушел выше
+      floatingBtn.classList.add('visible');
     };
 
     toggleButton();
