@@ -2540,13 +2540,13 @@ body:has(.details-modal-overlay.active) {
   }
 
   .floating-cta-btn {
-    bottom: 2rem;
+    bottom: 5rem;
     right: 1rem;
     padding: 0.8rem 1.2rem;
   }
 
   .scroll-to-top {
-    bottom: 2rem;
+    bottom: 5rem;
     left: 1rem;
   }
 
