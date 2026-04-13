@@ -67,12 +67,10 @@ class AnimationManager {
     this.counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Для анимации запускаем только если значение ещё не установлено или равно 0
+          // Для анимации сбрасываем к 0 и запускаем анимацию
           const element = entry.target;
           const target = parseInt(element.getAttribute('data-target'), 10);
-          const currentValue = parseInt(element.textContent, 10);
-          
-          if (target && !isNaN(target) && (!currentValue || currentValue === 0)) {
+          if (target && !isNaN(target)) {
             element.textContent = '0';
             this._animateCounter(element);
           }
