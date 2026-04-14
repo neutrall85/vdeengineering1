@@ -2981,6 +2981,12 @@ body.app-ready > footer:not(.footer) {
   margin-bottom: 20px;
 }
 
+.doc-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .btn-doc {
   display: inline-flex;
   align-items: center;
@@ -2991,17 +2997,48 @@ body.app-ready > footer:not(.footer) {
   border-radius: 6px;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  border: none;
 }
 
 .btn-doc:hover {
   background: var(--vd-dark-blue);
+  transform: translateY(-2px);
 }
 
 .btn-doc svg {
   width: 20px;
   height: 20px;
   fill: currentColor;
+}
+
+.btn-view {
+  background: var(--vd);
+}
+
+.btn-view:hover {
+  background: var(--vd-dark);
+}
+
+.btn-download {
+  background: var(--vd-orange);
+}
+
+.btn-download:hover {
+  background: var(--vd-orange-light);
+}
+
+/* Стили для doc-card как ссылки */
+a.doc-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+a.doc-card:hover .doc-title,
+a.doc-card:hover .doc-description {
+  color: var(--vd);
 }
 
 /* Responsive styles for docs page */
