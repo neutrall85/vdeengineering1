@@ -29,6 +29,9 @@ class Application {
         // Задержка чтобы DOM обновился после вставки компонентов навигации, футера и модального окна
         await new Promise(resolve => setTimeout(resolve, 50));
       }
+      
+      // Скрываем лоадер и показываем контент после загрузки компонентов
+      this._hidePageLoader();
 
       this._initGlobalHelpers();
       this._setCurrentYear();
@@ -169,6 +172,23 @@ class Application {
         if (typeof modalManager !== 'undefined') modalManager.open('details');
       }
     };
+  }
+
+  _hidePageLoader() {
+    const loader = document.getElementById('pageLoader');
+    if (loader) {
+      // Добавляем класс app-ready на body для показа контента
+      document.body.classList.add('app-ready');
+      
+      // Скрываем лоадер с небольшой задержкой для плавного перехода
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        // Полностью удаляем лоадер из DOM после завершения анимации
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 300);
+      }, 100);
+    }
   }
 
   _setCurrentYear() {
