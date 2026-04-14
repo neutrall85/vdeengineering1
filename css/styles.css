@@ -3096,3 +3096,362 @@ body.app-ready > footer:not(.footer) {
     height: 160px;
   }
 }
+
+/* ==================== ABOUT PAGE STYLES ==================== */
+/* Основная секция о компании */
+.about-main-section {
+  padding: clamp(60px, 10vh, 100px) 5%;
+  background: white;
+}
+
+.about-content-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--vd);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.about-text {
+  color: var(--metallic);
+  line-height: 1.8;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  margin-bottom: 1.5rem;
+}
+
+.about-image-placeholder {
+  background: linear-gradient(135deg, var(--vd-light-blue) 0%, var(--vd-light-gray) 100%);
+  border-radius: 20px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 50px rgba(0, 78, 150, 0.1);
+  transition: transform var(--duration-slow) var(--ease-smooth), box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.about-image-placeholder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(0, 78, 150, 0.15);
+}
+
+.placeholder-icon {
+  width: 80px;
+  height: 80px;
+  color: var(--vd);
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+.placeholder-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder-text {
+  color: var(--metallic);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Секция направлений деятельности */
+.directions-section {
+  padding: clamp(60px, 10vh, 100px) 5%;
+  background: var(--vd-light-gray);
+}
+
+.directions-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.direction-card {
+  background: white;
+  border-radius: 20px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  transition: all var(--duration-normal) var(--ease-elastic);
+  position: relative;
+  overflow: hidden;
+}
+
+.direction-card-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.direction-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0, 78, 150, 0.15);
+}
+
+.direction-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--vd), var(--vd-orange));
+  transform: scaleX(0);
+  transition: transform var(--duration-normal) var(--ease-smooth);
+}
+
+.direction-card:hover::before {
+  transform: scaleX(1);
+}
+
+.direction-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: var(--vd-light-blue);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all var(--duration-normal) var(--ease-bounce);
+}
+
+.direction-card:hover .direction-icon-wrapper {
+  background: var(--vd);
+  transform: scale(1.05) rotate(5deg);
+}
+
+.direction-icon {
+  width: 35px;
+  height: 35px;
+  fill: var(--vd);
+  transition: fill var(--duration-normal) var(--ease-smooth);
+}
+
+.direction-card:hover .direction-icon {
+  fill: white;
+}
+
+.direction-title {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: 700;
+  color: var(--vd);
+  margin-bottom: 1rem;
+}
+
+.direction-text {
+  color: var(--metallic);
+  line-height: 1.7;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+}
+
+/* Секция с фактами и цифрами */
+.facts-section {
+  padding: clamp(60px, 10vh, 100px) 5%;
+  background: white;
+}
+
+.facts-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.fact-item {
+  background: white;
+  border-radius: 20px;
+  padding: clamp(2rem, 4vw, 2.5rem);
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-elastic);
+  border: 1px solid var(--border-color);
+}
+
+.fact-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.fact-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0, 78, 150, 0.12);
+  border-color: var(--vd);
+}
+
+.fact-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--vd-orange);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.fact-label {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.fact-desc {
+  color: var(--metallic);
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.6;
+}
+
+/* Секция ценностей */
+.values-section {
+  padding: clamp(60px, 10vh, 100px) 5%;
+  background: var(--vd-light-gray);
+}
+
+.values-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.values-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--vd);
+  margin-bottom: 2rem;
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.value-item {
+  display: flex;
+  gap: 1.5rem;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.value-item-shadow {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.value-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 15px 35px rgba(0, 78, 150, 0.12);
+}
+
+.value-icon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--vd-light-blue);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-normal) var(--ease-bounce);
+}
+
+.value-item:hover .value-icon {
+  background: var(--vd-orange);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.value-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--vd);
+  transition: fill var(--duration-normal) var(--ease-smooth);
+}
+
+.value-item:hover .value-icon svg {
+  fill: white;
+}
+
+.value-content {
+  flex: 1;
+}
+
+.value-heading {
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  color: var(--vd);
+  margin-bottom: 0.75rem;
+}
+
+.value-description {
+  color: var(--metallic);
+  line-height: 1.7;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+}
+
+.values-image-block .about-image-placeholder {
+  height: 500px;
+}
+
+/* Адаптивность для страницы about */
+@media (max-width: 1096px) {
+  .about-content-grid,
+  .values-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .values-image-block {
+    order: -1;
+  }
+  
+  .values-image-block .about-image-placeholder {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-main-section,
+  .directions-section,
+  .facts-section,
+  .values-section {
+    padding: clamp(40px, 8vh, 60px) 5%;
+  }
+  
+  .about-content-grid,
+  .values-content {
+    gap: 2rem;
+  }
+  
+  .about-image-placeholder,
+  .values-image-block .about-image-placeholder {
+    height: 300px;
+  }
+  
+  .directions-grid,
+  .facts-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .value-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .value-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .value-icon {
+    margin: 0 auto;
+  }
+}
