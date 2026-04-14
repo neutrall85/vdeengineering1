@@ -10,6 +10,7 @@
   --vd-orange-light: #FF8533;
   --vd: #004E96;
   --vd-dark: #003366;
+  --vd-blue: #2962FF;
   --vd-light-blue: #E6F0FA;
   --vd-light-gray: #F8F9FA;
   --text-dark: #1F2937;
@@ -2784,8 +2785,13 @@ body.app-ready > footer:not(.footer) {
 .btn-primary-inline:hover { background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); box-shadow: 0 12px 35px rgba(0, 51, 160, 0.5); transform: translateY(-3px); }
 .btn-secondary-inline { margin-top: 1rem; display: inline-block; }
 .about-preview-inline { padding: 50px 5%; background: var(--vd-light-gray); }
-.about-content-inline { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-.about-title-inline { font-size: 1.75rem; font-weight: 700; color: var(--vd); margin-bottom: 1rem; }
+.about-content-inline { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.about-title-inline { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--vd); margin-bottom: 1.5rem; line-height: 1.3; }
+.about-text p { color: var(--metallic); line-height: 1.7; margin-bottom: 1.25rem; font-size: clamp(0.95rem, 1.1vw, 1.05rem); }
+.about-image-placeholder { background: linear-gradient(135deg, var(--vd-light-blue) 0%, #f0f4f8 100%); border-radius: 20px; padding: 3rem 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0, 78, 150, 0.08); border: 2px dashed rgba(0, 78, 150, 0.15); }
+.placeholder-icon { width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--vd); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.placeholder-icon svg { width: 40px; height: 40px; fill: white; }
+.placeholder-text { color: var(--vd); font-weight: 600; font-size: 1rem; display: block; }
 .news-preview-inline { padding: 50px 5%; background: white; }
 .news-grid-inline { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
 .text-center-mt2 { text-align: center; margin-top: 2rem; }
@@ -3310,6 +3316,12 @@ body.app-ready > footer:not(.footer) {
   align-items: center;
 }
 
+.mission-content-center {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .mission-image-block {
   position: relative;
 }
@@ -3337,13 +3349,13 @@ body.app-ready > footer:not(.footer) {
 .mission-text-highlight {
   font-size: clamp(1.05rem, 1.2vw, 1.15rem);
   line-height: 1.7;
-  color: var(--vd-blue);
+  color: var(--vd);
   font-weight: 600;
-  padding: 1.25rem;
-  background: rgba(41, 98, 255, 0.05);
-  border-left: 3px solid var(--vd-blue);
-  border-radius: 8px;
+  padding: 2rem 2.5rem;
+  background: var(--vd-light-blue);
+  border-radius: 12px;
   margin-top: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 78, 150, 0.08);
 }
 
 /* Секция ценностей */
@@ -3470,6 +3482,11 @@ body.app-ready > footer:not(.footer) {
   .about-content-grid,
   .mission-content-grid,
   .values-content {
+    gap: 2rem;
+  }
+  
+  .about-content-inline {
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
   
