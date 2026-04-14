@@ -1,1 +1,67 @@
-Nothing should be ignored since only JavaScript source files were modified and no build artifacts, dependencies, or temporary files are present in the changes.
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
+build/
+target/
+
+# Dependencies
+.venv/
+venv/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+.env.*
+
+# Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Python specific
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.gitattributes
+.next
+.vercel
+```
