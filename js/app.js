@@ -452,7 +452,12 @@ function initApp() {
     console.error('ModalManager not found!');
   }
   
-  // 4. Запуск основного приложения
+  // 4. Инициализация DocPreviewManager для страницы документов
+  if (typeof DocPreviewManager !== 'undefined') {
+    DocPreviewManager.init();
+  }
+  
+  // 5. Запуск основного приложения
   const app = new Application();
   app.init();
 }
