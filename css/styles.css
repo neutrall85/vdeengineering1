@@ -184,22 +184,57 @@ body.app-ready > footer:not(.footer) {
     font-size: 0.85rem;
     margin-top: 18px;
   }
-}
 
-/* Адаптация для мобильных устройств */
-@media (max-width: 550px) {
-  .orbit-container {
-    width: 100px;
-    height: 100px;
+  .modal-overlay {
+    overflow: auto;
+    align-items: flex-start;
+    padding: 1rem 0;
   }
-  .plane-icon {
+  
+  .modal-container {
+    margin-top: 1rem;
+    max-width: calc(100% - 2rem);
+    max-height: calc(95vh - 2rem);
+    overflow-y: auto;
+  }
+  
+  .modal-close {
+    top: 0.25rem;
+    right: 0.25rem;
     width: 28px;
     height: 28px;
-    top: -14px;
+    background: var(--vd-light-gray);
+    box-shadow: none;
   }
-  .loader-text {
-    font-size: 0.9rem;
-    margin-top: 24px;
+
+  .modal-close svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-header {
+    padding: 1rem 1rem 0.5rem;
+    padding-right: 38px;
+  }
+  
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  
+  .modal-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+    max-height: none;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px; /* Предотвращает зум на iOS */
+    padding: 0.7rem 0.9rem;
   }
 }
 
@@ -2697,60 +2732,6 @@ body.app-ready > footer:not(.footer) {
   }
 }
 
-@media (max-width: 550px) {
-  .modal-overlay {
-    overflow: auto;
-    align-items: flex-start;
-    padding: 1rem 0;
-  }
-  
-  .modal-container {
-    margin-top: 1rem;
-    max-width: calc(100% - 2rem);
-    max-height: calc(95vh - 2rem);
-    overflow-y: auto;
-  }
-  
-  .modal-close {
-    top: 0.25rem;
-    right: 0.25rem;
-    width: 28px;
-    height: 28px;
-    background: var(--vd-light-gray);
-    box-shadow: none;
-  }
-
-  .modal-close svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .modal-header {
-    padding: 1rem 1rem 0.5rem;
-    padding-right: 38px;
-  }
-  
-  .modal-title {
-    font-size: 1.1rem;
-  }
-  
-  .modal-subtitle {
-    font-size: 0.8rem;
-  }
-  
-  .modal-body {
-    padding: 1rem;
-    max-height: none;
-  }
-  
-  .form-input,
-  .form-select,
-  .form-textarea {
-    font-size: 16px; /* Предотвращает зум на iOS */
-    padding: 0.7rem 0.9rem;
-  }
-}
-
 @media (max-width: 480px) {
   :root {
     font-size: 13px;
@@ -2799,23 +2780,15 @@ body.app-ready > footer:not(.footer) {
 /* ==================== КЛАССЫ ДЛЯ УСТРАНЕНИЯ ИНЛАЙНОВ ==================== */
 .service-card-inline { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; }
 .service-icon-inline { width: 70px; height: 70px; background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
-.services-cta-inline { text-align: center; margin-top: 2rem; }
 .btn-primary-inline { background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); box-shadow: 0 10px 30px rgba(0, 51, 160, 0.4); }
 .btn-primary-inline:hover { background: linear-gradient(135deg, var(--vd), var(--vd-light-blue)); box-shadow: 0 12px 35px rgba(0, 51, 160, 0.5); transform: translateY(-3px); }
+.btn-secondary-inline { margin-top: 1rem; display: inline-block; }
 .about-preview-inline { padding: 50px 5%; background: var(--vd-light-gray); }
 .about-content-inline { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-.about-image-inline { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); }
 .about-title-inline { font-size: 1.75rem; font-weight: 700; color: var(--vd); margin-bottom: 1rem; }
-.btn-secondary-inline { margin-top: 1rem; display: inline-block; }
 .news-preview-inline { padding: 50px 5%; background: white; }
 .news-grid-inline { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
 .text-center-mt2 { text-align: center; margin-top: 2rem; }
-.map-container-inline { border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); cursor: pointer; }
-.iframe-borderless { border: 0; display: block; }
-.flex-gap10 { display: flex; gap: 10px; }
-.flex-1 { flex: 1; }
-.width-100px { width: 100px; }
-.form-file-limit-warning-hidden { display: none; }
 .news-card-preview-inline { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease; cursor: pointer; }
 .news-img-container { height: 200px; overflow: hidden; }
 .news-img-cover { width: 100%; height: 100%; object-fit: cover; }
@@ -2824,6 +2797,12 @@ body.app-ready > footer:not(.footer) {
 .news-title-h3 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--vd); }
 .news-excerpt-p { color: var(--metallic); line-height: 1.5; font-size: 0.9rem; }
 .news-link-btn { background: none; border: none; color: var(--vd); text-decoration: none; font-weight: 600; margin-top: 1rem; display: inline-block; cursor: pointer; padding: 0; }
+.map-container-inline { border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); cursor: pointer; }
+.iframe-borderless { border: 0; display: block; }
+.flex-gap10 { display: flex; gap: 10px; }
+.flex-1 { flex: 1; }
+.width-100px { width: 100px; }
+.form-file-limit-warning-hidden { display: none; }
 .display-none { display: none; }
 
 /* ==================== УТИЛИТАРНЫЕ КЛАССЫ ДЛЯ СТРАНИЦ ==================== */
@@ -2849,7 +2828,6 @@ body.app-ready > footer:not(.footer) {
 .services-full-padding { padding: 60px 5%; }
 .services-grid-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
 .service-card-box { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; }
-.service-card-static { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .service-title-h3 { font-size: 1.3rem; color: var(--vd); margin-bottom: 1rem; }
 .service-desc-p { color: var(--metallic); line-height: 1.6; margin-bottom: 1.5rem; }
 .btn-secondary-sm { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
