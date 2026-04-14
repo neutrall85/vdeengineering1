@@ -42,7 +42,6 @@
   <script src="js/ui/NewsRenderer.js"></script>
   <script src="js/ui/NewsManager.js"></script>
   <script src="js/ui/ComponentLoader.js"></script>
-  <script src="js/ui/DocPreviewManager.js"></script>
   <script src="js/data/newsData.js"></script>
   <script src="js/app.js"></script>
 </head>
@@ -154,8 +153,26 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  // Превью PDF теперь управляется через DocPreviewManager (js/ui/DocPreviewManager.js)
-  // Дополнительный код не требуется - DRY принцип
+  // Управление превью PDF - простая инициализация после загрузки DOM
+  document.addEventListener('DOMContentLoaded', function() {
+    const frames = document.querySelectorAll('.pdf-frame');
+    
+    frames.forEach(frame => {
+      frame.addEventListener('load', () => {
+        frame.classList.add('loaded');
+      });
+      
+      // Показываем placeholder если iframe не загрузился
+      setTimeout(() => {
+        if (!frame.classList.contains('loaded')) {
+          const placeholder = frame.nextElementSibling;
+          if (placeholder && placeholder.classList.contains('pdf-preview-placeholder')) {
+            placeholder.style.display = 'flex';
+          }
+        }
+      }, 3000);
+    });
+  });
 </script>
 
 </body>

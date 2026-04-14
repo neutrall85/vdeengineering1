@@ -6,14 +6,16 @@ __pycache__/
 *.obj
 dist/
 build/
-*.log
-*.tmp
-*.swp
 
 # Dependencies
 .venv/
 venv/
 node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
 # Environment
 .env
@@ -24,23 +26,6 @@ node_modules/
 .vscode/
 .idea/
 
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# Python specific
-*.pyc
-__pycache__/
-*.pyo
-*.pyd
-.Python
-*.so
-.Python
-*.egg-info/
-.eggs/
-
-# System files
-.DS_Store
-Thumbs.db
+# Original rules preserved
+*.log
 ```
