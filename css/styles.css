@@ -3081,18 +3081,6 @@ body.app-ready > footer:not(.footer) {
   background: var(--vd-orange-light);
 }
 
-/* Стили для doc-card как контейнера */
-.doc-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.doc-card:hover .doc-title,
-.doc-card:hover .doc-description {
-  color: var(--vd);
-}
-
 /* Responsive styles for docs page */
 @media (max-width: 768px) {
   .page-title {
