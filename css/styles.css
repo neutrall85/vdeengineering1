@@ -75,7 +75,7 @@ body.app-ready > footer:not(.footer) {
   transition: opacity 0.2s ease-in-out;
 }
 
-/* Лоадер для страницы */
+/* ==================== ЛОАДЕР С САМОЛЁТИКОМ ==================== */
 .page-loader {
   position: fixed;
   top: 0;
@@ -100,26 +100,103 @@ body.app-ready > footer:not(.footer) {
   text-align: center;
 }
 
-.loader-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #ffffff;
+/* Контейнер для орбитальной анимации */
+.orbit-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+/* Круговая траектория */
+.orbit-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 20px;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+/* Самолётик, летящий по окружности */
+.plane-on-orbit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: orbitMove 2.2s linear infinite;
+  transform-origin: center center;
 }
 
+/* Иконка самолёта (стиль из service-icon) */
+.plane-icon {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+
+.plane-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: slightFloat 1.4s ease-in-out infinite;
+}
+
+/* Анимация движения по окружности */
+@keyframes orbitMove {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Лёгкое покачивание самолётика */
+@keyframes slightFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Текст под лоадером */
 .loader-text {
+  margin-top: 32px;
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: 0.5px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 550px) {
+  .orbit-container {
+    width: 100px;
+    height: 100px;
+  }
+  .plane-icon {
+    width: 28px;
+    height: 28px;
+    top: -14px;
+  }
+  .loader-text {
+    font-size: 0.9rem;
+    margin-top: 24px;
+  }
 }
 
 .navbar {
