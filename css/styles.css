@@ -3334,9 +3334,10 @@ body.app-ready > footer:not(.footer) {
 .mission-title {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--vd);
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  text-align: center;
 }
 
 .mission-text {
