@@ -255,7 +255,7 @@ const ComponentLoader = {
   </div>
 </div>`,
 
-    // Универсальное модальное окно для заявок (используется для кнопок "Откликнуться" и "Оставить заявку")
+    // Универсальное модальное окно для заявок (используется для кнопок "Откликнуться" и "Отправить заявку")
     universalApplicationModal: `
 <!-- Universal Application Modal -->
 <div class="modal-overlay" id="universalApplicationModalOverlay" role="dialog" aria-modal="true" aria-labelledby="universalApplicationModalTitle">
@@ -573,7 +573,7 @@ const ComponentLoader = {
 
     /**
      * Инициализация универсального модального окна заявок
-     * @param {string} mode - режим открытия ('vacancy' для кнопок "Откликнуться", 'application' для кнопки "Оставить заявку")
+     * @param {string} mode - режим открытия ('vacancy' для кнопок "Откликнуться", 'application' для кнопки "Отправить заявку")
      */
     initUniversalApplicationModal() {
         // Глобальные функции для открытия/закрытия универсального модального окна
@@ -587,8 +587,8 @@ const ComponentLoader = {
             const successTitle = document.getElementById('universalSuccessTitle');
             
             if (mode === 'application') {
-                // Режим для кнопки "Оставить заявку"
-                if (modalTitle) modalTitle.textContent = 'Оставить заявку';
+                // Режим для кнопки "Отправить заявку"
+                if (modalTitle) modalTitle.textContent = 'Отправить заявку';
                 if (submitBtnText) submitBtnText.textContent = 'Отправить информацию';
                 if (successTitle) successTitle.textContent = 'Данные отправлены!';
             } else {
