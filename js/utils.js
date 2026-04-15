@@ -48,7 +48,6 @@ const Utils = (function() {
     getElement(id) {
       const element = document.getElementById(id);
       if (!element && window.CONFIG?.DEBUG) {
-        console.warn(`Element with id "${id}" not found`);
       }
       return element || null;
     },
@@ -271,7 +270,6 @@ const Utils = (function() {
       }
       
       if (file.type && !config.ALLOWED_MIME_TYPES.includes(file.type)) {
-        console.warn('Необычный MIME-тип:', file.type);
       }
       
       return { valid: true };

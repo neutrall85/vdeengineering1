@@ -1,0 +1,7 @@
+# security.txt file for security vulnerability reporting
+Contact: mailto:security@vdengineering.ru
+Expires: 2026-12-31T23:59:59.000Z
+Encryption: https://vdengineering.ru/.well-known/pgp-key.txt
+Preferred-Languages: ru, en
+Canonical: https://vdengineering.ru/.well-known/security.txt
+Policy: https://vdengineering.ru/SECURITY.md
