@@ -304,7 +304,7 @@ const ComponentLoader = {
         <div class="form-group">
           <label class="form-label">Резюме (файл) <span class="required">*</span></label>
           <div class="form-file" id="vacanciesFileDrop">
-            <input type="file" id="vacanciesFileAttachment" name="fileAttachment" accept=".pdf,.doc,.docx,.xls,.xlsx" aria-label="Загрузить резюме" multiple>
+            <input type="file" id="vacanciesFileAttachment" name="fileAttachment" accept=".pdf,.doc,.docx,.xls,.xlsx" aria-label="Загрузить резюме" required multiple>
             <div class="form-file-icon">
               <svg viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
             </div>
@@ -315,7 +315,6 @@ const ComponentLoader = {
               <p>⚠️ Превышен лимит: максимум 5 файлов или 10MB на файл</p>
             </div>
           </div>
-          <p class="error-message" id="vacanciesFileError">Пожалуйста, прикрепите резюме</p>
         </div>
         <div class="form-agreement form-agreement-checkbox">
           <label class="checkbox-label">
@@ -606,14 +605,40 @@ const ComponentLoader = {
             document.body.style.paddingRight = '';
         };
 
-        // Обработчик чекбокса согласия
+        // Обработчик чекбокса согласия и валидации формы
         const consentCheckbox = document.getElementById('vacanciesConsent');
         const submitBtn = document.getElementById('vacanciesSubmitBtn');
+        const fullNameInput = document.getElementById('vacanciesFullName');
+        const phoneInput = document.getElementById('vacanciesPhone');
+        const emailInput = document.getElementById('vacanciesEmail');
+        const aboutInput = document.getElementById('vacanciesAbout');
+        const fileInput = document.getElementById('vacanciesFileAttachment');
+        
+        function checkFormValidity() {
+            if (!consentCheckbox || !consentCheckbox.checked) {
+                submitBtn.disabled = true;
+                return;
+            }
+            
+            const isFullNameValid = fullNameInput && fullNameInput.value.trim().length >= 2;
+            const isPhoneValid = phoneInput && phoneInput.value.trim().length >= 10;
+            const isEmailValid = emailInput && emailInput.value.includes('@') && emailInput.value.includes('.');
+            const isAboutValid = aboutInput && aboutInput.value.trim().length >= 10;
+            const isFileValid = fileInput && fileInput.files && fileInput.files.length > 0;
+            
+            submitBtn.disabled = !(isFullNameValid && isPhoneValid && isEmailValid && isAboutValid && isFileValid);
+        }
         
         if (consentCheckbox && submitBtn) {
-            consentCheckbox.addEventListener('change', () => {
-                submitBtn.disabled = !consentCheckbox.checked;
-            });
+            consentCheckbox.addEventListener('change', checkFormValidity);
+            if (fullNameInput) fullNameInput.addEventListener('input', checkFormValidity);
+            if (phoneInput) phoneInput.addEventListener('input', checkFormValidity);
+            if (emailInput) emailInput.addEventListener('input', checkFormValidity);
+            if (aboutInput) aboutInput.addEventListener('input', checkFormValidity);
+            if (fileInput) fileInput.addEventListener('change', checkFormValidity);
+            
+            // Initial check
+            checkFormValidity();
         }
 
         // Обработчик отправки формы
@@ -628,6 +653,48 @@ const ComponentLoader = {
                     if (consentError) consentError.classList.add('show');
                     return;
                 }
+                
+                // Проверка обязательных полей
+                let isValid = true;
+                
+                if (!fullNameInput || fullNameInput.value.trim().length < 2) {
+                    const error = document.getElementById('vacanciesFullNameError');
+                    if (error) error.classList.add('show');
+                    isValid = false;
+                }
+                
+                if (!phoneInput || phoneInput.value.trim().length < 10) {
+                    const error = document.getElementById('vacanciesPhoneError');
+                    if (error) error.classList.add('show');
+                    isValid = false;
+                }
+                
+                if (!emailInput || !emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+                    const error = document.getElementById('vacanciesEmailError');
+                    if (error) error.classList.add('show');
+                    isValid = false;
+                }
+                
+                if (!aboutInput || aboutInput.value.trim().length < 10) {
+                    const error = document.getElementById('vacanciesAboutError');
+                    if (error) error.classList.add('show');
+                    isValid = false;
+                }
+                
+                if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                    const fileError = document.createElement('p');
+                    fileError.className = 'error-message show';
+                    fileError.id = 'vacanciesFileError';
+                    fileError.textContent = 'Пожалуйста, прикрепите резюме';
+                    
+                    const existingError = document.getElementById('vacanciesFileError');
+                    if (!existingError && fileInput) {
+                        fileInput.parentElement.appendChild(fileError);
+                    }
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
 
                 // Здесь будет логика отправки формы
                 console.log('Отправка отклика на вакансию...');
