@@ -186,3 +186,4 @@ class NavigationManager {
 const navigationManager = new NavigationManager();
 
 window.NavigationManager = NavigationManager;
+window.scrollToTop = () => navigationManager.scrollToTop();

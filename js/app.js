@@ -339,9 +339,15 @@ class Application {
           <h2>Ошибка загрузки приложения</h2>
           <p>Произошла ошибка при инициализации сайта. Пожалуйста, обновите страницу.</p>
           <p style="font-size:0.85rem;margin-top:0.5rem;">${Utils.DOM.escapeHtml(error.message)}</p>
-          <button onclick="window.location.reload()" style="margin-top:0.5rem;padding:0.5rem 1rem;cursor:pointer;">Обновить страницу</button>
+          <button id="reloadErrorBtn" style="margin-top:0.5rem;padding:0.5rem 1rem;cursor:pointer;">Обновить страницу</button>
         </div>
       `;
+      const reloadBtn = document.getElementById('reloadErrorBtn');
+      if (reloadBtn) {
+        reloadBtn.addEventListener('click', function() {
+          window.location.reload();
+        });
+      }
     } else {
       console.error('Fatal error:', error);
       alert('Ошибка загрузки приложения: ' + error.message);
@@ -410,6 +416,7 @@ function initApp() {
       );
       formManager.init();
       window.formManager = formManager;
+      window.openModal = () => formManager.openModal();
       console.log('FormManager initialized');
     } catch (err) {
       console.error('FormManager initialization failed:', err);

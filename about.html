@@ -27,6 +27,7 @@
   <meta name="twitter:image" content="https://vdengineering.ru/assets/images/og-image.jpg">
   
   <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://yandex.ru https://mc.yandex.ru; script-src 'self' https://fonts.googleapis.com https://yandex.ru 'sha256-KqJHxPzXZ9vGnF8hN7YqQmLpW2xRtU5sV3wA1bC2dE4='; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src https://fonts.gstatic.com; connect-src 'self' https://api.volga-dnepr-engineering.ru https://yandex.ru; frame-src 'self' https://yandex.ru;">
   <meta name="X-Content-Type-Options" content="nosniff">
   <meta name="X-Frame-Options" content="SAMEORIGIN">
   <meta name="X-XSS-Protection" content="1; mode=block">
@@ -225,11 +226,11 @@
 <section class="contact-cta contact-cta-bg">
   <h2 class="contact-cta-title">Готовы к сотрудничеству?</h2>
   <p class="contact-cta-desc">Свяжитесь с нами для обсуждения вашего проекта</p>
-  <button class="btn-primary" onclick="window.openModal && window.openModal()">Запросить коммерческое предложение</button>
+  <button class="btn-primary" id="aboutRequestQuoteBtn">Запросить коммерческое предложение</button>
 </section>
 
 <!-- Футер и модальное окно загружаются через ComponentLoader -->
-<button class="scroll-to-top" id="scrollToTop" onclick="window.scrollToTop && window.scrollToTop()" aria-label="Наверх">
+<button class="scroll-to-top" id="scrollToTop" aria-label="Наверх">
   <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
 </button>
 </body>

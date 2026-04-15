@@ -143,7 +143,7 @@ const ComponentLoader = {
   </div>
 </footer>
 
-<button class="scroll-to-top" id="scrollToTop" onclick="window.scrollToTop && window.scrollToTop()" aria-label="Наверх">
+<button class="scroll-to-top" id="scrollToTop" aria-label="Наверх">
   <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
 </button>`,
 
@@ -152,7 +152,7 @@ const ComponentLoader = {
 <!-- Commercial Proposal Modal -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-container">
-    <button class="modal-close" onclick="window.closeModal && window.closeModal()" aria-label="Закрыть">
+    <button class="modal-close" id="modalCloseBtn" aria-label="Закрыть">
       <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
     <div class="modal-header">
@@ -260,7 +260,7 @@ const ComponentLoader = {
 <!-- Universal Application Modal -->
 <div class="modal-overlay" id="universalApplicationModalOverlay" role="dialog" aria-modal="true" aria-labelledby="universalApplicationModalTitle">
   <div class="modal-container">
-    <button class="modal-close" onclick="window.closeUniversalApplicationModal && window.closeUniversalApplicationModal()" aria-label="Закрыть">
+    <button class="modal-close" id="universalModalCloseBtn" aria-label="Закрыть">
       <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
     <div class="modal-header">
@@ -524,7 +524,7 @@ const ComponentLoader = {
             modalOverlay.setAttribute('aria-modal', 'true');
             modalOverlay.innerHTML = `
                 <div class="modal-container">
-                    <button class="modal-close" onclick="window.closePolicyModal && window.closePolicyModal()" aria-label="Закрыть">
+                    <button class="modal-close" id="policyModalCloseBtn" aria-label="Закрыть">
                         <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                     </button>
                     <div class="modal-header">
@@ -534,6 +534,18 @@ const ComponentLoader = {
                 </div>
             `;
             document.body.appendChild(modalOverlay);
+            
+            // Добавляем обработчик клика на кнопку закрытия
+            setTimeout(() => {
+              const closeBtn = document.getElementById('policyModalCloseBtn');
+              if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                  if (typeof window.closePolicyModal === 'function') {
+                    window.closePolicyModal();
+                  }
+                });
+              }
+            }, 0);
 
             // Закрытие по клику на overlay
             modalOverlay.addEventListener('click', (e) => {
@@ -543,9 +555,13 @@ const ComponentLoader = {
             });
         }
 
-        // Заполняем контент
+        // Заполняем контент с санитизацией
         document.getElementById('policyModalTitle').textContent = policy.title;
-        document.getElementById('policyModalContent').innerHTML = policy.content;
+        const sanitizer = window.Sanitizer || { sanitizeHtml: (html) => html };
+        document.getElementById('policyModalContent').innerHTML = sanitizer.sanitizeHtml(policy.content, {
+          allowedTags: ['h2', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'a'],
+          allowedAttributes: { 'a': ['href', 'target', 'rel'] }
+        });
 
         // Блокируем скролл
         document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
