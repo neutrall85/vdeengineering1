@@ -1861,9 +1861,19 @@ body.app-ready > footer:not(.footer) {
 
 .modal-image {
   width: 100%;
-  height: clamp(200px, 30vh, 300px);
+  height: clamp(200px, 30vh, 400px);
   object-fit: cover;
   display: block;
+  border-radius: 0;
+}
+
+/* Для новостного модального окна - изображение на всю ширину */
+#newsModalOverlay .modal-image {
+  width: 100%;
+  height: auto;
+  max-height: clamp(250px, 40vh, 500px);
+  object-fit: contain;
+  background: var(--vd-light-gray);
 }
 
 /* Специфичные стили для details-modal (узкий контейнер) */
@@ -2164,7 +2174,7 @@ body.app-ready > footer:not(.footer) {
 
 .news-card-image {
   position: relative;
-  min-height: 240px;
+  min-height: 200px;
   overflow: hidden;
   background: var(--vd-light-gray);
 }
@@ -2584,7 +2594,12 @@ body.app-ready > footer:not(.footer) {
   }
 
   .news-card-image {
-    min-height: 240px;
+    min-height: 200px;
+  }
+  
+  /* Адаптация модального окна новостей для планшетов */
+  #newsModalOverlay .modal-image {
+    max-height: clamp(200px, 35vh, 400px);
   }
 }
 
@@ -2731,6 +2746,12 @@ body.app-ready > footer:not(.footer) {
   .contact-form-container {
     padding: 1.5rem;
   }
+  
+  /* Адаптация изображения в модальном окне новостей для мобильных */
+  #newsModalOverlay .modal-image {
+    max-height: clamp(180px, 30vh, 300px);
+    object-fit: contain;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2776,6 +2797,11 @@ body.app-ready > footer:not(.footer) {
 
   .news-card-title {
     font-size: 1rem;
+  }
+  
+  /* Адаптация изображения в модальном окне новостей для маленьких экранов */
+  #newsModalOverlay .modal-image {
+    max-height: clamp(150px, 25vh, 250px);
   }
 }
 /* ==================== КЛАССЫ ДЛЯ УСТРАНЕНИЯ ИНЛАЙНОВ ==================== */
