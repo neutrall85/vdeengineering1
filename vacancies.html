@@ -27,6 +27,7 @@
   <meta name="twitter:image" content="https://vdengineering.ru/assets/images/og-image.jpg">
   
   <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://yandex.ru https://mc.yandex.ru; script-src 'self' https://fonts.googleapis.com https://yandex.ru; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src https://fonts.gstatic.com; connect-src 'self' https://api.volga-dnepr-engineering.ru https://yandex.ru; frame-src 'self' https://yandex.ru;">
   <meta name="X-Content-Type-Options" content="nosniff">
   <meta name="X-Frame-Options" content="SAMEORIGIN">
   <meta name="X-XSS-Protection" content="1; mode=block">
@@ -181,7 +182,7 @@
         </div>
       </div>
       <div class="vacancy-footer">
-        <button class="btn-primary btn-apply" onclick="window.openUniversalApplicationModal && window.openUniversalApplicationModal('vacancy')">Откликнуться</button>
+        <button class="btn-primary btn-apply vacancy-apply-btn" data-vacancy-id="1">Откликнуться</button>
       </div>
     </div>
     
@@ -228,7 +229,7 @@
         </div>
       </div>
       <div class="vacancy-footer">
-        <button class="btn-primary btn-apply" onclick="window.openUniversalApplicationModal && window.openUniversalApplicationModal('vacancy')">Откликнуться</button>
+        <button class="btn-primary btn-apply vacancy-apply-btn" data-vacancy-id="2">Откликнуться</button>
       </div>
     </div>
   </div>
@@ -238,12 +239,47 @@
 <section class="contact-cta contact-cta-bg">
   <h2 class="contact-cta-title">Не нашли подходящую вакансию?</h2>
   <p class="contact-cta-desc">Мы всегда рады талантливым специалистам! Отправьте нам своё резюме, и мы рассмотрим вашу кандидатуру для будущих возможностей.</p>
-  <button class="btn-primary" onclick="window.openUniversalApplicationModal && window.openUniversalApplicationModal('application')">Оставить заявку</button>
+  <button class="btn-primary" id="vacanciesApplicationBtn">Оставить заявку</button>
 </section>
 
 <!-- Футер и модальное окно загружаются через ComponentLoader -->
-<button class="scroll-to-top" id="scrollToTop" onclick="window.scrollToTop && window.scrollToTop()" aria-label="Наверх">
+<button class="scroll-to-top" id="scrollToTop" aria-label="Наверх">
   <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
 </button>
+
+<script>
+// Инициализация обработчиков после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+  // Обработчики для кнопок "Откликнуться" на вакансии
+  const applyButtons = document.querySelectorAll('.vacancy-apply-btn');
+  applyButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (typeof window.openUniversalApplicationModal === 'function') {
+        window.openUniversalApplicationModal('vacancy');
+      }
+    });
+  });
+
+  // Обработчик для кнопки "Оставить заявку"
+  const applicationBtn = document.getElementById('vacanciesApplicationBtn');
+  if (applicationBtn) {
+    applicationBtn.addEventListener('click', function() {
+      if (typeof window.openUniversalApplicationModal === 'function') {
+        window.openUniversalApplicationModal('application');
+      }
+    });
+  }
+
+  // Обработчик для кнопки "Наверх"
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', function() {
+      if (typeof window.scrollToTop === 'function') {
+        window.scrollToTop();
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>

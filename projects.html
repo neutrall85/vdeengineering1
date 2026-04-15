@@ -6,7 +6,12 @@
   <title>Проекты | ООО "Волга-Днепр Инжиниринг"</title>
   <meta name="description" content="Реализованные проекты по модификации авиационной техники. Портфолио наших успешных работ.">
   <meta property="og:title" content="Проекты | Реализованные работы по модификации авиатехники">
-  <meta property="og:description" content="Портфолио успешных проектов: модернизация Ан-124-100, установка навигационных систем, сертификация Ил-76ТД.">
+  <meta property="og:description" content="Реализованные работы по модификации авиатехники. Портфолио наших успешных работ.">
+  <meta name="X-Content-Type-Options" content="nosniff">
+  <meta name="X-Frame-Options" content="SAMEORIGIN">
+  <meta name="X-XSS-Protection" content="1; mode=block">
+  <meta name="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://yandex.ru https://mc.yandex.ru; script-src 'self' https://fonts.googleapis.com https://yandex.ru; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src https://fonts.gstatic.com; connect-src 'self' https://api.volga-dnepr-engineering.ru https://yandex.ru; frame-src 'self' https://yandex.ru;">
   <link rel="icon" type="image/png" href="assets/images/tab.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +71,7 @@
         <span class="project-category-badge">Транспортная авиация</span>
         <h3 class="project-title-h3">Модернизация грузового отсека Ан-124-100</h3>
         <p class="project-desc-p">Разработка и внедрение усиленной системы крепления для негабаритных грузов. Полный цикл проектирования, испытаний и сертификации.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Модернизация грузового отсека Ан-124-100', ['Разработка усиленной системы крепления', 'Модернизация конструкции грузового отсека', 'Испытания и сертификация по нормам АП-25', 'Увеличение грузоподъемности до 150 тонн', 'Совместимость с различными типами грузов'], 'assets/images/An-124-100.jpeg', 'Транспортная авиация')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="1">Подробнее →</button>
       </div>
     </div>
     <div class="project-card project-card-box fade-in">
@@ -77,7 +82,7 @@
         <span class="project-category-badge">Авионика</span>
         <h3 class="project-title-h3">Установка современной навигационной системы</h3>
         <p class="project-desc-p">Интеграция цифровых навигационных комплексов нового поколения для повышения точности и безопасности полетов.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Установка современной навигационной системы', ['Интеграция комплекса К-НВС-10', 'Повышение точности навигации до 0.1 NM', 'Соответствие требованиям RNAV/RNP', 'Автоматическое планирование маршрута', 'Совместимость с существующими системами'], 'assets/images/about.jpg', 'Авионика')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="2">Подробнее →</button>
       </div>
     </div>
     <div class="project-card project-card-box fade-in">
@@ -88,7 +93,7 @@
         <span class="project-category-badge">Двигательные системы</span>
         <h3 class="project-title-h3">Модернизация газотурбинного двигателя</h3>
         <p class="project-desc-p">Увеличение ресурса и повышение топливной эффективности двигателей за счет внедрения современных технологий.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Модернизация газотурбинного двигателя', ['Увеличение межремонтного ресурса на 30%', 'Снижение расхода топлива на 5%', 'Внедрение новых материалов турбины', 'Улучшение системы охлаждения', 'Сертификация по нормам ИКАО'], 'assets/images/Rossiya.jpg', 'Двигательные системы')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="3">Подробнее →</button>
       </div>
     </div>
     <div class="project-card project-card-box fade-in">
@@ -99,7 +104,7 @@
         <span class="project-category-badge">Сертификация</span>
         <h3 class="project-title-h3">Сертификация модификаций Ил-76ТД</h3>
         <p class="project-desc-p">Получение сертификатов на комплекс модификаций для самолетов Ил-76ТД, включая навигационное и связное оборудование.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Сертификация модификаций Ил-76ТД', ['Комплексная модернизация навигационного оборудования', 'Установка нового связного оборудования', 'Получение сертификата типа', 'Соответствие требованиям ЕАС АВ', 'Поддержка эксплуатации'], 'assets/images/An-124-100.jpeg', 'Сертификация')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="4">Подробнее →</button>
       </div>
     </div>
     <div class="project-card project-card-box fade-in">
@@ -110,7 +115,7 @@
         <span class="project-category-badge">Цифровизация</span>
         <h3 class="project-title-h3">Внедрение цифровой кабины пилота</h3>
         <p class="project-desc-p">Замена аналоговых приборов на современные цифровые дисплеи с интеграцией в существующие системы.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Внедрение цифровой кабины пилота', ['Установка 6 LCD-дисплеев', 'Интеграция с бортовыми системами', 'Резервирование критических систем', 'Эргономичное расположение приборов', 'Снижение нагрузки на экипаж'], 'assets/images/about.jpg', 'Цифровизация')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="5">Подробнее →</button>
       </div>
     </div>
     <div class="project-card project-card-box fade-in">
@@ -121,7 +126,7 @@
         <span class="project-category-badge">Документация</span>
         <h3 class="project-title-h3">Разработка ремонтной документации</h3>
         <p class="project-desc-p">Создание полного комплекта документации для выполнения капитального ремонта ВС с внесенными изменениями.</p>
-        <button class="btn-secondary btn-secondary-sm" onclick="openProjectModal('Разработка ремонтной документации', ['Разработка РЭ и Формуляра', 'Карты дефектации и контроля', 'Технологические инструкции', 'Каталоги деталей и сборочных единиц', 'Согласование с заказчиком и.cert органами'], 'assets/images/Rossiya.jpg', 'Документация')">Подробнее →</button>
+        <button class="btn-secondary btn-secondary-sm project-details-btn" data-project-id="6">Подробнее →</button>
       </div>
     </div>
   </div>
@@ -131,16 +136,16 @@
 <section class="contact-cta contact-cta-bg">
   <h2 class="contact-cta-title">Хотите реализовать похожий проект?</h2>
   <p class="contact-cta-desc">Свяжитесь с нами для обсуждения ваших задач</p>
-  <button class="btn-primary" onclick="window.openModal && window.openModal()">Запросить коммерческое предложение</button>
+  <button class="btn-primary" id="projectsRequestQuoteBtn">Запросить коммерческое предложение</button>
 </section>
 
 
-<button class="scroll-to-top" id="scrollToTop" onclick="window.scrollToTop && window.scrollToTop()" aria-label="Наверх"><svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg></button>
+<button class="scroll-to-top" id="scrollToTop" aria-label="Наверх"><svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg></button>
 
-<!-- Project Details Modal (same structure as news modal) -->
+<!-- Project Details Modal -->
 <div class="modal-overlay" id="projectModalOverlay" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
   <div class="modal-container">
-    <button class="modal-close" onclick="closeProjectModal()" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    <button class="modal-close" id="projectModalCloseBtn" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
     <img class="modal-image" id="projectModalImage" src="" alt="" loading="lazy">
     <div class="modal-body">
       <span class="modal-category" id="projectModalCategory"></span>
@@ -151,6 +156,87 @@
 </div>
 
 <script>
+// Данные проектов
+const projectsData = {
+  1: {
+    title: 'Модернизация грузового отсека Ан-124-100',
+    details: ['Разработка усиленной системы крепления', 'Модернизация конструкции грузового отсека', 'Испытания и сертификация по нормам АП-25', 'Увеличение грузоподъемности до 150 тонн', 'Совместимость с различными типами грузов'],
+    image: 'assets/images/An-124-100.jpeg',
+    category: 'Транспортная авиация'
+  },
+  2: {
+    title: 'Установка современной навигационной системы',
+    details: ['Интеграция комплекса К-НВС-10', 'Повышение точности навигации до 0.1 NM', 'Соответствие требованиям RNAV/RNP', 'Автоматическое планирование маршрута', 'Совместимость с существующими системами'],
+    image: 'assets/images/about.jpg',
+    category: 'Авионика'
+  },
+  3: {
+    title: 'Модернизация газотурбинного двигателя',
+    details: ['Увеличение межремонтного ресурса на 30%', 'Снижение расхода топлива на 5%', 'Внедрение новых материалов турбины', 'Улучшение системы охлаждения', 'Сертификация по нормам ИКАО'],
+    image: 'assets/images/Rossiya.jpg',
+    category: 'Двигательные системы'
+  },
+  4: {
+    title: 'Сертификация модификаций Ил-76ТД',
+    details: ['Комплексная модернизация навигационного оборудования', 'Установка нового связного оборудования', 'Получение сертификата типа', 'Соответствие требованиям ЕАС АВ', 'Поддержка эксплуатации'],
+    image: 'assets/images/An-124-100.jpeg',
+    category: 'Сертификация'
+  },
+  5: {
+    title: 'Внедрение цифровой кабины пилота',
+    details: ['Установка 6 LCD-дисплеев', 'Интеграция с бортовыми системами', 'Резервирование критических систем', 'Эргономичное расположение приборов', 'Снижение нагрузки на экипаж'],
+    image: 'assets/images/about.jpg',
+    category: 'Цифровизация'
+  },
+  6: {
+    title: 'Разработка ремонтной документации',
+    details: ['Разработка РЭ и Формуляра', 'Карты дефектации и контроля', 'Технологические инструкции', 'Каталоги деталей и сборочных единиц', 'Согласование с заказчиком и сертифицирующими органами'],
+    image: 'assets/images/Rossiya.jpg',
+    category: 'Документация'
+  }
+};
+
+// Инициализация обработчиков после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+  // Обработчики для кнопок "Подробнее"
+  const projectButtons = document.querySelectorAll('.project-details-btn');
+  projectButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const projectId = this.getAttribute('data-project-id');
+      const project = projectsData[projectId];
+      if (project) {
+        openProjectModal(project.title, project.details, project.image, project.category);
+      }
+    });
+  });
+
+  // Обработчик для кнопки закрытия модального окна
+  const closeBtn = document.getElementById('projectModalCloseBtn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeProjectModal);
+  }
+
+  // Обработчик для кнопки запроса КП
+  const requestQuoteBtn = document.getElementById('projectsRequestQuoteBtn');
+  if (requestQuoteBtn) {
+    requestQuoteBtn.addEventListener('click', function() {
+      if (typeof window.openModal === 'function') {
+        window.openModal();
+      }
+    });
+  }
+
+  // Обработчик для кнопки "Наверх"
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', function() {
+      if (typeof window.scrollToTop === 'function') {
+        window.scrollToTop();
+      }
+    });
+  }
+});
+
 function openProjectModal(title, details, image, category) {
   const modalTitle = document.getElementById('projectModalTitle');
   const modalContent = document.getElementById('projectModalContent');
@@ -163,7 +249,7 @@ function openProjectModal(title, details, image, category) {
     modalCategory.textContent = sanitizer ? sanitizer.escapeHtml(category) : category;
     modalImage.src = sanitizer ? (sanitizer.isValidUrl(image) ? image : 'assets/images/placeholder.jpg') : image;
     modalImage.alt = sanitizer ? sanitizer.escapeHtml(title) : title;
-    modalContent.innerHTML = '<ul class="modal-list-ul">' + details.map(item => '<li class="modal-list-li">' + (sanitizer ? sanitizer.escapeHtml(item) : item) + '</li>').join('') + '</ul>';
+    modalContent.innerHTML = '<ul class="modal-list-ul">' + details.map(function(item) { return '<li class="modal-list-li">' + (sanitizer ? sanitizer.escapeHtml(item) : item) + '</li>'; }).join('') + '</ul>';
 
     if (typeof modalManager !== 'undefined') modalManager.open('project');
   }
@@ -174,6 +260,5 @@ function closeProjectModal() {
 }
 </script>
 
-<!-- Компоненты загружаются через ComponentLoader -->
-
 </body>
+</html>
