@@ -30,7 +30,6 @@ const Services = (function() {
           try {
             callback(data);
           } catch (error) {
-            console.error(`Error in event handler for ${event}:`, error);
           }
         });
       }
@@ -52,7 +51,6 @@ const Services = (function() {
         const value = this.storage.getItem(key);
         return value ? JSON.parse(value) : defaultValue;
       } catch (error) {
-        console.warn(`Storage get error for key "${key}":`, error);
         return defaultValue;
       }
     }
@@ -62,7 +60,6 @@ const Services = (function() {
         this.storage.setItem(key, JSON.stringify(value));
         return true;
       } catch (error) {
-        console.error(`Storage set error for key "${key}":`, error);
         return false;
       }
     }
@@ -72,7 +69,6 @@ const Services = (function() {
         this.storage.removeItem(key);
         return true;
       } catch (error) {
-        console.error(`Storage remove error for key "${key}":`, error);
         return false;
       }
     }
@@ -82,7 +78,6 @@ const Services = (function() {
         this.storage.clear();
         return true;
       } catch (error) {
-        console.error('Storage clear error:', error);
         return false;
       }
     }
@@ -112,7 +107,6 @@ const Services = (function() {
 
         return await response.json();
       } catch (error) {
-        console.error('API request failed:', error);
         throw error;
       }
     }
@@ -120,7 +114,6 @@ const Services = (function() {
     async submitForm(data) {
       // Имитация отправки на сервер
       await new Promise(resolve => setTimeout(resolve, 500));
-      console.log('Form submitted:', data);
       return { success: true, message: 'Заявка успешно отправлена' };
     }
   }

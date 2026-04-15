@@ -12,7 +12,6 @@ class Application {
 
   async init() {
     try {
-      console.log('Initializing Volga-Dnepr Engineering website...');
       
       // 1. Сначала инициализация ComponentLoader для загрузки общих компонентов
       // Это критично, так как все модули зависят от наличия элементов в DOM
@@ -26,7 +25,6 @@ class Application {
             activePage: currentPage === 'index' ? '' : currentPage
           }, resolve);
         });
-        console.log('ComponentLoader initialized');
         
         // Задержка чтобы DOM обновился после вставки компонентов навигации, футера и модального окна
         await new Promise(resolve => setTimeout(resolve, 50));
@@ -46,11 +44,9 @@ class Application {
         try {
           if (module && typeof module.init === 'function') {
             await module.init();
-            console.log(`Module ${module.constructor?.name || 'unknown'} initialized`);
           }
         } catch (err) {
           const errorMsg = `Module ${module.constructor?.name || 'unknown'} init failed: ${err.message}`;
-          console.warn(errorMsg, err);
           this.errors.push(errorMsg);
           
           // Отправляем событие об ошибке
@@ -66,17 +62,14 @@ class Application {
       this._initPrefersReducedMotion();
       
       this.initialized = true;
-      console.log('Application initialized successfully');
       
       if (this.errors.length > 0) {
-        console.warn('Application initialized with errors:', this.errors);
       }
       
       if (window.Services?.eventBus) {
         window.Services.eventBus.emit('app:ready');
       }
     } catch (error) {
-      console.error('Application initialization failed:', error);
       this._showError(error);
     }
   }
@@ -89,8 +82,6 @@ class Application {
       typeof formManager !== 'undefined' ? formManager : null,
       typeof newsManager !== 'undefined' ? newsManager : null
     ].filter(m => m != null);
-    
-    console.log(`Registered ${this.modules.length} modules`);
   }
 
   _initGlobalHelpers() {
@@ -106,10 +97,8 @@ class Application {
       if (formManager && typeof formManager.openModal === 'function') {
         formManager.openModal();
       } else if (typeof modalManager !== 'undefined') {
-        console.warn('FormManager not ready, opening modal directly');
         modalManager.open('form');
       } else {
-        console.error('No modal manager available');
       }
     };
     
@@ -349,7 +338,6 @@ class Application {
         });
       }
     } else {
-      console.error('Fatal error:', error);
       alert('Ошибка загрузки приложения: ' + error.message);
     }
   }
@@ -373,17 +361,13 @@ let newsRenderer, newsManager, formManager;
 
 // Функция инициализации после загрузки всех скриптов
 function initApp() {
-  console.log('initApp started');
   
   // Проверяем наличие глобальных объектов
   const hasConfig = typeof window.CONFIG !== 'undefined';
   const hasServices = typeof window.Services !== 'undefined';
   const hasUtils = typeof window.Utils !== 'undefined';
   
-  console.log('Dependencies:', { hasConfig, hasServices, hasUtils });
-  
   if (!hasConfig || !hasServices || !hasUtils) {
-    console.error('Missing required dependencies!');
     setTimeout(() => initApp(), 100);
     return;
   }
@@ -396,12 +380,9 @@ function initApp() {
         newsManager = new NewsManager(NEWS_DATA, newsRenderer);
         newsManager.init();
         window.newsManager = newsManager;
-        console.log('News modules initialized');
       } else {
-        console.warn('NewsRenderer or NewsManager not loaded, news will be disabled');
       }
     } catch (err) {
-      console.error('News modules initialization failed:', err);
     }
   }
   
@@ -417,12 +398,9 @@ function initApp() {
       formManager.init();
       window.formManager = formManager;
       window.openModal = () => formManager.openModal();
-      console.log('FormManager initialized');
     } catch (err) {
-      console.error('FormManager initialization failed:', err);
     }
   } else {
-    console.warn('Services or Utils not fully loaded, FormManager not initialized');
   }
   
   // 3. Регистрация модальных окон (после ComponentLoader и FormManager)
@@ -454,9 +432,7 @@ function initApp() {
         }
       }
     });
-    console.log('Modals registered');
   } else {
-    console.error('ModalManager not found!');
   }
   
   // 4. Инициализация DocPreviewManager для страницы документов
