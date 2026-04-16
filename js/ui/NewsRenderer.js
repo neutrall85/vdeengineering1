@@ -72,7 +72,7 @@ class NewsRenderer {
         <img data-src="${safeImageSrc}" 
              alt="${safeTitle}" 
              loading="lazy"
-             onerror="this.src='assets/images/placeholder.jpg'">
+             class="news-card-img-lazy">
         <span class="news-card-category">${safeCategory}</span>
       </div>
     `;
