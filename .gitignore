@@ -1,4 +1,1 @@
-```
-# Build artifacts
-dist/
-```
+(js/ui/FormManager.js is just a source file, no build artifacts, dependencies, or temp files in the changes - output nothing)
