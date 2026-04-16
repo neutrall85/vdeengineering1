@@ -724,7 +724,6 @@ const ComponentLoader = {
                 // Показываем сообщение об успехе
                 const successMessage = document.getElementById('universalSuccessMessage');
                 const form = document.getElementById('universalApplicationForm');
-                const universalOverlay = document.getElementById('universalApplicationModalOverlay');
                 
                 if (successMessage && form) {
                     form.style.display = 'none';
@@ -743,7 +742,7 @@ const ComponentLoader = {
                             window.formManager.currentFiles = [];
                             const fileList = document.getElementById('universalFileList');
                             if (fileList) fileList.innerHTML = '';
-                            const fileText = universalOverlay ? universalOverlay.querySelector('.form-file-text') : null;
+                            const fileText = document.querySelector('#universalFileDrop .form-file-text');
                             if (fileText) fileText.textContent = 'Выбрать файл...';
                         }
                     }, 3000);
@@ -754,9 +753,9 @@ const ComponentLoader = {
         // Инициализация загрузки файлов для универсального модального окна
         if (window.formManager) {
             setTimeout(() => {
-                const universalOverlay = document.getElementById('universalApplicationModalOverlay');
-                if (universalOverlay) {
-                    window.formManager._initFileUpload(universalOverlay);
+                const universalFileDrop = document.getElementById('universalFileDrop');
+                if (universalFileDrop) {
+                    window.formManager._initFileUpload(document.getElementById('universalApplicationModalOverlay'));
                 }
             }, 150);
         }
