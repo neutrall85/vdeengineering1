@@ -332,17 +332,7 @@ const ComponentLoader = {
                 setTimeout(() => {
                     const modalPhoneInput = document.querySelector('#modalOverlay #phone');
                     if (modalPhoneInput) {
-                        modalPhoneInput.addEventListener('blur', function() {
-                            let value = this.value.trim();
-                            if (value.length > 0 && !value.startsWith('+')) {
-                                if (value.startsWith('8') && value.length > 1) {
-                                    value = '+7' + value.substring(1);
-                                } else if (value.length >= 10) {
-                                    value = '+7' + value;
-                                }
-                                this.value = value;
-                            }
-                        });
+                        Utils.PhoneUtils.setupAutoPrefix(modalPhoneInput);
                     }
                 }, 0);
             }
@@ -599,6 +589,9 @@ const ComponentLoader = {
         const aboutInput = document.getElementById('universalAbout');
         const fileInput = document.getElementById('universalFileAttachment');
         
+        // Применяем автопрефикс +7 к полю телефона в универсальной модалке
+        Utils.PhoneUtils.setupAutoPrefix(phoneInput);
+        
         function checkFormValidity() {
             if (!consentCheckbox || !consentCheckbox.checked) {
                 submitBtn.disabled = true;
@@ -606,8 +599,8 @@ const ComponentLoader = {
             }
             
             const isFullNameValid = fullNameInput && fullNameInput.value.trim().length >= 2;
-            const isPhoneValid = phoneInput && phoneInput.value.trim().length >= 10;
-            const isEmailValid = emailInput && emailInput.value.includes('@') && emailInput.value.includes('.');
+            const isPhoneValid = phoneInput && Utils.Validator.phone(phoneInput.value);
+            const isEmailValid = emailInput && Utils.Validator.email(emailInput.value);
             const isAboutValid = aboutInput && aboutInput.value.trim().length >= 10;
             const isFileValid = fileInput && fileInput.files && fileInput.files.length > 0;
             
@@ -648,13 +641,13 @@ const ComponentLoader = {
                     isValid = false;
                 }
                 
-                if (!phoneInput || phoneInput.value.trim().length < 10) {
+                if (!phoneInput || !Utils.Validator.phone(phoneInput.value)) {
                     const error = document.getElementById('universalPhoneError');
                     if (error) error.classList.add('show');
                     isValid = false;
                 }
                 
-                if (!emailInput || !emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+                if (!emailInput || !Utils.Validator.email(emailInput.value)) {
                     const error = document.getElementById('universalEmailError');
                     if (error) error.classList.add('show');
                     isValid = false;

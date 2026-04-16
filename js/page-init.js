@@ -87,16 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!inputElement) return;
     
     inputElement.addEventListener('blur', function() {
-      let value = this.value.trim();
-      if (value.length > 0 && !value.startsWith('+')) {
-        // Если номер не начинается с +, добавляем +7
-        if (value.startsWith('8') && value.length > 1) {
-          value = '+7' + value.substring(1);
-        } else if (value.length >= 10) {
-          value = '+7' + value;
-        }
-        this.value = value;
-      }
+      this.value = Utils.PhoneUtils.addPrefix(this.value);
     });
   }
   

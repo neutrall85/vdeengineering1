@@ -221,6 +221,55 @@ const Utils = (function() {
     }
   };
 
+  // ========== Утилиты для работы с телефоном ==========
+  const PhoneUtils = {
+    /**
+     * Нормализует телефон: удаляет всё кроме цифр
+     * @param {string} phone - номер телефона
+     * @returns {string} - только цифры
+     */
+    normalize(phone) {
+      if (!phone) return '';
+      return phone.replace(/[^0-9]/g, '');
+    },
+
+    /**
+     * Добавляет префикс +7 если номер начинается с 8 или не имеет префикса
+     * @param {string} phone - номер телефона
+     * @returns {string} - нормализованный номер с префиксом
+     */
+    addPrefix(phone) {
+      let value = phone.trim();
+      if (value.length === 0 || value.startsWith('+')) {
+        return value;
+      }
+      
+      // Если номер начинается с 8, заменяем на +7
+      if (value.startsWith('8') && value.length > 1) {
+        return '+7' + value.substring(1);
+      }
+      
+      // Если номер достаточно длинный, добавляем +7
+      if (value.length >= 10) {
+        return '+7' + value;
+      }
+      
+      return value;
+    },
+
+    /**
+     * Применяет автопрефикс к полю ввода
+     * @param {HTMLInputElement} inputElement - поле ввода
+     */
+    setupAutoPrefix(inputElement) {
+      if (!inputElement) return;
+      
+      inputElement.addEventListener('blur', function() {
+        this.value = PhoneUtils.addPrefix(this.value);
+      });
+    }
+  };
+
   // ========== Валидатор ==========
   const Validator = {
     email(email) {
@@ -229,7 +278,7 @@ const Utils = (function() {
     },
 
     phone(phone) {
-      const clean = phone.replace(/[^0-9]/g, '');
+      const clean = PhoneUtils.normalize(phone);
       return clean.length >= 10 && clean.length <= 11;
     },
 
@@ -438,11 +487,13 @@ const Utils = (function() {
     }
   };
 
-  return { DOM, Sanitizer, Validator, RateLimiter, SlugUtils };
+  return { DOM, Sanitizer, Validator, RateLimiter, SlugUtils, PhoneUtils };
 })();
 
 // Экспортируем только основной объект Utils
 window.Utils = Utils;
+// Также экспортируем PhoneUtils для прямого доступа
+window.PhoneUtils = Utils.PhoneUtils;
 
 /**
  * NewsNavigation - Управление URL новостей (DRY & KISS)
