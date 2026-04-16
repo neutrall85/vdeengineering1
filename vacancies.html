@@ -55,6 +55,7 @@
   <script src="js/ui/AnimationManager.js"></script>
   <script src="js/ui/FormManager.js"></script>
   <script src="js/app.js"></script>
+  <script src="assets/js/page-vacancies.js"></script>
 </head>
 <body>
 
@@ -243,39 +244,5 @@
   <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
 </button>
 
-<script>
-// Инициализация обработчиков после загрузки DOM
-document.addEventListener('DOMContentLoaded', function() {
-  // Обработчики для кнопок "Откликнуться" на вакансии
-  const applyButtons = document.querySelectorAll('.vacancy-apply-btn');
-  applyButtons.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (typeof window.openUniversalApplicationModal === 'function') {
-        window.openUniversalApplicationModal('vacancy');
-      }
-    });
-  });
-
-  // Обработчик для кнопки "Оставить заявку"
-  const applicationBtn = document.getElementById('vacanciesApplicationBtn');
-  if (applicationBtn) {
-    applicationBtn.addEventListener('click', function() {
-      if (typeof window.openUniversalApplicationModal === 'function') {
-        window.openUniversalApplicationModal('application');
-      }
-    });
-  }
-
-  // Обработчик для кнопки "Наверх"
-  const scrollToTopBtn = document.getElementById('scrollToTop');
-  if (scrollToTopBtn) {
-    scrollToTopBtn.addEventListener('click', function() {
-      if (typeof window.scrollToTop === 'function') {
-        window.scrollToTop();
-      }
-    });
-  }
-});
-</script>
 </body>
 </html>
