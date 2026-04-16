@@ -25,9 +25,9 @@ class MapManager {
       });
       this.container.setAttribute('role', 'button');
       this.container.setAttribute('tabindex', '0');
-      console.log('MapManager initialized');
+      Logger.INFO('MapManager initialized');
     } else {
-      console.warn('MapContainer not found');
+      Logger.WARN('MapContainer not found');
     }
   }
 

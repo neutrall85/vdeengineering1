@@ -436,7 +436,7 @@ const ComponentLoader = {
     openPolicyModal(policyKey) {
         const policy = POLICY_DOCUMENTS[policyKey];
         if (!policy) {
-            console.warn(`Policy "${policyKey}" not found`);
+            Logger.WARN(`Policy "${policyKey}" not found`);
             return;
         }
 
@@ -675,7 +675,7 @@ const ComponentLoader = {
                 if (!isValid) return;
 
                 // Здесь будет логика отправки формы
-                console.log('Отправка заявки...');
+                Logger.INFO('Отправка заявки...');
                 
                 // Показываем сообщение об успехе
                 const successMessage = document.getElementById('universalSuccessMessage');

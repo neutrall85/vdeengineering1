@@ -26,7 +26,7 @@ class NavigationManager {
         this.mobileMenuOverlay = Utils.DOM.getElement('mobileMenuOverlay');
         
         if (!this.navbar || !this.mobileMenu || !this.mobileMenuBtn) {
-          console.warn('Navigation elements not found, retrying...');
+          Logger.WARN('Navigation elements not found, retrying...');
           setTimeout(checkElements, 100);
           return;
         }
@@ -36,13 +36,13 @@ class NavigationManager {
         this._initMobileMenu();
         this._handleScroll();
         
-        console.log('NavigationManager initialized');
+        Logger.INFO('NavigationManager initialized');
       };
       
       // Начинаем проверку элементов
       checkElements();
     } catch (error) {
-      console.error('NavigationManager init failed:', error);
+      Logger.ERROR('NavigationManager init failed:', error);
     }
   }
 
@@ -60,7 +60,7 @@ class NavigationManager {
             this._closeMobileMenu();
           }
         } catch (error) {
-          console.warn('Smooth scroll error:', error);
+          Logger.WARN('Smooth scroll error:', error);
         }
       });
     });

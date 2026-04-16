@@ -11,7 +11,7 @@ class NewsManager {
   }
 
   init() {
-    console.log('NewsManager initializing...');
+    Logger.INFO('NewsManager initializing...');
     this._initTabs();
     this._initModal();
     this._initCardClickHandler();
@@ -21,7 +21,7 @@ class NewsManager {
     const tabs = document.querySelectorAll('.news-tab');
     
     if (tabs.length === 0) {
-      console.log('No news tabs found');
+      Logger.INFO('No news tabs found');
       return;
     }
     
@@ -75,7 +75,7 @@ class NewsManager {
 
   _initModal() {
     // Модальное окно уже зарегистрировано в app.js
-    console.log('News modal ready');
+    Logger.INFO('News modal ready');
   }
 
   _initCardClickHandler() {
@@ -113,7 +113,7 @@ class NewsManager {
         window.NewsNavigation.openNewsUrl(id, news.title);
       }
     } else {
-      console.warn('ModalManager not available');
+      Logger.WARN('ModalManager not available');
     }
   }
 

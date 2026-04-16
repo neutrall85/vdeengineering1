@@ -27,9 +27,9 @@ class FormManager {
           this._initFileUpload();
         }
       }, 50);
-      console.log('FormManager initialized');
+      Logger.INFO('FormManager initialized');
     } catch (error) {
-      console.error('FormManager init failed:', error);
+      Logger.ERROR('FormManager init failed:', error);
     }
   }
   
@@ -49,7 +49,7 @@ class FormManager {
     if (typeof modalManager !== 'undefined') {
       modalManager.open('form');
     } else {
-      console.error('ModalManager not available');
+      Logger.ERROR('ModalManager not available');
     }
   }
 
@@ -277,7 +277,7 @@ class FormManager {
   }
 
   _showError(message, fileLimitWarning) {
-    console.error('Form error:', message);
+    Logger.ERROR('Form error:', message);
     
     // Если передан элемент предупреждения о лимитах файлов, используем его
     if (fileLimitWarning) {
@@ -351,7 +351,7 @@ class FormManager {
     if (!isNaN(indexNum) && indexNum >= 0 && indexNum < this.currentFiles.length) {
       this.currentFiles.splice(indexNum, 1);
     } else {
-      console.error('Invalid file index:', index);
+      Logger.ERROR('Invalid file index:', index);
       return;
     }
 
@@ -500,7 +500,7 @@ class FormManager {
         this._showError(result.error || 'Произошла ошибка при отправке');
       }
     } catch (error) {
-      console.error('Form submission error:', error);
+      Logger.ERROR('Form submission error:', error);
       this._showError('Произошла ошибка при отправке. Пожалуйста, попробуйте позже.');
     } finally {
       submitBtn.disabled = false;

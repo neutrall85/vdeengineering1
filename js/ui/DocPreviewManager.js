@@ -21,12 +21,12 @@ class DocPreviewManager {
       setTimeout(() => {
         if (!frame.classList.contains('loaded')) {
           // Оставляем placeholder видимым
-          console.log(`PDF превью ${index + 1} не загрузилось, показываем placeholder`);
+          Logger.INFO(`PDF превью ${index + 1} не загрузилось, показываем placeholder`);
         }
       }, 3000);
     });
     
-    console.log('DocPreviewManager initialized');
+    Logger.INFO('DocPreviewManager initialized');
   }
 }
 

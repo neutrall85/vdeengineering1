@@ -15,7 +15,7 @@ class AnimationManager {
     setTimeout(() => {
       this._initFadeInObserver();
       this._initCounters();
-      console.log('AnimationManager initialized');
+      Logger.INFO('AnimationManager initialized');
     }, 50);
   }
 
