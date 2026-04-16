@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', function(e) {
       // Можно добавить дополнительную логику при клике на просмотр документа
       // Например, аналитику или логирование
-      console.log('Просмотр документа:', this.href);
+      Logger.INFO('Просмотр документа:', this.href);
     });
   });
 

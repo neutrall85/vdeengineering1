@@ -78,14 +78,14 @@ class ConsentManager {
           params: { analytics: 'disabled' }
         });
         
-        console.log('Yandex Metrica disabled by user');
+        Logger.INFO('Yandex Metrica disabled by user');
       }
     }
     
     // Здесь можно добавить логику для других категорий (marketing и т.д.)
     if (categories && !categories.marketing) {
       // Отключаем маркетинговые скрипты
-      console.log('Marketing cookies disabled by user');
+      Logger.INFO('Marketing cookies disabled by user');
     }
   } // <-- Исправлено: добавлена закрывающая скобка
 

@@ -112,7 +112,7 @@ class ModalManager {
   open(key, options = {}) {
     const config = this.modals.get(key);
     if (!config) {
-      console.warn(`Modal "${key}" not registered`);
+      Logger.WARN(`Modal "${key}" not registered`);
       return false;
     }
 

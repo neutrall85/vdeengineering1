@@ -12,7 +12,7 @@ class NewsRenderer {
 
   render(year, container, options = {}) {
     if (!container) {
-      console.warn('Container not found for year:', year);
+      Logger.WARN('Container not found for year:', year);
       return;
     }
     
@@ -233,7 +233,7 @@ class NewsRenderer {
               if (placeholder) placeholder.style.display = 'none';
             };
             img.onerror = () => {
-              console.warn('Failed to load image:', src);
+              Logger.WARN('Failed to load image:', src);
               img.src = 'assets/images/placeholder.jpg';
               img.classList.add('loaded');
             };
