@@ -197,9 +197,9 @@ const ComponentLoader = {
         </div>
         <div class="form-group">
           <label class="form-label">Телефон <span class="required">*</span></label>
-          <div class="form-phone-wrapper">
-            <input type="tel" class="form-input" id="phone" name="phone" placeholder="+7 (999) 000-00-00" required minlength="10" maxlength="20" autocomplete="tel">
-            <input type="text" class="form-input" id="extension" name="extension" placeholder="доб." maxlength="6" autocomplete="off">
+          <div style="display: flex; gap: 10px;">
+            <input type="tel" class="form-input" id="phone" name="phone" placeholder="+7 (999) 000-00-00" required minlength="10" maxlength="20" autocomplete="tel" style="flex: 1;">
+            <input type="text" class="form-input" id="extension" name="extension" placeholder="доб." maxlength="6" autocomplete="off" style="width: 100px;">
           </div>
           <p class="error-message" id="phoneError">Пожалуйста, введите корректный номер телефона</p>
         </div>
@@ -233,7 +233,7 @@ const ComponentLoader = {
             <p class="form-file-text">Выбрать файл...</p>
             <p class="form-file-hint">PDF, DOC, DOCX, XLS, XLSX (Max 10MB)</p>
             <div class="form-file-list" id="fileList"></div>
-            <div class="form-file-limit-warning" id="fileLimitWarningModal">
+            <div class="form-file-limit-warning" id="fileLimitWarningModal" style="display: none;">
               <p>⚠️ Превышен лимит: максимум 5 файлов или 10MB на файл</p>
             </div>
           </div>
@@ -311,7 +311,7 @@ const ComponentLoader = {
             <p class="form-file-text">Выбрать файл...</p>
             <p class="form-file-hint">PDF, DOC, DOCX, XLS, XLSX (Max 10MB)</p>
             <div class="form-file-list" id="universalFileList"></div>
-            <div class="form-file-limit-warning" id="universalFileLimitWarning">
+            <div class="form-file-limit-warning" id="universalFileLimitWarning" style="display: none;">
               <p>⚠️ Превышен лимит: максимум 5 файлов или 10MB на файл</p>
             </div>
           </div>
@@ -433,21 +433,13 @@ const ComponentLoader = {
         // Обрабатываем десктопное меню
         const homeLinkDesktop = document.querySelector('.nav-links .home-link');
         if (homeLinkDesktop) {
-            if (isHomePage) {
-                homeLinkDesktop.classList.add('hidden-mobile');
-            } else {
-                homeLinkDesktop.classList.remove('hidden-mobile');
-            }
+            homeLinkDesktop.style.display = isHomePage ? 'none' : 'block';
         }
         
         // Обрабатываем мобильное меню
         const homeLinkMobile = document.querySelector('.mobile-menu .home-link-mobile');
         if (homeLinkMobile) {
-            if (isHomePage) {
-                homeLinkMobile.classList.add('hidden-mobile');
-            } else {
-                homeLinkMobile.classList.remove('hidden-mobile');
-            }
+            homeLinkMobile.style.display = isHomePage ? 'none' : 'block';
         }
         
         // Подсветка активной ссылки
