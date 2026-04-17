@@ -62,15 +62,32 @@
         // Делегирование кликов
         container.addEventListener('click', (e) => {
             const link = e.target.closest('.news-card-preview-link');
-            if (link && link.dataset.newsId && window.newsManager) {
+            if (link && link.dataset.newsId) {
                 e.preventDefault();
-                window.newsManager.openNewsModal(parseInt(link.dataset.newsId, 10));
+                const newsId = parseInt(link.dataset.newsId, 10);
+                // Пробуем использовать window.newsManager, если он уже загружен
+                if (window.newsManager && typeof window.newsManager.openNewsModal === 'function') {
+                    window.newsManager.openNewsModal(newsId);
+                } else {
+                    // Если newsManager ещё не загружен, пробуем позже
+                    setTimeout(() => {
+                        if (window.newsManager && typeof window.newsManager.openNewsModal === 'function') {
+                            window.newsManager.openNewsModal(newsId);
+                        }
+                    }, 200);
+                }
             }
         });
     }
+    
+    // Делаем функцию доступной глобально для вызова из app.js
+    window.renderPreviewNews = renderPreviewNews;
 
     // ---- Остальные обработчики (кнопки, форма, телефон) ----
     document.addEventListener('DOMContentLoaded', function() {
+        // Запуск рендера превью новостей после полной загрузки страницы
+        setTimeout(renderPreviewNews, 100);
+        
         // Кнопки "Запросить КП"
         ['heroRequestQuoteBtn', 'aboutRequestQuoteBtn', 'servicesRequestQuoteBtn'].forEach(btnId => {
             const btn = document.getElementById(btnId);
@@ -127,8 +144,5 @@
         setupPhonePrefix(document.getElementById('phone'));
         // Для телефона в модалке (появится позже, используем MutationObserver или просто отложенный вызов)
         setTimeout(() => setupPhonePrefix(document.querySelector('#modalOverlay #phone')), 200);
-
-        // Запуск рендера новостей с небольшой задержкой (ждём загрузки NEWS_DATA и DOM)
-        setTimeout(renderPreviewNews, 200);
     });
 })();
