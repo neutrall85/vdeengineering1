@@ -2028,8 +2028,10 @@ body.app-ready > footer {
 .modal-image {
   width: 100%;
   height: clamp(200px, 30vh, 300px);
+  object-fit: contain;
   object-fit: cover;
   display: block;
+  background-color: #f5f5f5;
 }
 
 /* Специфичные стили для details-modal (узкий контейнер) */
