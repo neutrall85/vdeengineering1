@@ -113,8 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
   applyPhoneAutoPrefixToModal();
   
   // Инициализация карточек новостей на главной странице
-  const previewGrid = document.getElementById('previewNewsGrid');
-  if (previewGrid && typeof NEWS_DATA !== 'undefined') {
+  // Выносим в отдельную функцию для вызова после создания newsManager
+  window.initPreviewNews = function() {
+    const previewGrid = document.getElementById('previewNewsGrid');
+    if (!previewGrid || typeof NEWS_DATA === 'undefined') return;
+    
     // Собираем все новости и сортируем по ID (новые сверху)
     const allNews = [];
     for (const year in NEWS_DATA) {
@@ -208,5 +211,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
-  }
+  };
+  
+  // Инициализируем превью новостей после полной загрузки приложения
+  // Ждем события app:ready, которое сигнализирует о полной инициализации всех компонентов
+  document.addEventListener('app:ready', function() {
+    window.initPreviewNews();
+  });
 });
