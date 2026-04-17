@@ -143,7 +143,7 @@ body.app-ready > footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--gradient-loader);
+  background: var(--vd);
   display: flex;
   justify-content: center;
   align-items: center;
