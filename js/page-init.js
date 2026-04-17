@@ -214,8 +214,13 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   
   // Инициализируем превью новостей после полной загрузки приложения
-  // Ждем события app:ready, которое сигнализирует о полной инициализации всех компонентов
-  document.addEventListener('app:ready', function() {
+  // Ждем события app:ready из EventBus, которое сигнализирует о полной инициализации всех компонентов
+  if (window.Services && window.Services.eventBus) {
+    window.Services.eventBus.on('app:ready', function() {
+      window.initPreviewNews();
+    });
+  } else {
+    // Fallback: если EventBus ещё не доступен, пробуем сразу вызвать функцию
     window.initPreviewNews();
-  });
+  }
 });
