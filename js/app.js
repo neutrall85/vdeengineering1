@@ -26,14 +26,12 @@ class Application {
           };
           document.addEventListener('components:loaded', onComponentsLoaded);
           
-          // Инициализируем загрузчик
+          // Инициализируем загрузчик (без callback, событие отправляется внутри init)
           ComponentLoader.init({ 
             loadNavbar: true, 
             loadFooter: true, 
             loadModal: true,
             activePage: currentPage === 'index' ? '' : currentPage
-          }, () => {
-            // Компоненты загружены, событие будет отправлено в ComponentLoader
           });
         });
         
