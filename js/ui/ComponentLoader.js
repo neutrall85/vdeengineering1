@@ -115,7 +115,7 @@ const ComponentLoader = {
         </div>
         <div class="form-group">
           <label class="form-label" for="contactPerson">Контактное лицо <span class="required">*</span></label>
-          <input type="text" class="form-input" id="contactPerson" name="contactPerson" placeholder="Ваше полное имя" required minlength="2" maxlength="100" autocomplete="name">
+          <input type="text" class="form-input" id="contactPerson" name="contactPerson" placeholder="Ваше имя и фамилия" required minlength="2" maxlength="100" autocomplete="name">
           <p class="error-message" id="contactPersonError">Пожалуйста, введите ваше имя</p>
         </div>
         <div class="form-group">
@@ -125,9 +125,9 @@ const ComponentLoader = {
         </div>
         <div class="form-group">
           <label class="form-label">Телефон <span class="required">*</span></label>
-          <div class="form-phone-group">
-            <input type="tel" class="form-input" id="phone" name="phone" placeholder="+7 (999) 000-00-00" required minlength="10" maxlength="20" autocomplete="tel" class="form-input-phone">
-            <input type="text" class="form-input" id="extension" name="extension" placeholder="доб." maxlength="6" autocomplete="off" class="form-input-extension">
+          <div class="flex-gap10">
+            <input type="tel" class="form-input" id="phone" name="phone" placeholder="+7 (999) 000-00-00" required minlength="10" maxlength="20" autocomplete="tel" class="flex-1">
+            <input type="text" class="form-input" id="extension" name="extension" placeholder="доб." maxlength="6" autocomplete="off" class="width-100px">
           </div>
           <p class="error-message" id="phoneError">Пожалуйста, введите корректный номер телефона</p>
         </div>
@@ -142,6 +142,9 @@ const ComponentLoader = {
             <option value="">Выберите тип услуги</option>
             <option value="design">Проектирование модификаций</option>
             <option value="repair">Разработка ремонтной КД</option>
+            <option value="repair">Разработка СНО</option>
+            <option value="repair">Разработка погрузочно-разгрузочного оборудования</option>
+            <option value="repair">Оформление разрешения на допуск</option>
             <option value="other">Другое</option>
           </select>
           <p class="error-message" id="serviceTypeError">Пожалуйста, выберите тип услуги</p>

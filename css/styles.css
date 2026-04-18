@@ -107,6 +107,7 @@ body {
 /* Блокировка скролла при открытом модальном окне */
 body.no-scroll {
   overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px) !important;
 }
 
 /* Модальные окна новостей и деталей также блокируют скролл */
