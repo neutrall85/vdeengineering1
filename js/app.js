@@ -228,41 +228,46 @@ class Application {
   _initFloatingCTA() {
     const floatingBtn = document.querySelector('.floating-cta-btn');
     const commercialOfferTitle = document.querySelector('#commercial-offer-title');
-    const newsModalOverlay = document.getElementById('newsModalOverlay');
 
     if (!floatingBtn) return;
 
-    // Если заголовка нет (страница новостей), кнопка видна всегда
-    if (!commercialOfferTitle) {
-      floatingBtn.classList.add('visible');
-      return;
-    }
+    let hasPassedTitle = false;
 
     const toggleButton = () => {
-      // Если модальное окно новостей открыто - показываем кнопку
-      if (newsModalOverlay && newsModalOverlay.getAttribute('aria-modal') === 'true') {
+      const scrollY = window.scrollY;
+
+      if (scrollY <= 350) {
+        floatingBtn.classList.remove('visible');
+        hasPassedTitle = false;
+        return;
+      }
+
+      if (!commercialOfferTitle) {
         floatingBtn.classList.add('visible');
         return;
       }
 
-      const scrollY = window.scrollY;
-      
-      // Скрываем в верхней части страницы
-      if (scrollY <= 350) {
-        floatingBtn.classList.remove('visible');
-        return;
-      }
-
-      // Проверяем видимость заголовка
       const rect = commercialOfferTitle.getBoundingClientRect();
       const isTitleVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      const isTitleAbove = rect.bottom <= 0; // Заголовок ушел выше экрана
 
       if (isTitleVisible) {
         floatingBtn.classList.remove('visible');
+        hasPassedTitle = false;
         return;
       }
 
-      floatingBtn.classList.add('visible');
+      if (isTitleAbove) {
+        hasPassedTitle = true;
+        floatingBtn.classList.remove('visible'); // Не показываем кнопку после заголовка
+        return;
+      }
+
+      if (!hasPassedTitle) {
+        floatingBtn.classList.add('visible');
+      } else {
+        floatingBtn.classList.remove('visible');
+      }
     };
 
     toggleButton();
