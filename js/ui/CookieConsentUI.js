@@ -13,6 +13,11 @@ class CookieConsentUI {
 
   init() {
     this._subscribeToEvents();
+    // Проверяем состояние согласия после подписки на события
+    const consent = this.consentService.getConsent();
+    if (!consent) {
+      this.show();
+    }
   }
 
   _subscribeToEvents() {
