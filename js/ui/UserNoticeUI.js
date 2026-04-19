@@ -79,12 +79,8 @@ class UserNoticeUI {
               </button>
             </div>
             <div class="user-notice-links">
-              <a href="#" class="user-privacy-link" id="user-privacy-link">
-                Политика конфиденциальности
-              </a>
-              <a href="#" class="user-privacy-link" id="user-cookie-policy-link">
-                Политика в отношении файлов cookie
-              </a>
+             <a href="#" class="user-privacy-link" id="user-privacy-link">Политика конфиденциальности</a> 
+             <a href="#" class="user-privacy-link" id="user-cookie-policy-link">Политика в отношении файлов cookie</a>
             </div>
           </div>
         </div>
