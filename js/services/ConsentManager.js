@@ -23,9 +23,9 @@ class ConsentManager {
     this.consentUI = new CookieConsentUI(this.consentService, eventBus);
 
     // Запуск сервисов
-    this.consentService.init();
     this.consentUI.init();
-
+    this.consentService.init();
+    
     Logger.INFO('ConsentManager initialized with event-driven architecture');
   }
 }
