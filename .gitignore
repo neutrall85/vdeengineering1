@@ -7,6 +7,10 @@
 .env.local
 *.env.*
 
+# Editors
+.vscode/
+.idea/
+
 # Dependencies
 node_modules/
 .venv/
@@ -14,36 +18,45 @@ venv/
 __pycache__/
 .mypy_cache/
 .pytest_cache/
-dist/
-build/
-target/
+pip-log.txt
+pip-selfcheck.json
 
-# Compiled files
-*.pyc
-*.class
-*.o
-*.exe
-*.dll
-*.so
-*.a
-*.obj
-*.out
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# System files
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Coverage
-coverage/
-htmlcov/
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 .coverage
+htmlcov/
+coverage/
+.pytest_cache/
+.tox/
+.coverage.*
+.nox/
+dist/
+build/
+*.egg-info/
+.eggs/
+.installed.cfg
+lib/
+lib64/
+parts/
+sdist/
+develop-eggs/
+bin/
+var/
+share/python-eggs/
+*.egg
 
 # Compressed files
 *.zip
@@ -68,4 +81,17 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+
+# IDE and editor specific
+*.swp
+*.swo
+*.tmp
+*~
+.project
+.well-known/
+.settings/
+.metadata/
+.classpath
+.factorypath
+.springBeans
 ```
