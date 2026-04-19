@@ -81,11 +81,8 @@ class UserNoticeUI {
                 Настроить
               </button>
             </div>
-            <a href="#" class="user-privacy-link" data-policy="privacy">
+            <a href="#privacy-policy" class="user-privacy-link" target="_blank" rel="noopener noreferrer">
               Политика конфиденциальности
-            </a>
-            <a href="#" class="user-cookie-link" data-policy="cookies">
-              Политика в отношении файлов cookie
             </a>
           </div>
 

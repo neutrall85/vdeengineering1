@@ -539,7 +539,12 @@ const ComponentLoader = {
         document.body.classList.remove('scroll-padding-fix');
         document.body.style.removeProperty('--scrollbar-width');
     },
-};
+
+    /**
+     * Инициализация универсального модального окна заявок
+     * @param {string} mode - режим открытия ('vacancy' для кнопок "Откликнуться", 'application' для кнопки "Отправить заявку")
+     */
+    initUniversalApplicationModal() {
         // Глобальная функция для открытия универсального модального окна с поддержкой передачи элемента-триггера
         window.openApplicationModal = (triggerElement) => {
             const overlay = document.getElementById('universalApplicationModalOverlay');
