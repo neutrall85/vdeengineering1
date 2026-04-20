@@ -431,6 +431,7 @@ body.app-ready > footer {
 .mobile-menu-close svg {
   width: 24px;
   height: 24px;
+  fill: white;
 }
 
 .mobile-menu.active {
