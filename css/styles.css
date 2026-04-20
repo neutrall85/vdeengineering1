@@ -1853,8 +1853,7 @@ body.app-ready > footer {
 }
 
 /* Кнопка закрытия */
-.modal-close,
-.details-modal-close {
+.modal-close {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -1873,13 +1872,11 @@ body.app-ready > footer {
   -webkit-tap-highlight-color: transparent;
 }
 
-.modal-close:hover,
-.details-modal-close:hover {
+.modal-close:hover {
   background: var(--vd-dark);
 }
 
-.modal-close svg,
-.details-modal-close svg {
+.modal-close svg {
   width: 20px;
   height: 20px;
   fill: white;
