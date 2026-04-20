@@ -126,6 +126,11 @@ class NavigationManager {
         e.stopPropagation();
         this.openMobileMenu();
       }
+      // Закрытие по кнопке закрытия мобильного меню
+      if (e.target.closest('#mobileMenuClose')) {
+        e.stopPropagation();
+        this.closeMobileMenu();
+      }
     });
     
     if (this.mobileMenuOverlay) {
