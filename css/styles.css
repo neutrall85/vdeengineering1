@@ -92,6 +92,9 @@
   --z-toast: 1200;
   --z-tooltip: 1300;
   --z-loader: 9999;
+  
+  /* Ширина скроллбара для компенсации при блокировке скролла */
+  --scrollbar-width: 17px;
 
   /* Базовый размер шрифта для пропорционального масштабирования */
   font-size: 16px;
@@ -106,9 +109,10 @@ body {
   font-size: clamp(0.875rem, 1vw, 1rem);
 }
 
-/* Блокировка скролла при открытом модальном окне */
+/* Блокировка скролла при открытом модальном окне или мобильном меню */
 body.no-scroll {
   overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
 }
 
 /* Модальные окна новостей и деталей также блокируют скролл */
@@ -472,6 +476,7 @@ body.app-ready > footer {
   visibility: hidden;
   transition: all var(--duration-normal) var(--ease-smooth);
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   pointer-events: none;
 }
 
@@ -3855,6 +3860,7 @@ body.no-scroll {
     overflow: hidden;
 }
 
+/* Устаревший класс, теперь используется body.no-scroll */
 body.scroll-padding-fix {
     padding-right: var(--scrollbar-width, 0px);
 }

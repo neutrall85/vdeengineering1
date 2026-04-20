@@ -279,17 +279,19 @@ const ComponentLoader = {
                 const firstBodyChild = document.body.firstChild;
                 document.body.insertBefore(navContainer.firstElementChild, firstBodyChild);
                 
-                // Добавляем mobile-menu-overlay после навигации
-                const overlay = document.createElement('div');
-                overlay.className = 'mobile-menu-overlay';
-                overlay.id = 'mobileMenuOverlay';
-                document.body.appendChild(overlay);
-                
                 this.setActiveLink(activePage);
             } else {
                 // Если навигация уже есть в HTML (для обратной совместимости), обновляем её
                 existingNav.outerHTML = this.navbar;
                 this.setActiveLink(activePage);
+            }
+            
+            // Гарантированно добавляем mobile-menu-overlay (один раз)
+            if (!document.getElementById('mobileMenuOverlay')) {
+                const overlay = document.createElement('div');
+                overlay.className = 'mobile-menu-overlay';
+                overlay.id = 'mobileMenuOverlay';
+                document.body.appendChild(overlay);
             }
             
             // Вызываем callback после загрузки навигации
