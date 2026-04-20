@@ -2025,28 +2025,36 @@ body.app-ready > footer {
 
 .lightbox-close {
   position: absolute;
-  top: -50px;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  background: white;
+  top: 1rem;
+  right: 1rem;
+  width: 45px;
+  height: 45px;
+  background: transparent;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  z-index: 10;
+  transition: background var(--duration-fast) var(--ease-smooth);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .lightbox-close:hover {
-  background: #f0f0f0;
+  background: var(--vd);
 }
 
 .lightbox-close svg {
-  width: 24px;
-  height: 24px;
-  fill: #333;
+  width: 20px;
+  height: 20px;
+  fill: black;
+  transition: fill var(--duration-fast) var(--ease-smooth);
+}
+
+.lightbox-close:hover svg {
+  fill: white;
 }
 
 /* Специфичные стили для details-modal (узкий контейнер) */
