@@ -263,10 +263,10 @@ body.app-ready > footer {
   
   .modal-close {
     top: calc(0.5rem + var(--header-height, 0px));
-    right: 0.5rem;
+    right: calc(0.5rem + 650px / 2 + 15px);
     width: 36px;
     height: 36px;
-    background: var(--vd-light-gray);
+    background: transparent;
     box-shadow: none;
     opacity: 0;
     visibility: hidden;
@@ -275,6 +275,15 @@ body.app-ready > footer {
   .modal-close svg {
     width: 16px;
     height: 16px;
+    fill: black;
+  }
+
+  .modal-close:hover {
+    background: var(--vd);
+  }
+
+  .modal-close:hover svg {
+    fill: white;
   }
 
   .modal-header {
@@ -1377,6 +1386,12 @@ body.app-ready > footer {
   max-width: 850px;
 }
 
+/* Кнопка закрытия для модального окна коммерческого предложения */
+.modal-overlay-proposal .modal-close,
+.modal-overlay:has(.modal-container-proposal) .modal-close {
+  right: calc(1rem + 850px / 2 + 20px);
+}
+
 .modal-overlay.active .modal-container {
   transform: scale(1) translateY(0);
 }
@@ -1405,10 +1420,10 @@ body.app-ready > footer {
 .modal-close {
   position: fixed;
   top: calc(1rem + var(--header-height, 0px));
-  right: 1rem;
+  right: calc(1rem + 650px / 2 + 20px);
   width: 45px;
   height: 45px;
-  background: var(--vd);
+  background: transparent;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -1424,12 +1439,17 @@ body.app-ready > footer {
 }
 
 .modal-close:hover {
-  background: var(--vd-dark);
+  background: var(--vd);
 }
 
 .modal-close svg {
   width: 20px;
   height: 20px;
+  fill: black;
+  transition: fill var(--duration-fast) var(--ease-smooth);
+}
+
+.modal-close:hover svg {
   fill: white;
 }
 
@@ -1890,10 +1910,10 @@ body.app-ready > footer {
 .modal-close {
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  right: calc(1rem + 600px / 2 + 20px);
   width: 45px;
   height: 45px;
-  background: var(--vd);
+  background: transparent;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -1907,12 +1927,17 @@ body.app-ready > footer {
 }
 
 .modal-close:hover {
-  background: var(--vd-dark);
+  background: var(--vd);
 }
 
 .modal-close svg {
   width: 20px;
   height: 20px;
+  fill: black;
+  transition: fill var(--duration-fast) var(--ease-smooth);
+}
+
+.modal-close:hover svg {
   fill: white;
 }
 
@@ -2084,6 +2109,11 @@ body.app-ready > footer {
 .details-modal-container {
   max-width: 600px;
   max-height: 80vh;
+}
+
+/* Кнопка закрытия для details-modal */
+.details-modal-overlay .modal-close {
+  right: calc(1rem + 600px / 2 + 20px);
 }
 
 .details-modal-body {
