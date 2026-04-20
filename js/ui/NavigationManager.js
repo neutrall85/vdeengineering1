@@ -166,6 +166,11 @@ class NavigationManager {
       }
     });
     
+    // Отдельный обработчик клика на overlay для гарантии закрытия
+    if (this.mobileMenuOverlay) {
+      this.mobileMenuOverlay.addEventListener('click', () => this.closeMobileMenu());
+    }
+    
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1048 && this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
