@@ -403,9 +403,10 @@ body.app-ready > footer {
   flex-direction: column;
   padding: 80px 2rem 2rem;
   transform: translateX(100%);
-  transition: transform var(--duration-slow) var(--ease-smooth);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-nav);
   overflow-y: auto;
+  touch-action: pan-y;
 }
 
 .mobile-menu-close {

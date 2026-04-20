@@ -7,12 +7,16 @@ class NavigationManager {
   constructor() {
     this.scrollThreshold = window.CONFIG?.NAVIGATION?.SCROLL_HEADER_THRESHOLD || 100;
     this.scrollTopThreshold = window.CONFIG?.NAVIGATION?.SCROLL_TOP_THRESHOLD || 500;
+    this.swipeThreshold = 50;
     this.navbar = null;
     this.scrollToTopBtn = null;
     this.mobileMenu = null;
     this.mobileMenuBtn = null;
     this.mobileMenuOverlay = null;
     this.scrollHandler = null;
+    this.resizeHandler = null;
+    this.touchStartX = 0;
+    this.touchCurrentX = 0;
   }
 
   init() {
@@ -119,6 +123,24 @@ class NavigationManager {
 
   _initMobileMenu() {
     if (!this.mobileMenu) return;
+    
+    // Обработка свайпов для закрытия меню
+    this.mobileMenu.addEventListener('touchstart', (e) => {
+      this.touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    this.mobileMenu.addEventListener('touchmove', (e) => {
+      this.touchCurrentX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    this.mobileMenu.addEventListener('touchend', () => {
+      const swipeDistance = this.touchCurrentX - this.touchStartX;
+      if (swipeDistance > this.swipeThreshold) {
+        this.closeMobileMenu();
+      }
+      this.touchStartX = 0;
+      this.touchCurrentX = 0;
+    });
     
     // Используем делегирование событий для кнопки меню (по ID)
     document.addEventListener('click', (e) => {
