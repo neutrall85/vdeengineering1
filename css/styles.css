@@ -392,10 +392,12 @@ body.app-ready > footer {
   position: fixed;
   top: 0;
   right: 0;
-  width: 280px;
+  width: 140px;
   max-width: 80%;
   height: 100dvh;
-  background: var(--gradient-primary);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: var(--z-modal);
   display: flex;
   flex-direction: column;
