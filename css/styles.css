@@ -415,10 +415,13 @@ body.app-ready > footer {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: calc(var(--z-modal) + 1);
+  z-index: calc(var(--z-fixed) + 1);
   display: flex;
   flex-direction: column;
-  padding: 80px 2rem 2rem;
+  padding-top: 80px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
   transform: translateX(100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-nav);
@@ -426,33 +429,6 @@ body.app-ready > footer {
   touch-action: pan-y;
 }
 
-.mobile-menu-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--duration-fast) var(--ease-smooth);
-  color: black;
-}
-
-.mobile-menu-close:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: rotate(90deg);
-}
-
-.mobile-menu-close svg {
-  width: 24px;
-  height: 24px;
-  fill: black;
-}
 
 .mobile-menu.active {
   transform: translateX(0);

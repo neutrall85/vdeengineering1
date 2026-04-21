@@ -146,12 +146,7 @@ class NavigationManager {
     document.addEventListener('click', (e) => {
       if (e.target.closest('#mobileMenuBtn')) {
         e.stopPropagation();
-        this.openMobileMenu();
-      }
-      // Закрытие по кнопке закрытия мобильного меню
-      if (e.target.closest('#mobileMenuClose')) {
-        e.stopPropagation();
-        this.closeMobileMenu();
+        this.toggleMobileMenu();
       }
       // Закрытие по клику вне области меню (на overlay)
       if (e.target.id === 'mobileMenuOverlay') {
