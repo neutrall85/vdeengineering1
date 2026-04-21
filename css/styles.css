@@ -448,7 +448,7 @@ body.app-ready > footer {
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  padding: clamp(80px, 10vh, 120px) 5% 0;
+  padding: 10vh 5% 5vh;
   overflow: hidden;
   background: var(--vd-light-blue);
   color: #004E96;
@@ -3546,7 +3546,7 @@ body.app-ready > footer {
   /* Hero секция - уплотняем */
   .hero {
     min-height: 40vh;
-    padding: clamp(70px, 8vh, 100px) 3% 0;
+    padding: 8vh 3% 4vh;
   }
   .hero-content {
     width: 100%;
@@ -4010,7 +4010,7 @@ body.app-ready > footer {
   /* Hero секция - уплотняем отступы */
   .hero {
     min-height: 35vh;
-    padding: clamp(60px, 7vh, 90px) 3% 0;
+    padding: 7vh 3% 3.5vh;
   }
   .hero-slideshow {
     display: none;
