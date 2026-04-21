@@ -103,7 +103,12 @@ class Application {
     const modalsToRegister = [
       { key: 'about', overlayId: 'aboutModalOverlay', required: false },
       { key: 'details', overlayId: 'detailsModalOverlay', required: false },
-      { key: 'form', overlayId: 'proposalModalOverlay', required: false },
+      { 
+        key: 'form', 
+        overlayId: 'proposalModalOverlay', 
+        required: false,
+        focusSelector: '#companyName'
+      },
       { 
         key: 'news', 
         overlayId: 'newsModalOverlay',
@@ -114,16 +119,26 @@ class Application {
           }
         }
       },
-      { key: 'proposal', overlayId: 'proposalModalOverlay', required: false },
-      { key: 'universal', overlayId: 'universalApplicationModalOverlay', required: false },
+      { 
+        key: 'proposal', 
+        overlayId: 'proposalModalOverlay', 
+        required: false,
+        focusSelector: '#companyName'
+      },
+      { 
+        key: 'universal', 
+        overlayId: 'universalApplicationModalOverlay', 
+        required: false,
+        focusSelector: 'input[type="text"], input[type="email"], textarea'
+      },
       { key: 'project', overlayId: 'projectModalOverlay', required: false },
       { key: 'service', overlayId: 'serviceModalOverlay', required: false }
     ];
 
-    modalsToRegister.forEach(({ key, overlayId, required, onClose }) => {
+    modalsToRegister.forEach(({ key, overlayId, required, onClose, onOpen, focusSelector }) => {
       const overlay = document.getElementById(overlayId);
       if (overlay) {
-        modalManager.register(key, { overlayId, onClose });
+        modalManager.register(key, { overlayId, onClose, onOpen, focusSelector });
       } else if (required) {
         Logger.WARN(`Required modal "${key}" not found`);
       }
