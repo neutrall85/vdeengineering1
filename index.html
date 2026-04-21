@@ -43,6 +43,7 @@
   <script src="js/ui/FormManager.js" defer></script>
   <script src="js/ui/NewsRenderer.js" defer></script>
   <script src="js/ui/NewsManager.js" defer></script>
+  <script src="js/ui/HeroSlideshow.js" defer></script>
   <script src="js/data/policyDocuments.js" defer></script>
   <script src="js/ui/ComponentLoader.js" defer></script>
   <script src="js/data/newsData.js" defer></script>
@@ -88,18 +89,34 @@
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-text fade-in">
-      <h1>Разработка модификаций авиационной техники</h1>
-      <p>ООО "Волга-Днепр Инжиниринг" — ведущий разработчик модификаций авиационной техники. Создаём инновационные решения, объединяя передовые технологии и многолетний опыт.</p>
-      <div class="hero-buttons">
-        <button class="btn-primary" data-modal-open="proposal"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>Запросить КП</button>
-        <a href="services.html" class="btn-secondary">Узнать больше</a>
+    <div class="hero-wrapper">
+      <div class="hero-text fade-in">
+        <h1>Разработка модификаций авиационной техники</h1>
+        <p>ООО "Волга-Днепр Инжиниринг" — ведущий разработчик модификаций авиационной техники. Создаём инновационные решения, объединяя передовые технологии и многолетний опыт.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary" data-modal-open="proposal"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>Запросить КП</button>
+          <a href="services.html" class="btn-secondary">Узнать больше</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><span class="stat-number" data-target="8">0</span><span class="stat-label">лет опыта</span></div>
+          <div class="stat-item"><span class="stat-number" data-target="2">0</span><span class="stat-label">главных изменения</span></div>
+          <div class="stat-item"><span class="stat-number" data-target="50">0</span><span class="stat-label">второстепенных изменений</span></div>
+          <div class="stat-item"><span class="stat-number" data-target="60">0</span><span class="stat-label">сотрудников</span></div>
       </div>
-      <div class="hero-stats">
-        <div class="stat-item"><span class="stat-number" data-target="8">0</span><span class="stat-label">лет опыта</span></div>
-        <div class="stat-item"><span class="stat-number" data-target="2">0</span><span class="stat-label">главных изменения</span></div>
-        <div class="stat-item"><span class="stat-number" data-target="50">0</span><span class="stat-label">второстепенных изменений</span></div>
-        <div class="stat-item"><span class="stat-number" data-target="60">0</span><span class="stat-label">сотрудников</span></div>
+      </div>
+      <div class="hero-slideshow fade-in">
+        <div class="slideshow-container">
+          <div class="slideshow-slide active">
+            <img src="assets/images/An-124-100.webp" alt="Ан-124-100" loading="lazy">
+          </div>
+          <div class="slideshow-slide">
+            <img src="assets/images/airplane_in_the_sky.webp" alt="Самолет в небе" loading="lazy">
+          </div>
+          <div class="slideshow-slide">
+            <img src="assets/images/developer_certificate.webp" alt="Сертификат разработчика" loading="lazy">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -298,7 +315,7 @@
 
       <div class="map-section">
         <h3>Наше местоположение</h3>
-        <a href="https://yandex.ru/map-widget/v1/?ll=37.41917%2C55.947444&z=17&pt=37.41917,55.947444,pm2rdm" target="_blank" rel="noopener noreferrer" style="display: block; cursor: pointer;">
+        <a href="https://yandex.ru/map-widget/v1/?ll=37.41917%2C55.947444&z=17&pt=37.41917,55.947444,pm2rdm" target="_blank" rel="noopener noreferrer" class="map-link">
           <div id="mapContainer" class="map-container-inline">
             <iframe
               src="https://yandex.ru/map-widget/v1/?ll=37.41917%2C55.947444&z=17&pt=37.41917,55.947444,pm2rdm"
