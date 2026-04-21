@@ -3481,7 +3481,7 @@ body.scroll-padding-fix {
 /* ==================== АДАПТИВНОСТЬ ==================== */
 
 /* ==================== @media (max-width: 768px) ==================== */
-@media (max-width: 768px) {
+@media (max-width: 1048px) {
   :root {
     font-size: 14px;
   }
