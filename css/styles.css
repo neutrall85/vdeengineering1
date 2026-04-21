@@ -4146,6 +4146,7 @@ body.app-ready > footer {
   .modal-close:hover svg {
     fill: #000;
   }
+  
   .modal-header {
     padding: 0.85rem 0.85rem 0.4rem;
   }
