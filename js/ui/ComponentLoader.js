@@ -604,10 +604,11 @@ const ComponentLoader = {
 
             overlay.classList.add('active');
             
-            // Фокус на первом поле
+            // Фокус на первом поле (теперь обрабатывается через modalManager.focusSelector)
+            // Код оставлен для обратной совместимости при прямом вызове openApplicationModal
             setTimeout(() => {
-                const firstInput = overlay.querySelector('input, textarea');
-                if (firstInput) firstInput.focus();
+                const focusTarget = overlay.querySelector('input[type="text"], input[type="email"], textarea');
+                if (focusTarget) focusTarget.focus();
             }, 100);
         };
 

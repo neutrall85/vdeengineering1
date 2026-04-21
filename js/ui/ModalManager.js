@@ -19,7 +19,7 @@ class ModalManager {
       overlayId: config.overlayId,
       onOpen: config.onOpen || null,
       onClose: config.onClose || null,
-      shouldFocus: config.shouldFocus !== false
+      focusSelector: config.focusSelector || null
     });
     
     this._setupOverlayClick(key);
@@ -148,14 +148,14 @@ class ModalManager {
         window.formManager.initFileUploadOnModalOpen();
       }
 
-      if (config.shouldFocus) {
-        const focusTarget = options.focusSelector 
-          ? document.querySelector(options.focusSelector)
+      const focusTarget = options.focusSelector 
+        ? document.querySelector(options.focusSelector)
+        : config.focusSelector
+          ? overlay.querySelector(config.focusSelector)
           : overlay.querySelector('.modal-close, button, [href], input, select, textarea');
-        
-        if (focusTarget) {
-          setTimeout(() => focusTarget.focus(), 100);
-        }
+      
+      if (focusTarget) {
+        setTimeout(() => focusTarget.focus(), 100);
       }
 
       if (config.onOpen) config.onOpen(overlay);
