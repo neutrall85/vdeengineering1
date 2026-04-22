@@ -1336,11 +1336,11 @@ body.app-ready > footer {
 
 .modal-close {
   position: absolute;
-  top: -35px;
-  right: -35px;
-  width: 45px;
-  height: 45px;
-  background: transparent;
+  top: -40px;
+  right: -40px;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0);
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -1358,8 +1358,8 @@ body.app-ready > footer {
 }
 
 .modal-close svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   fill: white;
   transition: fill var(--duration-fast) var(--ease-smooth);
 }
@@ -1403,15 +1403,27 @@ body.app-ready > footer {
 
 /* Увеличенная ширина для модального окна коммерческого предложения */
 .modal-container-proposal {
-  max-width: 700px;
-  max-height: 90vh;
+  max-width: 90vw;
+  max-height: 85vh;
 }
 
 /* Кнопка закрытия для модального окна коммерческого предложения */
 .modal-overlay-proposal .modal-close,
 .modal-overlay:has(.modal-container-proposal) .modal-close {
-  top: -35px;
-  right: -35px;
+  top: -40px;
+  right: -40px;
+}
+
+/* Увеличенный размер для универсального модального окна (вакансии) */
+.modal-overlay-universal .modal-container {
+  max-width: 90vw;
+  max-height: 85vh;
+}
+
+/* Кнопка закрытия для универсального модального окна */
+.modal-overlay-universal .modal-close {
+  top: -40px;
+  right: -40px;
 }
 
 .modal-overlay.active .modal-container {
@@ -2071,8 +2083,8 @@ body.app-ready > footer {
 
 /* Кнопка закрытия для details-modal */
 .details-modal-overlay .modal-close {
-  top: -50px;
-  right: 0;
+  top: -40px;
+  right: -40px;
 }
 
 .details-modal-body {
@@ -4450,16 +4462,19 @@ body.app-ready > footer {
     overflow-y: auto;
   }
   .modal-close {
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     width: 36px;
     height: 36px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0);
   }
   .modal-close svg {
-    width: 18px;
-    height: 18px;
-    fill: #333;
+    width: 20px;
+    height: 20px;
+    fill: white;
+  }
+  .modal-close:hover {
+    background: white;
   }
   .modal-close:hover svg {
     fill: #000;
