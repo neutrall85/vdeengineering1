@@ -267,7 +267,7 @@ body.app-ready > footer {
   left: 0;
   right: 0;
   z-index: calc(var(--z-fixed) + 20);
-  padding: 1rem 5%;
+  padding: clamp(0.5rem, 1vh, 1rem) 5%;
   background: var(--vd);
   transition: background-color var(--duration-normal) var(--ease-smooth),
               box-shadow var(--duration-normal) var(--ease-smooth),
@@ -448,7 +448,7 @@ body.app-ready > footer {
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  padding: 10vh 5% 5vh;
+  padding: clamp(60px, 10vh, 100px) 5% clamp(30px, 5vh, 60px);
   overflow: hidden;
   background: var(--vd-light-blue);
   color: #004E96;
@@ -457,7 +457,6 @@ body.app-ready > footer {
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 1400px;
   width: 100%;
 }
 
@@ -466,7 +465,7 @@ body.app-ready > footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: clamp(1.5rem, 3vw, 3rem);
   width: 100%;
 }
 
@@ -522,11 +521,11 @@ body.app-ready > footer {
 }
 
 .hero-text h1 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 800;
   color: var(--vd);
-  line-height: 1.15;
-  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
 
@@ -535,15 +534,15 @@ body.app-ready > footer {
 }
 
 .hero-text p {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   color: var(--metallic);
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -552,15 +551,15 @@ body.app-ready > footer {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  margin-top: clamp(2rem, 4vh, 3rem);
-  padding-top: clamp(1rem, 2vh, 2rem);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+  padding-top: clamp(0.75rem, 1.5vh, 1.5rem);
   border-top: 1px solid rgba(0, 78, 150, 0.15);
   flex-wrap: wrap;
 }
 
 .stat-number {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 800;
   color: var(--vd);
   display: block;
@@ -568,13 +567,14 @@ body.app-ready > footer {
 }
 
 .stat-label {
-  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
   color: var(--metallic);
   transition: color 0.3s ease;
 }
 
 .stat-item {
   flex: 0 0 auto;
+  min-width: 80px;
   transition: transform 0.3s ease;
 }
 
@@ -1191,7 +1191,7 @@ body.app-ready > footer {
 /* ==================== ФУТЕР ==================== */
 .footer {
   background: var(--vd);
-  padding: 50px;
+  padding: clamp(30px, 5vh, 60px) 5%;
 }
 
 .footer-legal {
@@ -2119,7 +2119,7 @@ body.app-ready > footer {
 }
 
 .contact-cta {
-  padding: clamp(40px, 8vh, 80px) 5%;
+  padding: clamp(30px, 6vh, 60px) 5%;
   background: var(--vd-light-blue);
   text-align: center;
   color: #004E96;
@@ -2128,15 +2128,15 @@ body.app-ready > footer {
 }
 
 .contact-cta h2 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-bottom: 1rem;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  margin-bottom: 0.75rem;
   position: relative;
   z-index: 1;
 }
 
 .contact-cta p {
-  margin-bottom: 2rem;
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  margin-bottom: 1.5rem;
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
   position: relative;
   z-index: 1;
 }
@@ -3544,8 +3544,8 @@ body.app-ready > footer {
   
   /* Hero секция - уплотняем */
   .hero {
-    min-height: 40vh;
-    padding: 8vh 3% 4vh;
+    min-height: auto;
+    padding: clamp(40px, 8vh, 60px) 3% clamp(20px, 4vh, 40px);
   }
   .hero-content {
     width: 100%;
@@ -3553,7 +3553,7 @@ body.app-ready > footer {
   }
   .hero-wrapper {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   .hero-text {
     margin: 0 auto;
@@ -3566,19 +3566,21 @@ body.app-ready > footer {
     justify-content: center;
   }
   .hero-text h1 {
-    margin-bottom: 0.6rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   .hero-text p {
-    margin-bottom: 0.85rem;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
   }
   .hero-buttons {
     gap: 0.5rem;
   }
   .hero-stats {
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
     justify-content: center;
   }
   
@@ -3587,8 +3589,8 @@ body.app-ready > footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 90px;
-    padding: 1rem 0.75rem;
+    min-width: 70px;
+    padding: 0.75rem 0.5rem;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 78, 150, 0.1);
@@ -3598,15 +3600,15 @@ body.app-ready > footer {
   }
   
   .stat-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: 0 12px 40px rgba(0, 78, 150, 0.15);
   }
   
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     line-height: 1.1;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
     color: var(--vd);
     transition: transform 0.3s ease;
   }
@@ -3616,7 +3618,7 @@ body.app-ready > footer {
   }
   
   .stat-label {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     line-height: 1.3;
     color: var(--metallic);
     font-weight: 500;
