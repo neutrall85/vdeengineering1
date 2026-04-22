@@ -21,37 +21,71 @@ class NavigationManager {
 
   init() {
     try {
-      // Ждём пока ComponentLoader загрузит навигацию
       const checkElements = () => {
         this.navbar = Utils.DOM.getElement('navbar');
         this.scrollToTopBtn = Utils.DOM.getElement('scrollToTop');
         this.mobileMenu = Utils.DOM.getElement('mobileMenu');
         this.mobileMenuBtn = Utils.DOM.getElement('mobileMenuBtn');
         this.mobileMenuOverlay = Utils.DOM.getElement('mobileMenuOverlay');
-        
+
         if (!this.navbar || !this.mobileMenu || !this.mobileMenuBtn) {
           Logger.WARN('Navigation elements not found, retrying...');
           setTimeout(checkElements, 100);
           return;
         }
-        
-        // Инициализируем scrollToTop, даже если кнопки ещё нет (она может появиться позже)
-        // Проверка наличия кнопки будет внутри _initScrollToTop()
-        
+
         this._initSmoothScroll();
         this._initScrollHandler();
         this._initMobileMenu();
         this._initScrollToTop();
         this._handleScroll();
-        
+        this._handleInitialHash();
+
         Logger.INFO('NavigationManager initialized');
       };
-      
-      // Начинаем проверку элементов
+
       checkElements();
     } catch (error) {
       Logger.ERROR('NavigationManager init failed:', error);
     }
+  }
+
+  /**
+   * Единый метод прокрутки к элементу по ID
+   * @param {string} id - ID элемента (без #)
+   * @param {number} extraOffset - дополнительный отступ (по умолчанию 0)
+   */
+  scrollToId(id, extraOffset = 0) {
+    const target = document.getElementById(id);
+    if (!target) {
+      Logger.WARN(`Element with id "${id}" not found`);
+      return;
+    }
+    const navbarHeight = this.navbar ? this.navbar.offsetHeight : 70;
+    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: elementPosition - navbarHeight - extraOffset, behavior: 'smooth' });
+  }
+
+  /**
+   * Обработка якоря при загрузке страницы
+   */
+  _handleInitialHash() {
+    const hash = window.location.hash;
+    if (!hash || hash === '#') return;
+
+    const id = hash.startsWith('#') ? hash.slice(1) : hash;
+
+    const doScroll = () => {
+      this.scrollToId(id);
+    };
+
+    if (document.readyState === 'complete') {
+      setTimeout(doScroll, 100);
+    } else {
+      window.addEventListener('load', () => setTimeout(doScroll, 100));
+    }
+
+    document.addEventListener('components:loaded', doScroll);
   }
 
   _initSmoothScroll() {
@@ -59,34 +93,25 @@ class NavigationManager {
       anchor.addEventListener('click', (e) => {
         const href = anchor.getAttribute('href');
         if (href === '#') return;
-        
-        try {
-          // Извлекаем хэш из URL (например, #partners из index.html#partners)
-          const hashIndex = href.indexOf('#');
-          if (hashIndex === -1) return;
-          
-          const hash = href.substring(hashIndex);
-          const target = Utils.DOM.query(hash);
-          
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        } catch (error) {
-          Logger.WARN('Smooth scroll error:', error);
+
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+
+        const id = href.substring(hashIndex + 1);
+        if (!id) return;
+
+        if (document.getElementById(id)) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.scrollToId(id);
         }
       });
     });
-    
-    // Обработка кликов на ссылки в мобильном меню
+
     if (this.mobileMenu) {
       this.mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (e) => {
-          // Закрываем меню только если это не якорная ссылка на текущей странице
-          const href = link.getAttribute('href');
-          if (href && (href.startsWith('#') || href.includes(window.location.pathname))) {
-            setTimeout(() => this.closeMobileMenu(), 300);
-          }
+        link.addEventListener('click', () => {
+          setTimeout(() => this.closeMobileMenu(), 300);
         });
       });
     }
@@ -95,23 +120,22 @@ class NavigationManager {
   _initScrollHandler() {
     let scrollTimeout;
     let resizeTimeout;
-    
+
     this.scrollHandler = () => {
       if (scrollTimeout) clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => this._handleScroll(), window.CONFIG?.PERFORMANCE?.SCROLL_DEBOUNCE_MS || 10);
     };
-    
+
     this.resizeHandler = () => {
       if (resizeTimeout) clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => this._handleResize(), window.CONFIG?.PERFORMANCE?.RESIZE_DEBOUNCE_MS || 150);
     };
-    
+
     window.addEventListener('scroll', this.scrollHandler, { passive: true });
     window.addEventListener('resize', this.resizeHandler);
   }
 
   _handleResize() {
-    // Обработка изменения размера окна
     if (window.innerWidth > 1048 && this.mobileMenu && this.mobileMenu.classList.contains('active')) {
       this.closeMobileMenu();
     }
@@ -119,7 +143,7 @@ class NavigationManager {
 
   _handleScroll() {
     const scrollY = window.scrollY;
-    
+
     if (this.navbar) {
       if (scrollY > this.scrollThreshold) {
         Utils.DOM.addClass(this.navbar, 'scrolled');
@@ -127,7 +151,7 @@ class NavigationManager {
         Utils.DOM.removeClass(this.navbar, 'scrolled');
       }
     }
-    
+
     if (this.scrollToTopBtn) {
       if (scrollY > this.scrollTopThreshold) {
         Utils.DOM.addClass(this.scrollToTopBtn, 'visible');
@@ -139,16 +163,15 @@ class NavigationManager {
 
   _initMobileMenu() {
     if (!this.mobileMenu) return;
-    
-    // Обработка свайпов для закрытия меню
+
     this.mobileMenu.addEventListener('touchstart', (e) => {
       this.touchStartX = e.touches[0].clientX;
     }, { passive: true });
-    
+
     this.mobileMenu.addEventListener('touchmove', (e) => {
       this.touchCurrentX = e.touches[0].clientX;
     }, { passive: true });
-    
+
     this.mobileMenu.addEventListener('touchend', () => {
       const swipeDistance = this.touchCurrentX - this.touchStartX;
       if (swipeDistance > this.swipeThreshold) {
@@ -157,47 +180,40 @@ class NavigationManager {
       this.touchStartX = 0;
       this.touchCurrentX = 0;
     });
-    
-    // Закрытие меню при возврате через историю браузера (кнопка "назад")
+
     window.addEventListener('pageshow', (e) => {
-      // e.persisted === true означает, что страница загружена из bfcache
       if (e.persisted || this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
       }
     });
-    
-    // Используем делегирование событий для кнопки меню (по ID)
+
     document.addEventListener('click', (e) => {
       if (e.target.closest('#mobileMenuBtn')) {
         e.stopPropagation();
         this.toggleMobileMenu();
       }
-      // Закрытие по клику вне области меню (на overlay)
       if (e.target.id === 'mobileMenuOverlay') {
         this.closeMobileMenu();
       }
     });
-    
-    // Закрытие по ESC
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
       }
     });
-    
-    // Отдельный обработчик клика на overlay для гарантии закрытия
+
     if (this.mobileMenuOverlay) {
       this.mobileMenuOverlay.addEventListener('click', (e) => {
         e.stopPropagation();
         this.closeMobileMenu();
       });
     }
-    
-    // Предотвращаем всплытие кликов внутри мобильного меню, чтобы они не закрывали его
+
     this.mobileMenu.addEventListener('click', (e) => {
       e.stopPropagation();
     });
-    
+
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1048 && this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
@@ -216,12 +232,11 @@ class NavigationManager {
 
   openMobileMenu() {
     if (!this.mobileMenu) return;
-    
+
     Utils.DOM.addClass(this.mobileMenu, 'active');
     if (this.mobileMenuOverlay) Utils.DOM.addClass(this.mobileMenuOverlay, 'active');
     if (this.mobileMenuBtn) Utils.DOM.addClass(this.mobileMenuBtn, 'active');
-    
-    // Используем централизованный ScrollManager для блокировки скролла
+
     if (window.ScrollManager) {
       ScrollManager.lock();
     } else {
@@ -231,12 +246,11 @@ class NavigationManager {
 
   closeMobileMenu() {
     if (!this.mobileMenu) return;
-    
+
     Utils.DOM.removeClass(this.mobileMenu, 'active');
     if (this.mobileMenuOverlay) Utils.DOM.removeClass(this.mobileMenuOverlay, 'active');
     if (this.mobileMenuBtn) Utils.DOM.removeClass(this.mobileMenuBtn, 'active');
-    
-    // Используем централизованный ScrollManager для восстановления скролла
+
     if (window.ScrollManager) {
       ScrollManager.unlock();
     } else {
