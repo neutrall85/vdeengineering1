@@ -127,7 +127,7 @@ textarea:focus-visible,
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background: url('../assets/images/hero.webp') center center / cover no-repeat fixed;
+  background: white;
   color: var(--text-dark);
   overflow-x: hidden;
   font-size: clamp(0.875rem, 1vw, 1rem);
@@ -450,7 +450,7 @@ body.app-ready > footer {
   min-height: 70vh;
   padding: 10vh 5% 5vh;
   overflow: hidden;
-  background: transparent;
+  background: var(--vd-light-blue);
   color: #004E96;
 }
 
@@ -658,7 +658,7 @@ body.app-ready > footer {
 /* ==================== УСЛУГИ ==================== */
 .services {
   padding: clamp(40px, 8vh, 80px) 5%;
-  background: transparent;
+  background: white;
   scroll-margin-top: 80px;
 }
 
@@ -701,8 +701,7 @@ body.app-ready > footer {
 }
 
 .service-card {
-  background: rgba(248, 249, 250, 0.85);
-  backdrop-filter: blur(10px);
+  background: var(--vd-light-gray);
   border-radius: 20px;
   padding: clamp(1.5rem, 3vw, 2rem);
   transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
@@ -778,7 +777,7 @@ body.app-ready > footer {
 /* ==================== О НАС PREVIEW ==================== */
 .about-preview {
   padding: clamp(40px, 8vh, 80px) 5%;
-  background: transparent;
+  background: var(--vd-light-gray);
 }
 
 .about-content {
@@ -1076,7 +1075,7 @@ body.app-ready > footer {
 /* ==================== КОНТАКТЫ ==================== */
 .contact {
   padding: clamp(40px, 8vh, 80px) 5%;
-  background: transparent;
+  background: white;
   scroll-margin-top: 100px;
 }
 
@@ -1086,13 +1085,6 @@ body.app-ready > footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-}
-
-.contact-info {
-  background: rgba(248, 249, 250, 0.85);
-  backdrop-filter: blur(10px);
-  padding: clamp(1.5rem, 3vw, 2rem);
-  border-radius: 20px;
 }
 
 .contact-info h2 {
@@ -1187,10 +1179,7 @@ body.app-ready > footer {
 }
 
 .commercial-offer-container {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  padding: clamp(1.5rem, 3vw, 2rem);
-  border-radius: 20px;
+  background: white;
 }
 
 .commercial-offer-container h2 {
@@ -3033,10 +3022,6 @@ body.app-ready > footer {
 }
 
 .about-text {
-  background: rgba(248, 249, 250, 0.85);
-  backdrop-filter: blur(10px);
-  padding: clamp(1.5rem, 3vw, 2rem);
-  border-radius: 20px;
   color: var(--metallic);
   line-height: 1.7;
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
