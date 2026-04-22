@@ -267,7 +267,7 @@ body.app-ready > footer {
   left: 0;
   right: 0;
   z-index: calc(var(--z-fixed) + 20);
-  padding: 1rem 5%;
+  padding: clamp(0.75rem, 1.5vh, 1rem) 5%;
   background: var(--vd);
   transition: background-color var(--duration-normal) var(--ease-smooth),
               box-shadow var(--duration-normal) var(--ease-smooth),
@@ -448,7 +448,7 @@ body.app-ready > footer {
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  padding: 10vh 5% 5vh;
+  padding: clamp(60px, 10vh, 100px) 5% clamp(30px, 5vh, 50px);
   overflow: hidden;
   background: var(--vd-light-blue);
   color: #004E96;
@@ -527,7 +527,7 @@ body.app-ready > footer {
   font-weight: 800;
   color: var(--vd);
   line-height: 1.15;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 2vh, 1.5rem);
   letter-spacing: -0.02em;
 }
 
@@ -539,13 +539,13 @@ body.app-ready > footer {
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--metallic);
   line-height: 1.7;
-  margin-bottom: 2.5rem;
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
   max-width: 650px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: clamp(0.75rem, 2vw, 1rem);
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -665,7 +665,7 @@ body.app-ready > footer {
 .section-header {
   text-align: center;
   max-width: 850px;
-  margin: 0 auto 2rem;
+  margin: 0 auto clamp(1rem, 3vh, 2rem);
 }
 
 .section-tag {
@@ -695,7 +695,7 @@ body.app-ready > footer {
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: clamp(1.5rem, 3vw, 2rem);
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -785,7 +785,7 @@ body.app-ready > footer {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: clamp(2rem, 4vw, 3rem);
   align-items: center;
 }
 
@@ -817,12 +817,12 @@ body.app-ready > footer {
 /* ==================== SERVICES CTA ==================== */
 .services-cta {
   text-align: center;
-  margin-top: 2.5rem;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
 }
 
 .services-cta-inline {
   text-align: center;
-  margin-top: 2.5rem;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
 }
 
 .services-cta .btn-primary,
@@ -2738,7 +2738,7 @@ body.app-ready > footer {
 .contact-cta-title { font-size: 2rem; margin-bottom: 1rem; }
 .contact-cta-desc { margin-bottom: 2rem; font-size: 1.1rem; }
 
-.services-full-padding { padding: 60px 5%; }
+.services-full-padding { padding: clamp(40px, 8vh, 60px) 5%; }
 .services-grid-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
 .service-card-box { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.3s ease; display: flex; flex-direction: column; }
 .service-title-h3 { font-size: 1.3rem; color: var(--vd); margin-bottom: 1rem; }
