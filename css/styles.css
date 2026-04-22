@@ -1325,47 +1325,9 @@ body.app-ready > footer {
   overflow-x: hidden;
 }
 
-.modal-overlay.active .modal-close {
-  transition-delay: 0.2s;
-}
-
 .modal-overlay.active {
   opacity: 1;
   visibility: visible;
-}
-
-.modal-close {
-  position: absolute;
-  top: -35px;
-  right: -35px;
-  width: 45px;
-  height: 45px;
-  background: transparent;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background var(--duration-fast) var(--ease-smooth);
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.modal-close:hover {
-  background: white;
-}
-
-.modal-close svg {
-  width: 20px;
-  height: 20px;
-  fill: white;
-  transition: fill var(--duration-fast) var(--ease-smooth);
-}
-
-.modal-close:hover svg {
-  fill: black;
 }
 
 .modal-container {
@@ -1374,7 +1336,7 @@ body.app-ready > footer {
   width: 100%;
   max-width: 650px;
   max-height: 90vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1405,13 +1367,6 @@ body.app-ready > footer {
 .modal-container-proposal {
   max-width: 700px;
   max-height: 90vh;
-}
-
-/* Кнопка закрытия для модального окна коммерческого предложения */
-.modal-overlay-proposal .modal-close,
-.modal-overlay:has(.modal-container-proposal) .modal-close {
-  top: -35px;
-  right: -35px;
 }
 
 .modal-overlay.active .modal-container {
@@ -2062,12 +2017,6 @@ body.app-ready > footer {
 .details-modal-container {
   max-width: 600px;
   max-height: 80vh;
-}
-
-/* Кнопка закрытия для details-modal */
-.details-modal-overlay .modal-close {
-  top: -50px;
-  right: 0;
 }
 
 .details-modal-body {
@@ -4443,21 +4392,6 @@ body.app-ready > footer {
     max-width: calc(100% - 1.5rem);
     max-height: calc(95vh - 1.5rem);
     overflow-y: auto;
-  }
-  .modal-close {
-    top: 10px;
-    right: 10px;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.9);
-  }
-  .modal-close svg {
-    width: 18px;
-    height: 18px;
-    fill: #333;
-  }
-  .modal-close:hover svg {
-    fill: #000;
   }
   
   .modal-header {
