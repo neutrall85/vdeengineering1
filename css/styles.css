@@ -1979,11 +1979,6 @@ body.app-ready > footer {
   flex-shrink: 0;
 }
 
-/* Для модальных окон новостей изображение внизу - скрываем дублирующийся стиль */
-.modal-container .modal-image {
-  /* Стили уже определены выше в секции .modal-container */
-}
-
 .modal-image:hover {
   opacity: 0.9;
 }
