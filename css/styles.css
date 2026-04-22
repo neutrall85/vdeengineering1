@@ -447,8 +447,8 @@ body.app-ready > footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 70vh;
-  padding: clamp(60px, 10vh, 100px) 5% clamp(30px, 5vh, 50px);
+  /* min-height: 70vh; */
+  padding: calc(clamp(60px, 10vh, 100px) + 80px) 5% clamp(30px, 5vh, 50px);
   overflow: hidden;
   background: var(--vd-light-blue);
   color: #004E96;
