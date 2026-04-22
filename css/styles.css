@@ -120,6 +120,8 @@ textarea:focus-visible,
   /* Ширина скроллбара для компенсации при блокировке скролла */
   --scrollbar-width: 17px;
 
+  --navbar-height: 70px;
+
   /* Базовый размер шрифта для пропорционального масштабирования */
   font-size: 16px;
   scroll-padding-top: 100px;
@@ -447,9 +449,11 @@ body.app-ready > footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* min-height: 70vh; */
-  padding: calc(clamp(60px, 10vh, 100px) + 80px) 5% clamp(30px, 5vh, 50px);
-  overflow: hidden;
+  min-height: auto;
+  padding-top: calc(var(--navbar-height) + clamp(20px, 5vh, 40px));
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: clamp(30px, 5vh, 50px);
   background: var(--vd-light-blue);
   color: #004E96;
 }
