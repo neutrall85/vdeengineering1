@@ -449,11 +449,8 @@ body.app-ready > footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: auto;
-  padding-top: calc(var(--navbar-height) + clamp(20px, 5vh, 40px));
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-bottom: clamp(30px, 5vh, 50px);
+  padding: calc(clamp(15px, 5vh, 20px) + clamp(60px, 8vh, 80px)) 3% clamp(30px, 5vh, 50px);
+  overflow: hidden;
   background: var(--vd-light-blue);
   color: #004E96;
 }
@@ -518,12 +515,6 @@ body.app-ready > footer {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-/* Анимация покачивания вверх-вниз - удалена по запросу */
-
-.hero-slideshow .slideshow-container {
-  /* animation: gentleRock 6s ease-in-out infinite; - анимация удалена */
 }
 
 .hero-text h1 {
@@ -3547,7 +3538,7 @@ body.app-ready > footer {
   /* Hero секция - уплотняем */
   .hero {
     min-height: 40vh;
-    padding: 8vh 3% 4vh;
+    padding: calc(10vh + clamp(10px, 8vh, 30px)) 3% 4vh;
   }
   .hero-content {
     width: 100%;
@@ -3974,7 +3965,7 @@ body.app-ready > footer {
   /* Hero секция - уплотняем отступы */
   .hero {
     min-height: 35vh;
-    padding: 7vh 3% 3.5vh;
+    padding: calc(9vh + clamp(20px, 7vh, 40px)) 3% 3.5vh;
   }
   .hero-slideshow {
     display: none;
