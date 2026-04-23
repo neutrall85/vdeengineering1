@@ -8,7 +8,7 @@ const NEWS_DATA = {
       excerpt: "ООО «Волга-Днепр Инжиниринг» получило сертификат разработчика модификаций авиационной техники в июне 2022 года.",
       category: "Сертификация",
       date: "Июнь 2022",
-      image: "assets/images/docs/certificate-2022.webp",
+      image: "/assets/images/docs/certificate-2022.webp",
       content: `
       <p>В июне 2022 года ООО «Волга-Днепр Инжиниринг» успешно прошло процедуру сертификации и получила сертификат разработчика модификаций авиационной техники.</p>
       <p>Этот сертификат подтверждает нашу способность разрабатывать и внедрять модификации для ВС Ан-124-100 в соответствии с требованиями авиационных регуляторов.</p>
@@ -20,7 +20,7 @@ const NEWS_DATA = {
       excerpt: "ООО «Волга-Днепр Инжиниринг» получила ДСТ на продление ресурса и реализацию функции ADS-B out v2 на Ан-124-100",
       category: "Сертификация",
       date: "Июнь 2022",
-      image: "assets/images/docs/DST_together.webp",
+      image: "/assets/images/docs/DST_together.webp",
       content: `
       <p>ООО «Волга-Днепр Инжиниринг» успешно переоформило два ранее выданных AMTES GmbH Дополнения к сертификату типа (ДСТ), касающиеся продления ресурса и внедрения передовой системы 
       наблюдения. Эти ДСТ подтверждают высокий уровень компетенции компании как разработчика модификации авиационной техники (сертификат № ФАВТ-Р-61 от 14.06.2022г.) и являются результатом 
@@ -35,7 +35,7 @@ const NEWS_DATA = {
       excerpt: "22 сентября 2023 года область действия сертификата разработчика расширена.",
       category: "Сертификация",
       date: "Сентябрь 2023",
-      image: "assets/images/docs/certificate-preview.webp",
+      image: "/assets/images/docs/certificate-preview.webp",
       content: "<p>22 сентября 2023 года область действия сертификата разработчика расширена на самолеты транспортной категории, газотурбинные двигатели и компоненты II и III классов.</p>"
     },
     {
@@ -44,7 +44,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Февраль 2023",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     },
     {
@@ -53,7 +53,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Март 2023",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     },
     {
@@ -62,7 +62,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Апрель 2023",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     },
     {
@@ -71,7 +71,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Май 2023",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     },
     {
@@ -80,7 +80,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Июнь 2023",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     }
   ],
@@ -91,7 +91,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Январь 2024",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     }
   ],
@@ -102,7 +102,7 @@ const NEWS_DATA = {
       excerpt: "Краткое описание.",
       category: "Категория",
       date: "Январь 2025",
-      image: "assets/images/docs/placeholder.jpg",
+      image: "/assets/images/docs/placeholder.jpg",
       content: "<p>Полное описание новости</p>"
     }
   ],
@@ -113,7 +113,7 @@ const NEWS_DATA = {
       excerpt: "ООО «Волга-Днепр Инжиниринг» - российский разработчик модификаций и технологий ремонта авиационной техники, официально завершил процесс вхождения в структуру «ЕАС Групп».",
       category: "Реорганизация",
       date: "Январь 2026",
-      image: "assets/images/join.webp",
+      image: "/assets/images/join.webp",
       content: `
       <p>ООО «Волга-Днепр Инжиниринг» - российский разработчик модификаций и ремонта авиационной техники, 
       официально завершил процесс вхождения в структуру «ЕАС Групп».</p>
