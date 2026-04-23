@@ -861,12 +861,30 @@ body.app-ready > footer {
   margin: 0 auto;
 }
 
+/* Grid-сетка для превью новостей на главной (3 колонки) */
 .news-grid-inline {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+/* Карточки новостей на главной странице - вертикальная раскладка как на news.html */
+.news-grid-inline .news-card {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  margin-bottom: 0;
+}
+
+.news-grid-inline .news-card-image {
+  width: 100%;
+  height: 250px;
+}
+
+.news-grid-inline .news-card-content {
+  flex: 1;
 }
 
 .text-center-mt2 {
@@ -881,84 +899,6 @@ body.app-ready > footer {
 
 .text-center-mt2 .btn-primary:hover {
   background: var(--vd-dark);
-}
-
-.news-card-preview {
-  position: relative;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transition: transform var(--duration-normal) var(--ease-elastic),
-              box-shadow var(--duration-normal) var(--ease-smooth);
-}
-
-.news-card-preview:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-.news-card-preview.loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.news-card-preview-image {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--vd-light-gray);
-}
-
-.news-card-preview-image img {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform var(--duration-slower) var(--ease-smooth);
-  opacity: 0;
-}
-
-.news-card-preview-image img.loaded,
-.news-card-preview-image img[src],
-.news-card-preview-image img[data-src] {
-  opacity: 1;
-}
-
-.news-card-preview:hover .news-card-preview-image img {
-  transform: scale(1.08);
-}
-
-.news-card-preview-content {
-  padding: clamp(1rem, 2vw, 1.5rem);
-}
-
-.news-card-preview-category {
-  display: inline-block;
-  background: var(--vd-light-blue);
-  color: var(--vd);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: clamp(0.65rem, 1vw, 0.7rem);
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.news-card-preview h3 {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  margin-bottom: 0.75rem;
-  color: var(--vd);
-  line-height: 1.4;
-}
-
-.news-card-preview p {
-  color: var(--metallic);
-  line-height: 1.6;
-  font-size: clamp(0.8rem, 1.2vw, 0.9rem);
-  margin-bottom: 1rem;
 }
 
 /* Общий стиль для кнопок "Подробнее" в карточках новостей */
@@ -2359,6 +2299,8 @@ body.app-ready > footer {
 }
 
 .news-card-image img {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -2367,7 +2309,9 @@ body.app-ready > footer {
   opacity: 0;
 }
 
-.news-card-image img.loaded {
+.news-card-image img.loaded,
+.news-card-image img[src],
+.news-card-image img[data-src] {
   opacity: 1;
 }
 
@@ -2479,6 +2423,7 @@ body.app-ready > footer {
   font-size: clamp(0.9rem, 1.2vw, 1rem);
 }
 
+/* Placeholder для изображений (общий для всех карточек) */
 .image-placeholder {
   position: absolute;
   top: 0;
@@ -2491,12 +2436,12 @@ body.app-ready > footer {
   z-index: 1;
 }
 
-.news-card-preview-image .image-placeholder {
+.news-card-image .image-placeholder {
   display: none;
 }
 
-.news-card-preview-image img:not([src]):not([data-src]) + .image-placeholder,
-.news-card-preview-image img.loading + .image-placeholder {
+.news-card-image img:not([src]):not([data-src]) + .image-placeholder,
+.news-card-image img.loading + .image-placeholder {
   display: block;
 }
 
@@ -2773,7 +2718,14 @@ body.app-ready > footer {
 
 .news-full-padding { padding: 60px 5%; }
 .news-tabs-container { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
-.news-grid-auto { max-width: 1400px; margin: 0 auto; }
+.news-grid-auto { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1400px; 
+  margin: 0 auto; 
+}
 
 .modal-list-ul { padding-left: 1.5rem; margin-top: 1rem; }
 .modal-list-li { margin-bottom: 0.5rem; }
