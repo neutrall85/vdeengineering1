@@ -4065,6 +4065,7 @@ body.app-ready > footer {
     width: 32px;
     height: 32px;
     border-width: 1.5px;
+    border-color: #000;
   }
   .modal-close svg {
     width: 18px;
