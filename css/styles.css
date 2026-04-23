@@ -1343,6 +1343,7 @@ body.app-ready > footer {
   margin-top: 80px;
   transform: scale(0.9) translateY(20px);
   transition: transform var(--duration-slow) var(--ease-bounce);
+  padding: 16px;
 }
 
 /* Изображение новости внизу модального окна */
@@ -1374,7 +1375,7 @@ body.app-ready > footer {
 }
 
 .modal-header {
-  padding: 1.5rem 2rem 0.5rem;
+  padding: 1rem 1.5rem 0.5rem;
   border-bottom: 1px solid var(--border-color);
   position: relative;
   flex-shrink: 0;
@@ -1382,7 +1383,7 @@ body.app-ready > footer {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   max-height: calc(90vh - 320px);
   overflow-y: auto;
   flex: 1;
@@ -2012,31 +2013,36 @@ body.app-ready > footer {
 /* Кнопка закрытия модального окна */
 .modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: -16px;
+  right: -16px;
   width: 40px;
   height: 40px;
-  background: white;
+  background: transparent;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
   z-index: 10;
   padding: 0;
   flex-shrink: 0;
 }
 
-.modal-close:hover {
-  background: #f0f0f0;
-}
-
 .modal-close svg {
   width: 24px;
   height: 24px;
-  fill: #333;
+  fill: white;
+  transition: fill var(--duration-fast) var(--ease-smooth);
+}
+
+.modal-close:hover {
+  background: white;
+}
+
+.modal-close:hover svg {
+  fill: var(--vd-dark);
 }
 
 /* Специфичные стили для details-modal (узкий контейнер) */
@@ -2047,6 +2053,7 @@ body.app-ready > footer {
 .details-modal-container {
   max-width: 600px;
   max-height: 80vh;
+  padding: 16px;
 }
 
 .details-modal-body {

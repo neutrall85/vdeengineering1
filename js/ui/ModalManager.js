@@ -1,6 +1,11 @@
 /**
  * Управление модальными окнами
  * ООО "Волга-Днепр Инжиниринг"
+ * 
+ * Единая точка управления закрытием модалок:
+ * - Клик по кнопке закрытия (.modal-close)
+ * - Клик вне области модалки (по overlay)
+ * - Нажатие клавиши Escape
  */
 
 class ModalManager {
@@ -9,7 +14,6 @@ class ModalManager {
     this.activeModal = null;
     this.cleanupHandlers = new Map();
     this._boundKeyHandler = null;
-    this._boundClickHandler = null;
     this._initGlobalHandlers();
   }
 
@@ -24,6 +28,10 @@ class ModalManager {
     return this;
   }
 
+  /**
+   * Настраивает клик по overlay для закрытия модалки
+   * Клик обрабатывается только если цель - сам overlay (а не контент внутри)
+   */
   _setupOverlayClick(key) {
     const config = this.modals.get(key);
     if (!config) return;
@@ -40,14 +48,25 @@ class ModalManager {
     }
   }
 
+  /**
+   * Инициализирует глобальные обработчики событий:
+   * - KeyboardEvent (Escape) для закрытия активной модалки
+   * - ClickEvent для кнопок .modal-close
+   */
   _initGlobalHandlers() {
+    // Обработчик нажатия клавиш (Escape)
     this._boundKeyHandler = (e) => {
-      if (e.key === 'Escape' && this.activeModal) {
+      if (e.key !== 'Escape') return;
+      
+      // Закрываем активную модалку через ModalManager
+      if (this.activeModal) {
         this.close(this.activeModal);
         return;
       }
+      
+      // Fallback для policy modal (если не зарегистрирована в ModalManager)
       const policyModal = document.getElementById('policyModalOverlay');
-      if (e.key === 'Escape' && policyModal && policyModal.classList.contains('active')) {
+      if (policyModal && policyModal.classList.contains('active')) {
         if (typeof ComponentLoader !== 'undefined') {
           ComponentLoader.closePolicyModal();
         }
@@ -55,11 +74,14 @@ class ModalManager {
     };
     document.addEventListener('keydown', this._boundKeyHandler);
 
+    // Делегированный обработчик кликов по кнопкам закрытия
     this._boundClickHandler = (e) => {
       const closeBtn = e.target.closest('.modal-close');
       if (!closeBtn) return;
+      
       const overlay = closeBtn.closest('.modal-overlay');
       if (!overlay) return;
+      
       const overlayId = overlay.id;
       const modalKeyMap = {
         'modalOverlay': 'form',
@@ -72,7 +94,10 @@ class ModalManager {
         'serviceModalOverlay': 'service',
         'policyModalOverlay': 'policy'
       };
+      
       const modalKey = modalKeyMap[overlayId];
+      
+      // Закрываем через ModalManager если модалка зарегистрирована
       if (modalKey && this.modals.has(modalKey)) {
         this.close(modalKey);
       } else if (overlayId === 'policyModalOverlay' && typeof ComponentLoader !== 'undefined') {
@@ -80,8 +105,9 @@ class ModalManager {
       } else if (overlayId === 'universalApplicationModalOverlay' && typeof window.closeUniversalApplicationModal === 'function') {
         window.closeUniversalApplicationModal();
       } else {
+        // Fallback для незарегистрированных модалок
         overlay.classList.remove('active');
-        ScrollManager.unlock(); // ✅ используем ScrollManager напрямую
+        ScrollManager.unlock();
       }
     };
     document.addEventListener('click', this._boundClickHandler);
@@ -174,6 +200,20 @@ class ModalManager {
     this.modals.forEach((_, key) => {
       this.close(key);
     });
+  }
+  
+  /**
+   * Очистка ресурсов при уничтожении
+   */
+  destroy() {
+    if (this._boundKeyHandler) {
+      document.removeEventListener('keydown', this._boundKeyHandler);
+    }
+    if (this._boundClickHandler) {
+      document.removeEventListener('click', this._boundClickHandler);
+    }
+    this.modals.clear();
+    this.activeModal = null;
   }
 }
 
