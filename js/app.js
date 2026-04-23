@@ -100,12 +100,6 @@ class Application {
       { key: 'about', overlayId: 'aboutModalOverlay', required: false },
       { key: 'details', overlayId: 'detailsModalOverlay', required: false },
       { 
-        key: 'form', 
-        overlayId: 'proposalModalOverlay', 
-        required: false,
-        focusSelector: '#companyName'
-      },
-      { 
         key: 'news', 
         overlayId: 'newsModalOverlay',
         required: false,
