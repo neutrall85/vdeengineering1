@@ -4065,11 +4065,11 @@ body.app-ready > footer {
     width: 32px;
     height: 32px;
     border-width: 1.5px;
-    border-color: #000;
   }
   .modal-close svg {
     width: 18px;
     height: 18px;
+    fill: #000;
   }
   .contact-form-container {
     padding: 1.25rem;
@@ -4484,6 +4484,7 @@ body.app-ready > footer {
   .modal-close svg {
     width: 16px;
     height: 16px;
+    fill: #000;
   }
   /* Lightbox - кнопка закрытия внутри области просмотра */
   .lightbox-close {
