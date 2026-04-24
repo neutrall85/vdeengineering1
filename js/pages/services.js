@@ -180,7 +180,7 @@ function closeServiceModal() {
 }
 
 // Инициализация страницы: назначение обработчиков кнопкам "Подробнее"
-export function initServicesPage() {
+window.initServicesPage = function() {
   const serviceButtons = document.querySelectorAll('.service-details-btn');
   serviceButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {
@@ -209,11 +209,11 @@ export function initServicesPage() {
       }
     });
   }
-}
+};
 
 // Автоматический запуск, если страница загружена
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initServicesPage);
+  document.addEventListener('DOMContentLoaded', window.initServicesPage);
 } else {
-  initServicesPage();
+  window.initServicesPage();
 }

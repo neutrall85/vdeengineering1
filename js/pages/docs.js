@@ -3,8 +3,8 @@
  * ООО "Волга-Днепр Инжиниринг"
  */
 
-// Экспортируем функцию инициализации для использования в module режиме
-export function initDocsPage() {
+// Функция инициализации (без export, так как это не модуль)
+function initDocsPage() {
   // Обработчик для кнопок просмотра документов
   const docViewLinks = document.querySelectorAll('.doc-view-link');
   
