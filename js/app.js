@@ -8,10 +8,16 @@ class Application {
     this.initialized = false;
     this.modules = [];
     this.errors = [];
+    this.services = {};
   }
 
   async init() {
     try {
+      // Проверка: ConsentManager должен быть инициализирован
+      if (typeof ConsentManager === 'undefined') {
+        throw new Error('ConsentManager is not loaded - critical security module missing');
+      }
+      
       if (typeof ComponentLoader !== 'undefined') {
         const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
         const componentsLoadedPromise = new Promise((resolve) => {
@@ -96,12 +102,27 @@ class Application {
   }
 
   _registerModules() {
-    this.modules = [
-      typeof navigationManager !== 'undefined' ? navigationManager : null,
-      typeof animationManager !== 'undefined' ? animationManager : null,
-      typeof formManager !== 'undefined' ? formManager : null,
-      typeof newsManager !== 'undefined' ? newsManager : null
-    ].filter(m => m != null);
+    // Регистрация модулей в центральном реестре services
+    const modulesToRegister = [];
+    
+    if (typeof navigationManager !== 'undefined') {
+      this.services.navigationManager = navigationManager;
+      modulesToRegister.push(navigationManager);
+    }
+    if (typeof animationManager !== 'undefined') {
+      this.services.animationManager = animationManager;
+      modulesToRegister.push(animationManager);
+    }
+    if (typeof formManager !== 'undefined') {
+      this.services.formManager = formManager;
+      modulesToRegister.push(formManager);
+    }
+    if (typeof newsManager !== 'undefined') {
+      this.services.newsManager = newsManager;
+      modulesToRegister.push(newsManager);
+    }
+    
+    this.modules = modulesToRegister;
   }
 
   _registerModals() {
@@ -480,18 +501,19 @@ function initApp() {
   }
   
   // Инициализация ConsentManager через единую точку Application
-  // UserPreferencesService теперь используется только внутри ConsentManager
+  // UserPreferencesService теперь встроен в ConsentManager
   if (typeof ConsentManager !== 'undefined') {
     try {
       const consentManager = new ConsentManager();
       consentManager.init();
-      window.consentManager = consentManager;
+      window.App.services.consentManager = consentManager;
     } catch (err) {
       console.error('Failed to initialize ConsentManager:', err);
     }
   }
 
   const app = new Application();
+  window.App = app;
   app.init();
 }
 

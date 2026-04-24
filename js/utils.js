@@ -98,29 +98,9 @@ const Utils = (function() {
           element.setAttribute(key, value);
         }
       });
-    },
-
-    addClass(element, ...classes) {
-      if (!element) return;
-      classes.forEach(cls => { if (cls) element.classList.add(cls); });
-    },
-
-    removeClass(element, ...classes) {
-      if (!element) return;
-      classes.forEach(cls => { if (cls) element.classList.remove(cls); });
-    },
-
-    hasClass(element, className) {
-      return element.classList.contains(className);
-    },
-
-    toggleClass(element, className, force) {
-      if (force !== undefined) {
-        element.classList.toggle(className, force);
-      } else {
-        element.classList.toggle(className);
-      }
     }
+    // Удалены методы addClass, removeClass, hasClass, toggleClass
+    // Используйте нативный element.classList.add/remove/toggle/contains вместо них
   };
 
   // ========== Санитизация HTML ==========
