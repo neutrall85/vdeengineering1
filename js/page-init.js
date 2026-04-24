@@ -83,21 +83,6 @@
 
         // Кнопка "Наверх" обрабатывается в app.js
 
-        // Автодобавление +7 к телефону
-        const setupPhonePrefix = (input) => {
-            if (!input) return;
-            input.addEventListener('blur', () => {
-                if (window.Utils?.PhoneUtils) {
-                    input.value = window.Utils.PhoneUtils.addPrefix(input.value);
-                } else {
-                    let v = input.value.trim();
-                    if (v && !v.startsWith('+') && !v.startsWith('8') && v.length >= 10) input.value = '+7' + v;
-                    else if (v.startsWith('8') && v.length > 1) input.value = '+7' + v.substring(1);
-                }
-            });
-        };
-        // Телефон больше не используется на странице - форма переехала в модалку
-
         // Запуск рендера новостей с небольшой задержкой (ждём загрузки NEWS_DATA и DOM)
         setTimeout(renderPreviewNews, 200);
     });

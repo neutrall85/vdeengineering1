@@ -43,8 +43,11 @@ const projectsData = {
   }
 };
 
-// Экспортируем функцию инициализации для module режима
-export function initProjectsPage() {
+/**
+ * Глобальная функция инициализации страницы проектов
+ * Вызывается из HTML после загрузки DOM
+ */
+window.initProjectsPage = function() {
   // Обработчики для кнопок "Подробнее"
   const projectButtons = document.querySelectorAll('.news-card-link[data-project-id]');
   projectButtons.forEach(function(btn) {
@@ -67,12 +70,12 @@ export function initProjectsPage() {
   const requestQuoteBtn = document.getElementById('projectsRequestQuoteBtn');
   if (requestQuoteBtn) {
     requestQuoteBtn.addEventListener('click', function() {
-      if (typeof window.openModal === 'function') {
-        window.openModal();
+      if (typeof window.openApplicationModal === 'function') {
+        window.openApplicationModal();
       }
     });
   }
-}
+};
 
 function openProjectModal(title, details, image, category) {
   const modalTitle = document.getElementById('projectModalTitle');
@@ -105,11 +108,4 @@ function openProjectModal(title, details, image, category) {
 
 function closeProjectModal() {
   if (typeof modalManager !== 'undefined') modalManager.close('project');
-}
-
-// Автозапуск если не используется как модуль, или ожидание DOMContentLoaded
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initProjectsPage);
-} else {
-  initProjectsPage();
 }

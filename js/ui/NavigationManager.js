@@ -21,29 +21,24 @@ class NavigationManager {
 
   init() {
     try {
-      const checkElements = () => {
-        this.navbar = Utils.DOM.getElement('navbar');
-        this.scrollToTopBtn = Utils.DOM.getElement('scrollToTop');
-        this.mobileMenu = Utils.DOM.getElement('mobileMenu');
-        this.mobileMenuBtn = Utils.DOM.getElement('mobileMenuBtn');
-        this.mobileMenuOverlay = Utils.DOM.getElement('mobileMenuOverlay');
+      this.navbar = Utils.DOM.getElement('navbar');
+      this.scrollToTopBtn = Utils.DOM.getElement('scrollToTop');
+      this.mobileMenu = Utils.DOM.getElement('mobileMenu');
+      this.mobileMenuBtn = Utils.DOM.getElement('mobileMenuBtn');
+      this.mobileMenuOverlay = Utils.DOM.getElement('mobileMenuOverlay');
 
-        if (!this.navbar || !this.mobileMenu || !this.mobileMenuBtn) {
-          Logger.WARN('Navigation elements not found, retrying...');
-          setTimeout(checkElements, 100);
-          return;
-        }
+      if (!this.navbar || !this.mobileMenu || !this.mobileMenuBtn) {
+        Logger.WARN('Navigation elements not found');
+        return;
+      }
 
-        this._initSmoothScroll();
-        this._initScrollHandler();
-        this._initMobileMenu();
-        this._initScrollToTop();
-        this._handleScroll();
+      this._initSmoothScroll();
+      this._initScrollHandler();
+      this._initMobileMenu();
+      this._initScrollToTop();
+      this._handleScroll();
 
-        Logger.INFO('NavigationManager initialized');
-      };
-
-      checkElements();
+      Logger.INFO('NavigationManager initialized');
     } catch (error) {
       Logger.ERROR('NavigationManager init failed:', error);
     }
