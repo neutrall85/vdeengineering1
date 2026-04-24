@@ -95,13 +95,13 @@ const UniversalApplicationModalManager = {
         const form = document.getElementById('universalApplicationForm');
         
         if (successMessage && form) {
-            form.classList.add('form-element-hidden');
+            form.classList.add('hidden-form');
             successMessage.classList.add('show');
             
             setTimeout(() => {
                 window.closeUniversalApplicationModal();
                 form.reset();
-                form.classList.remove('form-element-hidden');
+                form.classList.remove('hidden-form');
                 successMessage.classList.remove('show');
                 
                 if (typeof formManager !== 'undefined') {

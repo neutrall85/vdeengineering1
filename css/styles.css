@@ -2517,12 +2517,37 @@ body.app-ready > footer {
   z-index: 1;
 }
 
-.news-card-image .image-placeholder {
+/* Специфичные плейсхолдеры для разных типов контента */
+.about-image-placeholder {
+  background: linear-gradient(135deg, var(--vd-light-blue) 0%, var(--vd-light-gray) 100%);
+  border-radius: 16px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 40px rgba(0, 78, 150, 0.08);
+  transition: transform var(--duration-slow) var(--ease-smooth), box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.about-image-placeholder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 78, 150, 0.12);
+}
+
+/* Управление видимостью плейсхолдеров */
+.news-card-image .image-placeholder,
+.modal-container .modal-image .image-placeholder,
+.modal-image .image-placeholder {
   display: none;
 }
 
 .news-card-image img:not([src]):not([data-src]) + .image-placeholder,
-.news-card-image img.loading + .image-placeholder {
+.news-card-image img.loading + .image-placeholder,
+.modal-container .modal-image img:not([src]):not([data-src]) + .image-placeholder,
+.modal-container .modal-image img.loading + .image-placeholder,
+.modal-image img:not([src]):not([data-src]) + .image-placeholder,
+.modal-image img.loading + .image-placeholder {
   display: block;
 }
 
@@ -3045,23 +3070,6 @@ body.app-ready > footer {
   margin-bottom: 1.25rem;
 }
 
-.about-image-placeholder {
-  background: linear-gradient(135deg, var(--vd-light-blue) 0%, var(--vd-light-gray) 100%);
-  border-radius: 16px;
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 15px 40px rgba(0, 78, 150, 0.08);
-  transition: transform var(--duration-slow) var(--ease-smooth), box-shadow var(--duration-normal) var(--ease-smooth);
-}
-
-.about-image-placeholder:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 50px rgba(0, 78, 150, 0.12);
-}
-
 .placeholder-icon {
   width: 70px;
   height: 70px;
@@ -3523,27 +3531,13 @@ body.app-ready > footer {
 }
 
 /* Для управления видимостью форм */
-.form-element-visible {
-    display: block !important;
-}
-
-.form-element-hidden {
+.hidden-form {
     display: none !important;
 }
 
 /* Анимация для плавного появления/исчезновения */
 .fade-transition {
     transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.element-visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.element-hidden {
-    opacity: 0;
-    visibility: hidden;
 }
 
 
@@ -4107,28 +4101,6 @@ body.app-ready > footer {
     opacity: 1;
   }
   
-  /* Modal image placeholder styles for mobile */
-  .modal-container .modal-image .image-placeholder,
-  .modal-image .image-placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-    background-size: 200% 100%;
-    animation: shimmer 1.2s ease-in-out infinite;
-    z-index: 1;
-    display: none;
-  }
-  
-  .modal-container .modal-image img:not([src]):not([data-src]) + .image-placeholder,
-  .modal-container .modal-image img.loading + .image-placeholder,
-  .modal-image img:not([src]):not([data-src]) + .image-placeholder,
-  .modal-image img.loading + .image-placeholder {
-    display: block;
-  }
-  
   .details-modal-body {
     padding: 1.25rem;
   }
@@ -4210,28 +4182,6 @@ body.app-ready > footer {
   }
   .news-card-image {
     height: 180px;
-  }
-  
-  /* Image placeholder styles for mobile */
-  .image-placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-    background-size: 200% 100%;
-    animation: shimmer 1.2s ease-in-out infinite;
-    z-index: 1;
-  }
-  
-  .news-card-image .image-placeholder {
-    display: none;
-  }
-  
-  .news-card-image img:not([src]):not([data-src]) + .image-placeholder,
-  .news-card-image img.loading + .image-placeholder {
-    display: block;
   }
   
   .about-text p {
