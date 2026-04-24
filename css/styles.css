@@ -1047,6 +1047,11 @@ body.app-ready > footer {
   gap: 3rem;
 }
 
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .contact-info h2 {
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
@@ -1121,13 +1126,15 @@ body.app-ready > footer {
 }
 
 .map-section {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
-.map-section h3 {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+.map-section h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--vd);
@@ -1136,6 +1143,19 @@ body.app-ready > footer {
 .map-link {
   display: block;
   cursor: pointer;
+}
+
+.map-container-inline {
+  width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.iframe-borderless {
+  border: none;
+  display: block;
 }
 
 .commercial-offer-container {
