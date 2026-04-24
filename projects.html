@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="css/user-notice.css">
 
   <script src="js/config.js"></script>
-  <script src="js/utils/AppState.js" defer></script>
-  <script src="js/utils/FormValidation.js" defer></script>
+  <script src="js/services/AppState.js" defer></script>
+  <script src="js/services/FormValidation.js" defer></script>
   <script src="js/services.js"></script>
   <script src="js/modules/init-nojs.js" defer></script>
   <script src="js/modules/preferences.js" defer></script>
@@ -40,6 +40,12 @@
   <script src="js/app.js" defer></script>
   <script src="js/pages/projects.js" defer></script>
   <script>
+    // Инициализация страницы проектов через глобальную функцию
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof window.initProjectsPage === 'function') {
+        window.initProjectsPage();
+      }
+    });
     // Удаляем класс no-js при загрузке JS
     document.documentElement.classList.remove('no-js');
   </script>
@@ -86,69 +92,69 @@
 
 <section class="projects-full projects-full-padding">
   <div class="projects-grid">
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Модернизация Ан-124-100" class="img-cover-transition">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Транспортная авиация</span>
-        <h3 class="project-title-h3">Модернизация грузового отсека Ан-124-100</h3>
-        <p class="project-desc-p">Разработка и внедрение усиленной системы крепления для негабаритных грузов. Полный цикл проектирования, испытаний и сертификации.</p>
+        <h3 class="project-card-title">Модернизация грузового отсека Ан-124-100</h3>
+        <p class="project-card-desc">Разработка и внедрение усиленной системы крепления для негабаритных грузов. Полный цикл проектирования, испытаний и сертификации.</p>
         <button class="news-card-link" data-project-id="1">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Система навигации" class="img-cover-full">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Авионика</span>
-        <h3 class="project-title-h3">Установка современной навигационной системы</h3>
-        <p class="project-desc-p">Интеграция цифровых навигационных комплексов нового поколения для повышения точности и безопасности полетов.</p>
+        <h3 class="project-card-title">Установка современной навигационной системы</h3>
+        <p class="project-card-desc">Интеграция цифровых навигационных комплексов нового поколения для повышения точности и безопасности полетов.</p>
         <button class="news-card-link" data-project-id="2">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Двигатель" class="img-cover-full">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Двигательные системы</span>
-        <h3 class="project-title-h3">Модернизация газотурбинного двигателя</h3>
-        <p class="project-desc-p">Увеличение ресурса и повышение топливной эффективности двигателей за счет внедрения современных технологий.</p>
+        <h3 class="project-card-title">Модернизация газотурбинного двигателя</h3>
+        <p class="project-card-desc">Увеличение ресурса и повышение топливной эффективности двигателей за счет внедрения современных технологий.</p>
         <button class="news-card-link" data-project-id="3">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Сертификация Ил-76ТД" class="img-cover-full">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Сертификация</span>
-        <h3 class="project-title-h3">Сертификация модификаций Ил-76ТД</h3>
-        <p class="project-desc-p">Получение сертификатов на комплекс модификаций для самолетов Ил-76ТД, включая навигационное и связное оборудование.</p>
+        <h3 class="project-card-title">Сертификация модификаций Ил-76ТД</h3>
+        <p class="project-card-desc">Получение сертификатов на комплекс модификаций для самолетов Ил-76ТД, включая навигационное и связное оборудование.</p>
         <button class="news-card-link" data-project-id="4">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Цифровая кабина" class="img-cover-full">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Цифровизация</span>
-        <h3 class="project-title-h3">Внедрение цифровой кабины пилота</h3>
-        <p class="project-desc-p">Замена аналоговых приборов на современные цифровые дисплеи с интеграцией в существующие системы.</p>
+        <h3 class="project-card-title">Внедрение цифровой кабины пилота</h3>
+        <p class="project-card-desc">Замена аналоговых приборов на современные цифровые дисплеи с интеграцией в существующие системы.</p>
         <button class="news-card-link" data-project-id="5">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
-    <div class="project-card project-card-box fade-in">
+    <div class="project-card fade-in">
       <div class="project-image-container">
         <img src="assets/images/" alt="Ремонтная документация" class="img-cover-full">
       </div>
       <div class="project-content-padding">
         <span class="project-category-badge">Документация</span>
-        <h3 class="project-title-h3">Разработка ремонтной документации</h3>
-        <p class="project-desc-p">Создание полного комплекта документации для выполнения капитального ремонта ВС с внесенными изменениями.</p>
+        <h3 class="project-card-title">Разработка ремонтной документации</h3>
+        <p class="project-card-desc">Создание полного комплекта документации для выполнения капитального ремонта ВС с внесенными изменениями.</p>
         <button class="news-card-link" data-project-id="6">Подробнее <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
       </div>
     </div>
