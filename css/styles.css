@@ -1793,6 +1793,11 @@ body.app-ready > footer {
   overflow-y: auto;
 }
 
+/* Заголовок модального окна - отступы как у тела */
+.modal-header {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
 /* Элементы контента */
 .modal-category {
   display: inline-block;
@@ -4421,7 +4426,7 @@ body.app-ready > footer {
   }
   
   .modal-header {
-    padding: 0.85rem 0.85rem 0.4rem;
+    padding: clamp(1rem, 3vw, 2rem);
   }
   .modal-title {
     font-size: 1.15rem;
