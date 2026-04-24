@@ -518,7 +518,7 @@ class FormManager {
         const formEl = document.getElementById('proposalForm');
         const successMessage = document.getElementById('successMessage');
 
-        if (formEl) formEl.classList.add('form-element-hidden');
+        if (formEl) formEl.classList.add('hidden-form');
         if (successMessage) successMessage.classList.add('show');
 
         setTimeout(() => {
@@ -548,7 +548,7 @@ class FormManager {
 
     if (form) {
       form.reset();
-      form.classList.remove('form-element-hidden');
+      form.classList.remove('hidden-form');
     }
 
     if (successMessage) successMessage.classList.remove('show');
