@@ -7,16 +7,16 @@
  */
 
 // Экспортируем функцию инициализации для module режима
-export function initVacanciesPage() {
+window.initVacanciesPage = function() {
   // Дополнительная логика может быть добавлена здесь при необходимости
   // Например, передача данных о вакансии в модальное окно
   
   console.log('Страница вакансий инициализирована');
-}
+};
 
 // Автозапуск если не используется как модуль, или ожидание DOMContentLoaded
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initVacanciesPage);
+  document.addEventListener('DOMContentLoaded', window.initVacanciesPage);
 } else {
-  initVacanciesPage();
+  window.initVacanciesPage();
 }
