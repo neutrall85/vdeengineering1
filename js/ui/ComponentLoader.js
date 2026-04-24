@@ -31,15 +31,18 @@ const ComponentLoader = {
 
         // Загрузка навигации
         if (loadNavbar) {
-            const existingNav = document.querySelector('body > nav.navbar');
-            if (!existingNav) {
-                const navContainer = document.createElement('div');
+            const navContainer = document.getElementById('navbar');
+            if (navContainer && !navContainer.hasChildNodes()) {
                 navContainer.innerHTML = this.navbar.trim();
+                this.setActiveLink(activePage);
+            } else if (!navContainer) {
+                const newNavContainer = document.createElement('div');
+                newNavContainer.id = 'navbar';
+                newNavContainer.innerHTML = this.navbar.trim();
                 const firstBodyChild = document.body.firstChild;
-                document.body.insertBefore(navContainer.firstElementChild, firstBodyChild);
+                document.body.insertBefore(newNavContainer, firstBodyChild);
                 this.setActiveLink(activePage);
             } else {
-                existingNav.outerHTML = this.navbar;
                 this.setActiveLink(activePage);
             }
             
