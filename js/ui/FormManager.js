@@ -566,4 +566,4 @@ class FormManager {
   }
 }
 
-window.FormManager = FormManager;
+// Экспорт удален - регистрация происходит через Application.services

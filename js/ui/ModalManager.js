@@ -268,8 +268,7 @@ class ModalManager {
 
 const modalManager = new ModalManager();
 
-window.UI = window.UI || {};
-window.UI.modalManager = modalManager;
+// Экспорт через window.App.services.modalManager будет выполнен в Application
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { ModalManager, modalManager };

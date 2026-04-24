@@ -121,6 +121,14 @@ class Application {
       this.services.newsManager = newsManager;
       modulesToRegister.push(newsManager);
     }
+    // DocPreviewManager регистрируется отдельно в initApp()
+    if (typeof DocPreviewManager !== 'undefined') {
+      this.services.docPreviewManager = DocPreviewManager;
+    }
+    // ModalManager регистрируется для доступа через app.services
+    if (typeof modalManager !== 'undefined') {
+      this.services.modalManager = modalManager;
+    }
     
     this.modules = modulesToRegister;
   }
@@ -306,35 +314,64 @@ class Application {
     floatingBtn.addEventListener('click', () => {
       if (typeof modalManager !== 'undefined') {
         modalManager.open('proposal');
+      } else if (window.App?.services?.modalManager) {
+        window.App.services.modalManager.open('proposal');
       } else if (typeof window.openModal === 'function') {
         window.openModal();
       }
     }, { passive: true });
 
-    const toggleButton = () => {
-      const scrollY = window.scrollY;
+    // Используем IntersectionObserver для управления видимостью кнопки
+    // Кнопка появляется после ухода героя и скрывается у футера
+    let heroExited = false;
+    
+    const heroSection = document.querySelector('.hero, header');
+    if (heroSection) {
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // Герой полностью ушел из viewport - можно показывать кнопку
+          if (!entry.isIntersecting) {
+            heroExited = true;
+          } else {
+            heroExited = false;
+          }
+          updateButtonVisibility();
+        });
+      }, { threshold: 0 });
+      
+      heroObserver.observe(heroSection);
+    }
 
-      // Показываем кнопку после прокрутки 350px от верха
-      if (scrollY <= 350) {
-        floatingBtn.classList.remove('visible');
-        return;
-      }
-
-      // Скрываем кнопку, когда виден футер
-      if (footer) {
-        const footerRect = footer.getBoundingClientRect();
-        if (footerRect.top < window.innerHeight) {
+    const footerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Футер появился в viewport - скрываем кнопку
+        if (entry.isIntersecting) {
           floatingBtn.classList.remove('visible');
-          return;
+        } else if (heroExited) {
+          floatingBtn.classList.add('visible');
         }
+      });
+    }, { threshold: 0.1 });
+    
+    if (footer) {
+      footerObserver.observe(footer);
+    }
+
+    const updateButtonVisibility = () => {
+      if (heroExited && footer) {
+        const footerRect = footer.getBoundingClientRect();
+        const footerVisible = footerRect.top < window.innerHeight;
+        if (!footerVisible) {
+          floatingBtn.classList.add('visible');
+        } else {
+          floatingBtn.classList.remove('visible');
+        }
+      } else if (heroExited) {
+        floatingBtn.classList.add('visible');
+      } else {
+        floatingBtn.classList.remove('visible');
       }
-
-      // Показываем кнопку во всех остальных случаях
-      floatingBtn.classList.add('visible');
     };
-
-    toggleButton();
-    window.addEventListener('scroll', toggleButton, { passive: true });
   }
 
   _initImageLazyLoading() {
@@ -496,9 +533,14 @@ function initApp() {
     Logger.WARN('Required services or utils are not available for FormManager initialization');
   }
   
+  // DocPreviewManager инициализируется до создания Application,
+  // регистрация в services произойдет внутри Application._registerModules()
   if (typeof DocPreviewManager !== 'undefined') {
     DocPreviewManager.init();
   }
+  
+  const app = new Application();
+  window.App = app;
   
   // Инициализация ConsentManager через единую точку Application
   // UserPreferencesService теперь встроен в ConsentManager
@@ -506,14 +548,12 @@ function initApp() {
     try {
       const consentManager = new ConsentManager();
       consentManager.init();
-      window.App.services.consentManager = consentManager;
+      app.services.consentManager = consentManager;
     } catch (err) {
       console.error('Failed to initialize ConsentManager:', err);
     }
   }
-
-  const app = new Application();
-  window.App = app;
+  
   app.init();
 }
 

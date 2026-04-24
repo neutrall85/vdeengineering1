@@ -265,7 +265,7 @@ class NewsManager {
   }
 }
 
-window.NewsManager = NewsManager;
+// Экспорт удален - регистрация происходит через Application.services
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = NewsManager;
