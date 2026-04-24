@@ -88,8 +88,8 @@ class NewsManager {
       ScrollManager.lock();
     }
     
-    // Добавляем закрытие по клику на изображение
-    this.lightboxImage.onclick = () => this.closeLightbox();
+    // Добавляем закрытие по клику на изображение через addEventListener
+    this.lightboxImage.addEventListener('click', () => this.closeLightbox());
     
     // Фокус на кнопку закрытия для доступности
     const closeBtn = document.getElementById('lightboxCloseBtn');
@@ -117,9 +117,11 @@ class NewsManager {
       Logger.WARN('ScrollManager not available for news lightbox close');
     }
     
-    // Сбрасываем обработчик клика
+    // Сбрасываем обработчик клика (удаляем listener)
     if (this.lightboxImage) {
-      this.lightboxImage.onclick = null;
+      const newLightboxImage = this.lightboxImage.cloneNode(true);
+      this.lightboxImage.parentNode.replaceChild(newLightboxImage, this.lightboxImage);
+      this.lightboxImage = newLightboxImage;
     }
     
     // Очищаем src после анимации

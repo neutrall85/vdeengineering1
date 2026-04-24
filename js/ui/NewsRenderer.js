@@ -223,18 +223,27 @@ class NewsRenderer {
           const img = entry.target;
           const src = img.getAttribute('data-src');
           if (src && !img.src) {
-            img.src = src;
-            img.removeAttribute('data-src');
-            img.onload = () => {
+            // Создаем обработчики через addEventListener вместо on* свойств
+            const onLoadHandler = () => {
               img.classList.add('loaded');
               const placeholder = img.parentElement?.querySelector('.image-placeholder');
               if (placeholder) placeholder.style.display = 'none';
+              img.removeEventListener('load', onLoadHandler);
+              img.removeEventListener('error', onErrorHandler);
             };
-            img.onerror = () => {
+            
+            const onErrorHandler = () => {
               Logger.WARN('Failed to load image:', src);
               img.src = 'assets/images/placeholder.jpg';
               img.classList.add('loaded');
+              img.removeEventListener('load', onLoadHandler);
+              img.removeEventListener('error', onErrorHandler);
             };
+            
+            img.addEventListener('load', onLoadHandler);
+            img.addEventListener('error', onErrorHandler);
+            img.src = src;
+            img.removeAttribute('data-src');
           }
           observer.unobserve(img);
         }
