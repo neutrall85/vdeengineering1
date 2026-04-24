@@ -959,7 +959,7 @@ body.app-ready > footer {
 
 /* ==================== ПАРТНЕРЫ ==================== */
 .partners {
-  padding: clamp(40px, 8vh, 80px) 5%;
+  padding: clamp(20px, 8vh, 40px) 5%;
   background: linear-gradient(135deg, var(--vd-light-gray) 0%, white 100%);
 }
 
