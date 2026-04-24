@@ -239,5 +239,6 @@ class NavigationManager {
 
 const navigationManager = new NavigationManager();
 
-window.NavigationManager = NavigationManager;
+// Экспорт удален - регистрация происходит через Application.services
+// window.scrollToTop остается как глобальная функция для обратной совместимости
 window.scrollToTop = () => navigationManager.scrollToTop();

@@ -184,8 +184,7 @@ class ConsentManager {
   }
 }
 
-// Экспортируем в глобальную область для использования в index.html
-window.ConsentManager = ConsentManager;
+// Экспорт удален - регистрация происходит через Application.services
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { ConsentManager };

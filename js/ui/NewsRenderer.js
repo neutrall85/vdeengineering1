@@ -273,4 +273,4 @@ class NewsRenderer {
   }
 }
 
-window.NewsRenderer = NewsRenderer;
+// Экспорт удален - регистрация происходит через Application.services

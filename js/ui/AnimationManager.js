@@ -87,7 +87,7 @@ class AnimationManager {
 
 const animationManager = new AnimationManager();
 
-window.AnimationManager = AnimationManager;
+// Экспорт удален - регистрация происходит через Application.services
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { AnimationManager, animationManager };

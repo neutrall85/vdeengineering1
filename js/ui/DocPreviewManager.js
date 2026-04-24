@@ -53,5 +53,4 @@ class DocPreviewManager {
   }
 }
 
-// Экспортируем глобально
-window.DocPreviewManager = new DocPreviewManager();
+// Экспорт удален - регистрация происходит через Application.services
