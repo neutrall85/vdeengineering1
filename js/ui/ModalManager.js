@@ -220,8 +220,13 @@ class ModalManager {
       : null;
     
     // Разблокируем скролл только если нет родительской модалки
+    // ScrollManager сам посчитает количество блокировок через lockCount
     if (!previousModal) {
       ScrollManager.unlock();
+    } else {
+      // Если есть родительская модалка, уменьшаем счётчик блокировок
+      // так как вложенная модалка закрывается
+      ScrollManager.state.lockCount--;
     }
     
     this.activeModal = previousModal;
