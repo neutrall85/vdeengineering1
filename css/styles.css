@@ -82,7 +82,7 @@ textarea:focus-visible,
   --shadow-2xl: 0 25px 45px rgba(0, 0, 0, 0.18);
   --shadow-orange: 0 4px 15px rgba(var(--vd-orange-rgb), 0.3);
   --shadow-primary: 0 4px 15px rgba(0, 78, 150, 0.3);
-  --shadow-nav: -5px 0 30px rgba(0, 0, 0, 0.3);
+  /* --shadow-nav: -5px 0 30px rgba(0, 0, 0, 0.3); */
 
   /* Отступы (шкала spacing) */
   --space-1: 0.25rem;
@@ -138,7 +138,6 @@ body {
 /* Блокировка скролла при открытом модальном окне или мобильном меню */
 body.no-scroll {
   overflow: hidden;
-  padding-right: var(--scrollbar-width, 0px);
 }
 
 /* Фиксация позиции скролла с сохранением текущей прокрутки */
@@ -147,7 +146,6 @@ body.no-scroll-fixed {
   width: 100%;
   top: var(--scroll-position, 0);
   overflow: hidden;
-  padding-right: var(--scrollbar-width, 0px);
 }
 
 /* ==================== НАВИГАЦИЯ ==================== */
@@ -392,7 +390,7 @@ body.app-ready>footer {
   position: fixed;
   top: 0;
   right: 0;
-  width: 180px;
+  width: 220px;
   max-width: 75%;
   height: 100dvh;
   background: rgba(255, 255, 255, 0.1);
@@ -4650,40 +4648,39 @@ body.app-ready>footer {
   .hero-stats {
     display: flex;
     justify-content: space-between;
-    /* Равномерное распределение */
+    justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid rgba(0, 78, 150, 0.15);
     flex-wrap: wrap;
-    /* Разрешаем перенос на мобильных */
     overflow-x: visible;
   }
 
   .stat-item {
-    flex: 1 1 auto;
-    min-width: 70px;
+    flex: 0 0 calc(50% - 0.25rem);
+    max-width: calc(50% - 0.5rem);
+    min-width: unset;
     padding: 0.5rem 0.25rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    word-wrap: normal;
+    overflow-wrap: normal;
   }
 
   .stat-number {
     font-size: 1.2rem;
     margin-bottom: 0.25rem;
     white-space: nowrap;
-    /* Цифры не переносим */
   }
 
   .stat-label {
     font-size: 0.65rem;
     line-height: 1.2;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
+    word-wrap: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
     white-space: normal;
     display: block;
   }
