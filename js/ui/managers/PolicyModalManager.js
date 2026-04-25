@@ -22,8 +22,9 @@ const PolicyModalManager = {
     /**
      * Открытие модального окна с текстом политики
      * @param {string} policyKey - ключ политики (terms, privacy, personal-data, cookies)
+     * @param {boolean} keepParentModal - если true, не закрывать родительскую модалку
      */
-    openPolicyModal(policyKey) {
+    openPolicyModal(policyKey, keepParentModal = true) {
         const policy = POLICY_DOCUMENTS[policyKey];
         if (!policy) {
             Logger.WARN(`Policy "${policyKey}" not found`);
@@ -44,7 +45,7 @@ const PolicyModalManager = {
 
         // Открываем через ModalManager - все манипуляции со скроллом только через ScrollManager
         if (typeof modalManager !== 'undefined') {
-            modalManager.open('policy');
+            modalManager.open('policy', { keepParentModal });
         } else {
             Logger.WARN('ModalManager not available for policy modal');
         }
