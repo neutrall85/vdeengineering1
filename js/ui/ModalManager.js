@@ -12,6 +12,7 @@ class ModalManager {
   constructor() {
     this.modals = new Map();
     this.activeModal = null;
+    this.activeModalStack = []; // Стек для хранения родительских модалок
     this.cleanupHandlers = new Map();
     this._boundKeyHandler = null;
     this._initGlobalHandlers();
@@ -155,8 +156,14 @@ class ModalManager {
       return true;
     }
 
-    if (this.activeModal && this.activeModal !== key) {
+    // Проверяем флаг keepParentModal - если true, не закрываем текущую модалку, а сохраняем в стек
+    const keepParentModal = options.keepParentModal === true;
+    
+    if (this.activeModal && this.activeModal !== key && !keepParentModal) {
       this.close(this.activeModal);
+    } else if (this.activeModal && this.activeModal !== key && keepParentModal) {
+      // Сохраняем текущую модалку в стек для последующего восстановления
+      this.activeModalStack.push(this.activeModal);
     }
 
     const overlay = document.getElementById(config.overlayId);
@@ -207,13 +214,20 @@ class ModalManager {
 
     overlay.classList.remove('active');
     
-    // Разблокируем скролл через ScrollManager
-    ScrollManager.unlock();
+    // Проверяем, есть ли родительская модалка, которую нужно восстановить как активную
+    const previousModal = this.activeModalStack && this.activeModalStack.length > 0 
+      ? this.activeModalStack.pop() 
+      : null;
     
-    this.activeModal = null;
+    // Разблокируем скролл только если нет родительской модалки
+    if (!previousModal) {
+      ScrollManager.unlock();
+    }
+    
+    this.activeModal = previousModal;
 
-    // Сброс формы КП после закрытия модалки
-    if (key === 'proposal' && typeof formManager !== 'undefined' && typeof formManager._resetForm === 'function') {
+    // Сброс формы КП после закрытия модалки (только если это не вложенная модалка)
+    if (key === 'proposal' && !previousModal && typeof formManager !== 'undefined' && typeof formManager._resetForm === 'function') {
       formManager._resetForm();
     }
 
@@ -249,6 +263,7 @@ class ModalManager {
     }
     this.modals.clear();
     this.activeModal = null;
+    this.activeModalStack = [];
   }
 }
 
