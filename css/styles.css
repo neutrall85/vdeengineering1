@@ -5494,13 +5494,17 @@ body.app-ready>footer {
 
 @media (max-width: 768px) {
   .error-page-container {
-    min-height: calc(100vh - var(--navbar-height) - 150px);
-    padding: 2rem 5%;
+    min-height: calc(100vh - var(--navbar-height) - 100px);
+    padding: 1.5rem 5%;
+  }
+
+  .error-page-graphic {
+    margin-bottom: 1.5rem;
   }
 
   .error-plane-icon {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
   }
 
   .error-actions {
