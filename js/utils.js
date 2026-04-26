@@ -86,11 +86,28 @@ const Utils = (function() {
       };
       
       element.addEventListener('keydown', handler);
+      // Возвращаем функцию очистки для предотвращения утечек памяти
       return () => element.removeEventListener('keydown', handler);
     },
 
-    // Удалено: используйте ScrollManager.lock()/unlock() вместо этого метода
-    // toggleBodyScroll(disable) { ... }
+    /**
+     * Добавляет обработчик blur для автопрефикса телефона
+     * Возвращает функцию очистки для предотвращения утечек памяти
+     * @param {HTMLInputElement} inputElement - поле ввода
+     * @returns {Function} функция очистки
+     */
+    setupPhoneAutoPrefix(inputElement) {
+      if (!inputElement) return null;
+      
+      const handler = function() {
+        this.value = Utils.PhoneUtils.addPrefix(this.value);
+      };
+      
+      inputElement.addEventListener('blur', handler);
+      
+      // Возвращаем функцию очистки
+      return () => inputElement.removeEventListener('blur', handler);
+    },
 
     setAttributes(element, attributes) {
       Object.entries(attributes).forEach(([key, value]) => {
@@ -237,13 +254,19 @@ const Utils = (function() {
     /**
      * Применяет автопрефикс к полю ввода
      * @param {HTMLInputElement} inputElement - поле ввода
+     * @returns {Function|null} функция очистки обработчика
      */
     setupAutoPrefix(inputElement) {
-      if (!inputElement) return;
+      if (!inputElement) return null;
       
-      inputElement.addEventListener('blur', function() {
+      const handler = function() {
         this.value = PhoneUtils.addPrefix(this.value);
-      });
+      };
+      
+      inputElement.addEventListener('blur', handler);
+      
+      // Возвращаем функцию очистки для предотвращения утечек памяти
+      return () => inputElement.removeEventListener('blur', handler);
     }
   };
 

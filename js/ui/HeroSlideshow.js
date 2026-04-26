@@ -11,6 +11,8 @@ class HeroSlideshow {
     this.currentSlide = 0;
     this.slideInterval = 4000; // 4 секунды между слайдами
     this.intervalId = null;
+    this.boundMouseEnterHandler = null;
+    this.boundMouseLeaveHandler = null;
     
     this.init();
   }
@@ -21,8 +23,10 @@ class HeroSlideshow {
     this.startAutoPlay();
     
     // Пауза при наведении
-    this.container.addEventListener('mouseenter', () => this.pause());
-    this.container.addEventListener('mouseleave', () => this.resume());
+    this.boundMouseEnterHandler = () => this.pause();
+    this.boundMouseLeaveHandler = () => this.resume();
+    this.container.addEventListener('mouseenter', this.boundMouseEnterHandler);
+    this.container.addEventListener('mouseleave', this.boundMouseLeaveHandler);
   }
   
   startAutoPlay() {
@@ -58,7 +62,18 @@ class HeroSlideshow {
   destroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
+      this.intervalId = null;
     }
+    if (this.boundMouseEnterHandler && this.container) {
+      this.container.removeEventListener('mouseenter', this.boundMouseEnterHandler);
+    }
+    if (this.boundMouseLeaveHandler && this.container) {
+      this.container.removeEventListener('mouseleave', this.boundMouseLeaveHandler);
+    }
+    this.boundMouseEnterHandler = null;
+    this.boundMouseLeaveHandler = null;
+    this.container = null;
+    this.slides = null;
   }
 }
 

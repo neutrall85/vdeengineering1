@@ -6,6 +6,8 @@
 
 const UniversalApplicationModalManager = {
     formValidator: null,
+    _phoneCleanup: null,
+    _formValidHandler: null,
 
     /**
      * Инициализация универсального модального окна
@@ -15,6 +17,32 @@ const UniversalApplicationModalManager = {
         this._setupFormValidation();
         this._setupPhoneInput();
         this._setupFileUpload();
+    },
+
+    /**
+     * Очистка ресурсов при уничтожении
+     */
+    destroy() {
+        // Очищаем валидатор формы
+        if (this.formValidator && typeof this.formValidator.destroy === 'function') {
+            this.formValidator.destroy();
+            this.formValidator = null;
+        }
+
+        // Очищаем обработчик телефона
+        if (this._phoneCleanup && typeof this._phoneCleanup === 'function') {
+            this._phoneCleanup();
+            this._phoneCleanup = null;
+        }
+
+        // Удаляем обработчик form:valid
+        const universalForm = document.getElementById('universalApplicationForm');
+        if (universalForm && this._formValidHandler) {
+            universalForm.removeEventListener('form:valid', this._formValidHandler);
+            this._formValidHandler = null;
+        }
+
+        Logger.INFO('UniversalApplicationModalManager destroyed');
     },
 
     /**
@@ -129,7 +157,8 @@ const UniversalApplicationModalManager = {
     _setupPhoneInput() {
         const phoneInput = document.getElementById('universalPhone');
         if (phoneInput && Utils.PhoneUtils) {
-            Utils.PhoneUtils.setupAutoPrefix(phoneInput);
+            // Сохраняем функцию очистки для последующего удаления обработчика
+            this._phoneCleanup = Utils.PhoneUtils.setupAutoPrefix(phoneInput);
         }
     },
 

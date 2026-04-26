@@ -80,9 +80,24 @@ class AnimationManager {
     update();
   }
 
+  /**
+   * Очистка ресурсов при уничтожении
+   */
   destroy() {
-    this.observers.forEach(observer => observer.disconnect());
+    // Отключаем Observer для fade-in анимаций
+    if (this.fadeObserver) {
+      this.fadeObserver.disconnect();
+      this.fadeObserver = null;
+    }
+    
+    // Отключаем Observer для счётчиков
+    if (this.counterObserver) {
+      this.counterObserver.disconnect();
+      this.counterObserver = null;
+    }
+    
     this.observers = [];
+    Logger.INFO('AnimationManager destroyed');
   }
 }
 

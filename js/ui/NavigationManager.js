@@ -239,10 +239,11 @@ class NavigationManager {
 
   _initScrollToTop() {
     if (this.scrollToTopBtn) {
-      this.scrollToTopBtn.addEventListener('click', (e) => {
+      this._boundScrollToTopClick = (e) => {
         e.preventDefault();
         this.scrollToTop();
-      });
+      };
+      this.scrollToTopBtn.addEventListener('click', this._boundScrollToTopClick);
     }
   }
 
@@ -350,6 +351,9 @@ class NavigationManager {
     }
     if (this.boundMenuClickHandler && this.mobileMenu) {
       this.mobileMenu.removeEventListener('click', this.boundMenuClickHandler);
+    }
+    if (this._boundScrollToTopClick && this.scrollToTopBtn) {
+      this.scrollToTopBtn.removeEventListener('click', this._boundScrollToTopClick);
     }
     
     // Удаляем обработчики кликов по ссылкам

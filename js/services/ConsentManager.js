@@ -215,47 +215,57 @@ const ConsentManager = {
   _attachEvents() {
     const storage = window.Services.storage;
     
-    // Кнопки cookie баннера
-    document.getElementById('user-accept-all')?.addEventListener('click', () => {
+    // Сохраняем обработчики для последующего удаления
+    this._boundAcceptHandler = () => {
       this.saveConsent({
         functional: true,
         analytics: true,
         marketing: true
       }, storage);
-    });
-
-    document.getElementById('user-reject-all')?.addEventListener('click', () => {
+    };
+    
+    this._boundRejectHandler = () => {
       this.saveConsent({
         functional: true,
         analytics: false,
         marketing: false
       }, storage);
-    });
-
-    // Ссылка на политику конфиденциальности
-    document.getElementById('user-privacy-link')?.addEventListener('click', (e) => {
+    };
+    
+    this._boundPrivacyLinkHandler = (e) => {
       e.preventDefault();
       if (typeof PolicyModalManager !== 'undefined') {
         PolicyModalManager.openPolicyModal('privacy');
       } else {
         Logger.WARN('PolicyModalManager not available for privacy link');
       }
-    });
-
-    // Ссылка на политику в отношении файлов cookie
-    document.getElementById('user-cookie-policy-link')?.addEventListener('click', (e) => {
+    };
+    
+    this._boundCookieLinkHandler = (e) => {
       e.preventDefault();
       if (typeof PolicyModalManager !== 'undefined') {
         PolicyModalManager.openPolicyModal('cookies');
       } else {
         Logger.WARN('PolicyModalManager not available for cookies link');
       }
-    });
-
-    // Кнопка отзыва согласия
-    document.getElementById('user-settings-icon')?.addEventListener('click', () => {
+    };
+    
+    this._boundSettingsIconHandler = () => {
       this.withdrawConsent(storage);
-    });
+    };
+    
+    // Кнопки cookie баннера
+    const acceptBtn = document.getElementById('user-accept-all');
+    const rejectBtn = document.getElementById('user-reject-all');
+    const privacyLink = document.getElementById('user-privacy-link');
+    const cookieLink = document.getElementById('user-cookie-policy-link');
+    const settingsIcon = document.getElementById('user-settings-icon');
+    
+    if (acceptBtn) acceptBtn.addEventListener('click', this._boundAcceptHandler);
+    if (rejectBtn) rejectBtn.addEventListener('click', this._boundRejectHandler);
+    if (privacyLink) privacyLink.addEventListener('click', this._boundPrivacyLinkHandler);
+    if (cookieLink) cookieLink.addEventListener('click', this._boundCookieLinkHandler);
+    if (settingsIcon) settingsIcon.addEventListener('click', this._boundSettingsIconHandler);
   },
 
   /**
@@ -338,6 +348,43 @@ const ConsentManager = {
       clearTimeout(this.state.recoveryTimer);
       this.state.recoveryTimer = null;
     }
+    
+    // Удаляем обработчики событий баннера
+    const acceptBtn = document.getElementById('user-accept-all');
+    const rejectBtn = document.getElementById('user-reject-all');
+    const privacyLink = document.getElementById('user-privacy-link');
+    const cookieLink = document.getElementById('user-cookie-policy-link');
+    const settingsIcon = document.getElementById('user-settings-icon');
+    
+    if (acceptBtn && this._boundAcceptHandler) {
+      acceptBtn.removeEventListener('click', this._boundAcceptHandler);
+    }
+    if (rejectBtn && this._boundRejectHandler) {
+      rejectBtn.removeEventListener('click', this._boundRejectHandler);
+    }
+    if (privacyLink && this._boundPrivacyLinkHandler) {
+      privacyLink.removeEventListener('click', this._boundPrivacyLinkHandler);
+    }
+    if (cookieLink && this._boundCookieLinkHandler) {
+      cookieLink.removeEventListener('click', this._boundCookieLinkHandler);
+    }
+    if (settingsIcon && this._boundSettingsIconHandler) {
+      settingsIcon.removeEventListener('click', this._boundSettingsIconHandler);
+    }
+    
+    // Очищаем ссылки на обработчики
+    this._boundAcceptHandler = null;
+    this._boundRejectHandler = null;
+    this._boundPrivacyLinkHandler = null;
+    this._boundCookieLinkHandler = null;
+    this._boundSettingsIconHandler = null;
+    
+    // Очищаем ссылки на DOM-элементы
+    this.state.banner = null;
+    this.state.settingsIcon = null;
+    this.state.eventBus = null;
+    
+    Logger.INFO('[ConsentManager] Destroyed');
   }
 };
 

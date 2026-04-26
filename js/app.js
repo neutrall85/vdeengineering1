@@ -9,6 +9,13 @@ class Application {
     this.modules = [];
     this.errors = [];
     this.services = {};
+    this._modalsRegistered = false;
+    // Ссылки на обработчики для очистки
+    this._globalInputHandler = null;
+    this._prefersReducedMotionHandler = null;
+    this._floatingCtaObserver = null;
+    this._lazyImageObserver = null;
+    this._componentsLoadedHandler = null;
   }
 
   async init() {
@@ -20,11 +27,11 @@ class Application {
       if (typeof ComponentLoader !== 'undefined') {
         const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
         const componentsLoadedPromise = new Promise((resolve) => {
-          const onComponentsLoaded = () => {
-            document.removeEventListener('components:loaded', onComponentsLoaded);
+          this._componentsLoadedHandler = () => {
+            document.removeEventListener('components:loaded', this._componentsLoadedHandler);
             resolve();
           };
-          document.addEventListener('components:loaded', onComponentsLoaded);
+          document.addEventListener('components:loaded', this._componentsLoadedHandler);
           ComponentLoader.init({ 
             loadNavbar: true, 
             loadFooter: true, 
@@ -94,6 +101,67 @@ class Application {
     } catch (error) {
       this._showError(error);
     }
+  }
+
+  /**
+   * Корректное завершение работы приложения и очистка ресурсов
+   */
+  destroy() {
+    // Останавливаем модули в обратном порядке
+    for (let i = this.modules.length - 1; i >= 0; i--) {
+      const module = this.modules[i];
+      if (module && typeof module.destroy === 'function') {
+        try {
+          module.destroy();
+        } catch (err) {
+          Logger.ERROR(`Module ${module.constructor?.name || 'unknown'} destroy failed:`, err);
+        }
+      }
+    }
+    
+    // Удаляем глобальный обработчик input для textarea
+    if (this._globalInputHandler) {
+      document.removeEventListener('input', this._globalInputHandler);
+      this._globalInputHandler = null;
+    }
+    
+    // Удаляем обработчик prefers-reduced-motion
+    if (this._prefersReducedMotionHandler) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      prefersReducedMotion.removeEventListener('change', this._prefersReducedMotionHandler);
+      this._prefersReducedMotionHandler = null;
+    }
+    
+    // Отключаем IntersectionObserver для плавающей кнопки CTA
+    if (this._floatingCtaObserver) {
+      this._floatingCtaObserver.disconnect();
+      this._floatingCtaObserver = null;
+    }
+    
+    // Отключаем IntersectionObserver для ленивой загрузки изображений
+    if (this._lazyImageObserver) {
+      this._lazyImageObserver.disconnect();
+      this._lazyImageObserver = null;
+    }
+    
+    // Удаляем обработчик components:loaded если он ещё активен
+    if (this._componentsLoadedHandler) {
+      document.removeEventListener('components:loaded', this._componentsLoadedHandler);
+      this._componentsLoadedHandler = null;
+    }
+    
+    // Очищаем сервисы
+    Object.keys(this.services).forEach(key => {
+      this.services[key] = null;
+    });
+    
+    this.modules = [];
+    this.errors = [];
+    this.services = {};
+    this.initialized = false;
+    this._modalsRegistered = false;
+    
+    Logger.INFO('Application destroyed');
   }
 
   _registerModules() {
@@ -268,7 +336,7 @@ class Application {
 
     if (!floatingBtn) return;
 
-    floatingBtn.addEventListener('click', () => {
+    const clickHandler = () => {
       if (typeof modalManager !== 'undefined') {
         modalManager.open('proposal');
       } else if (window.App?.services?.modalManager) {
@@ -276,13 +344,16 @@ class Application {
       } else if (typeof window.openModal === 'function') {
         window.openModal();
       }
-    }, { passive: true });
+    };
+    
+    floatingBtn.addEventListener('click', clickHandler, { passive: true });
+    this._floatingCtaClickHandler = clickHandler;
 
     let heroExited = false;
     
     const heroSection = document.querySelector('.hero, header');
     if (heroSection) {
-      const heroObserver = new IntersectionObserver((entries) => {
+      this._floatingCtaObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) {
             heroExited = true;
@@ -294,7 +365,7 @@ class Application {
         });
       }, { threshold: 0 });
       
-      heroObserver.observe(heroSection);
+      this._floatingCtaObserver.observe(heroSection);
     }
   }
 
@@ -302,7 +373,7 @@ class Application {
     const lazyImages = document.querySelectorAll('img[data-src]');
     
     if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
+      this._lazyImageObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const img = entry.target;
@@ -312,12 +383,12 @@ class Application {
               img.removeAttribute('data-src');
               img.classList.add('loaded');
             }
-            imageObserver.unobserve(img);
+            this._lazyImageObserver.unobserve(img);
           }
         });
       }, { rootMargin: '100px' });
       
-      lazyImages.forEach(img => imageObserver.observe(img));
+      lazyImages.forEach(img => this._lazyImageObserver.observe(img));
     } else {
       lazyImages.forEach(img => {
         const src = img.getAttribute('data-src');
@@ -348,13 +419,15 @@ class Application {
       document.head.appendChild(style);
     }
     
-    prefersReducedMotion.addEventListener('change', (e) => {
+    this._prefersReducedMotionHandler = (e) => {
       if (e.matches) {
         document.body.classList.add('reduced-motion');
       } else {
         document.body.classList.remove('reduced-motion');
       }
-    });
+    };
+    
+    prefersReducedMotion.addEventListener('change', this._prefersReducedMotionHandler);
   }
 
   _handleHashScroll() {
@@ -516,9 +589,17 @@ if (document.readyState === 'loading') {
   initApp();
 }
 
-document.addEventListener('input', function(e) {
+// Глобальный обработчик для авто-высоты textarea - сохранена ссылка для очистки
+const globalInputHandler = function(e) {
   if (e.target.tagName === 'TEXTAREA' && e.target.classList.contains('form-textarea')) {
     e.target.style.height = 'auto';
     e.target.style.height = (e.target.scrollHeight) + 'px';
   }
-});
+};
+
+document.addEventListener('input', globalInputHandler);
+
+// Сохраняем ссылку в App для последующей очистки
+if (window.App) {
+  window.App._globalInputHandler = globalInputHandler;
+}

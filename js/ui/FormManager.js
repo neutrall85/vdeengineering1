@@ -16,6 +16,13 @@ class FormManager {
     this.formValidator = null;
     this.isSubmitting = false;
     this.submitTimeoutId = null;
+    this.uploadWarningTimeout = null;
+    // Ссылки на обработчики для очистки
+    this._fileInputHandlers = new Map();
+    this._fileDropHandlers = new Map();
+    this._containerClickHandlers = new Map();
+    this._boundSubmitHandler = null;
+    this._boundFloatingBtnClick = null;
   }
 
   init() {
@@ -89,36 +96,40 @@ class FormManager {
       fileInput.setAttribute('multiple', 'multiple');
       
       // Проверяем, был ли уже добавлен обработчик change для этого input
-      if (fileInput._changeHandlerAttached) return;
+      if (this._fileInputHandlers.has(fileInput)) return;
       
       // Обработчик выбора файлов через input
-      fileInput.addEventListener('change', (e) => {
+      const changeHandler = (e) => {
         this._handleFileSelect(e.target.files, fileDrop);
-      });
-      fileInput._changeHandlerAttached = true;
+      };
+      fileInput.addEventListener('change', changeHandler);
+      this._fileInputHandlers.set(fileInput, changeHandler);
 
       // Проверяем, были ли уже добавлены drag & drop обработчики
-      if (fileDrop._dragDropHandlerAttached) return;
+      if (this._fileDropHandlers.has(fileDrop)) return;
       
       // Drag & drop обработчики
-      fileDrop.addEventListener('dragover', (e) => {
+      const dragOverHandler = (e) => {
         e.preventDefault();
         fileDrop.style.borderColor = 'var(--vd-blue)';
         fileDrop.style.background = 'rgba(0, 51, 160, 0.05)';
-      });
-
-      fileDrop.addEventListener('dragleave', () => {
+      };
+      const dragLeaveHandler = () => {
         fileDrop.style.borderColor = '';
         fileDrop.style.background = '';
-      });
-
-      fileDrop.addEventListener('drop', (e) => {
+      };
+      const dropHandler = (e) => {
         e.preventDefault();
         fileDrop.style.borderColor = '';
         fileDrop.style.background = '';
         this._handleFileSelect(e.dataTransfer.files, fileDrop);
-      });
-      fileDrop._dragDropHandlerAttached = true;
+      };
+      
+      fileDrop.addEventListener('dragover', dragOverHandler);
+      fileDrop.addEventListener('dragleave', dragLeaveHandler);
+      fileDrop.addEventListener('drop', dropHandler);
+      
+      this._fileDropHandlers.set(fileDrop, { dragOverHandler, dragLeaveHandler, dropHandler });
     });
   }
 
@@ -253,8 +264,7 @@ class FormManager {
       });
 
       // Используем делегирование событий для кнопок удаления - вешаем обработчик только один раз на контейнер
-      // Удаляем старый обработчик если он был, чтобы избежать дублирования при перерисовке
-      const oldHandler = container._clickHandler;
+      const oldHandler = this._containerClickHandlers.get(container);
       if (oldHandler) {
         container.removeEventListener('click', oldHandler);
       }
@@ -270,7 +280,7 @@ class FormManager {
       };
       
       container.addEventListener('click', clickHandler);
-      container._clickHandler = clickHandler;
+      this._containerClickHandlers.set(container, clickHandler);
       
       // Обновляем текст в зоне загрузки
       const fileDropText = fileDrop?.querySelector('.form-file-text');
@@ -415,19 +425,28 @@ class FormManager {
         consent: 'Необходимо согласие на обработку данных'
       }
     });
+    
+    // Сохраняем ссылку на обработчик submit для последующего удаления
+    this._boundFormValidatorSubmit = (e) => {
+      e.preventDefault();
+      this.formValidator.validate();
+    };
+    form.addEventListener('submit', this._boundFormValidatorSubmit);
   }
 
   _initFormSubmit() {
     const form = document.getElementById('proposalForm');
     if (form) {
-      form.addEventListener('submit', (e) => this._handleSubmit(e));
+      this._boundSubmitHandler = (e) => this._handleSubmit(e);
+      form.addEventListener('submit', this._boundSubmitHandler);
     }
   }
 
   _initFloatingButton() {
     const btn = document.querySelector('.floating-cta-btn');
     if (btn) {
-      btn.addEventListener('click', () => this.openModal());
+      this._boundFloatingBtnClick = () => this.openModal();
+      btn.addEventListener('click', this._boundFloatingBtnClick);
     }
   }
 
@@ -602,6 +621,77 @@ class FormManager {
     // Находим зону загрузки для сброса текста
     const fileDrop = document.querySelector('#fileDrop');
     this._renderFileList(fileDrop);
+  }
+
+  /**
+   * Очистка ресурсов при уничтожении
+   */
+  destroy() {
+    // Очищаем таймауты
+    if (this.submitTimeoutId) {
+      clearTimeout(this.submitTimeoutId);
+      this.submitTimeoutId = null;
+    }
+    if (this.uploadWarningTimeout) {
+      clearTimeout(this.uploadWarningTimeout);
+      this.uploadWarningTimeout = null;
+    }
+
+    // Удаляем обработчики file input
+    this._fileInputHandlers.forEach((handler, input) => {
+      input.removeEventListener('change', handler);
+    });
+    this._fileInputHandlers.clear();
+
+    // Удаляем обработчики file drop
+    this._fileDropHandlers.forEach((handlers, fileDrop) => {
+      fileDrop.removeEventListener('dragover', handlers.dragOverHandler);
+      fileDrop.removeEventListener('dragleave', handlers.dragLeaveHandler);
+      fileDrop.removeEventListener('drop', handlers.dropHandler);
+    });
+    this._fileDropHandlers.clear();
+
+    // Удаляем обработчики кликов по контейнерам
+    this._containerClickHandlers.forEach((handler, container) => {
+      container.removeEventListener('click', handler);
+    });
+    this._containerClickHandlers.clear();
+
+    // Удаляем обработчик submit формы
+    if (this._boundSubmitHandler) {
+      const form = document.getElementById('proposalForm');
+      if (form) {
+        form.removeEventListener('submit', this._boundSubmitHandler);
+      }
+      this._boundSubmitHandler = null;
+    }
+
+    // Удаляем обработчик плавающей кнопки
+    if (this._boundFloatingBtnClick) {
+      const btn = document.querySelector('.floating-cta-btn');
+      if (btn) {
+        btn.removeEventListener('click', this._boundFloatingBtnClick);
+      }
+      this._boundFloatingBtnClick = null;
+    }
+
+    // Удаляем обработчик валидатора формы
+    if (this._boundFormValidatorSubmit) {
+      const form = document.getElementById('proposalForm');
+      if (form) {
+        form.removeEventListener('submit', this._boundFormValidatorSubmit);
+      }
+      this._boundFormValidatorSubmit = null;
+    }
+
+    // Сбрасываем ссылки на данные
+    this.currentFiles = [];
+    this.formValidator = null;
+    this.apiClient = null;
+    this.rateLimiter = null;
+    this.validator = null;
+
+    Logger.INFO('FormManager destroyed');
   }
 }
 

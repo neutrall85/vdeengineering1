@@ -54,7 +54,9 @@ const FormValidation = (function() {
         this._attachInputListeners();
       }
 
-      this.form.addEventListener('submit', (e) => this._handleSubmit(e));
+      // Сохраняем ссылку на обработчик для последующего удаления
+      this._boundSubmitHandler = (e) => this._handleSubmit(e);
+      this.form.addEventListener('submit', this._boundSubmitHandler);
     }
 
     _collectFields() {
@@ -129,14 +131,21 @@ const FormValidation = (function() {
       this.fields.forEach((fieldData, name) => {
         const { element } = fieldData;
         
-        element.addEventListener('input', () => {
+        // Сохраняем обработчики для последующего удаления
+        const inputHandler = () => {
           this.validateField(name);
           this._clearError(name);
-        });
-
-        element.addEventListener('blur', () => {
+        };
+        const blurHandler = () => {
           this.validateField(name);
-        });
+        };
+        
+        element.addEventListener('input', inputHandler);
+        element.addEventListener('blur', blurHandler);
+        
+        // Сохраняем ссылки на обработчики
+        fieldData.inputHandler = inputHandler;
+        fieldData.blurHandler = blurHandler;
       });
     }
 
@@ -319,6 +328,36 @@ const FormValidation = (function() {
       });
 
       return data;
+    }
+
+    /**
+     * Очистка ресурсов при уничтожении
+     */
+    destroy() {
+      // Удаляем обработчик submit
+      if (this._boundSubmitHandler) {
+        this.form.removeEventListener('submit', this._boundSubmitHandler);
+        this._boundSubmitHandler = null;
+      }
+
+      // Удаляем обработчики input и blur с полей
+      this.fields.forEach((fieldData) => {
+        const { element, inputHandler, blurHandler } = fieldData;
+        if (element) {
+          if (inputHandler) {
+            element.removeEventListener('input', inputHandler);
+          }
+          if (blurHandler) {
+            element.removeEventListener('blur', blurHandler);
+          }
+        }
+      });
+
+      // Очищаем ссылки
+      this.form = null;
+      this.fields.clear();
+      this.errors.clear();
+      this.options = null;
     }
   }
 
