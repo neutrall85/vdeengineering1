@@ -165,7 +165,10 @@ function openServiceModal(title, details, category) {
     });
     modalContent.appendChild(ul);
 
-    if (typeof modalManager !== 'undefined') {
+    // Используем централизованный ModalHelpers
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('service');
+    } else if (typeof modalManager !== 'undefined') {
       modalManager.open('service');
     } else {
       console.warn('ModalManager not available');
@@ -174,7 +177,10 @@ function openServiceModal(title, details, category) {
 }
 
 function closeServiceModal() {
-  if (typeof modalManager !== 'undefined') {
+  // Используем централизованный ModalHelpers
+  if (typeof ModalHelpers !== 'undefined') {
+    ModalHelpers.close('service');
+  } else if (typeof modalManager !== 'undefined') {
     modalManager.close('service');
   }
 }
