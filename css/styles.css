@@ -1356,7 +1356,7 @@ body.app-ready>footer {
 .modal-container,
 .details-modal-container {
   background: white;
-  border-radius: 32px 32px 0 0;
+  border-radius: 32px;
   width: 100%;
   max-width: 650px;
   max-height: 90vh;
@@ -1401,7 +1401,7 @@ body.app-ready>footer {
   cursor: zoom-in;
   transition: opacity 0.2s ease;
   flex-shrink: 0;
-  border-radius: 0 0 32px 32px;
+  border-radius: 32px;
 }
 
 .modal-container .modal-image:hover {
