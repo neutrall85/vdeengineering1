@@ -1,5 +1,5 @@
 // Данные услуг (12 пунктов) с детальными списками для модальных окон
-const servicesData = {
+window.servicesData = {
   1: {
     title: 'Модификация конструкции планера',
     details: [
@@ -178,6 +178,10 @@ function closeServiceModal() {
     modalManager.close('service');
   }
 }
+
+// Экспортируем функции в глобальную область
+window.openServiceModal = openServiceModal;
+window.closeServiceModal = closeServiceModal;
 
 // Инициализация страницы: обработчики теперь централизованы в ModalManager через data-modal-open
 window.initServicesPage = function() {
