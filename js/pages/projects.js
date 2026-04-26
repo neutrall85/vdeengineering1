@@ -18,6 +18,8 @@ function initProjectsPage() {
   }
   window._projectsPageInitialized = true;
 
+  // Обработчики для кнопок "Подробнее" теперь централизованы в ModalManager через data-modal-open
+  
   const requestQuoteBtn = document.getElementById('projectsRequestQuoteBtn');
   if (requestQuoteBtn) {
     requestQuoteBtn.addEventListener('click', handleRequestQuote);
@@ -25,9 +27,12 @@ function initProjectsPage() {
 }
 
 function handleRequestQuote() {
-  if (typeof window.openApplicationModal === 'function') {
-    window.openApplicationModal();
-  }
+  // Используем централизованное открытие через data-modal-open="application"
+  const fakeTrigger = document.createElement('button');
+  fakeTrigger.setAttribute('data-modal-open', 'application');
+  document.body.appendChild(fakeTrigger);
+  fakeTrigger.click();
+  document.body.removeChild(fakeTrigger);
 }
 
 function openProjectModal(title, details, images, category) {

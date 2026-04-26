@@ -179,22 +179,8 @@ function closeServiceModal() {
   }
 }
 
-// Инициализация страницы: назначение обработчиков кнопкам "Подробнее"
+// Инициализация страницы: обработчики теперь централизованы в ModalManager через data-modal-open
 window.initServicesPage = function() {
-  const serviceButtons = document.querySelectorAll('.service-details-btn');
-  serviceButtons.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const serviceId = this.getAttribute('data-service-id');
-      const service = servicesData[serviceId];
-      if (service) {
-        openServiceModal(service.title, service.details, service.category);
-      } else {
-        console.warn(`Service with id ${serviceId} not found`);
-      }
-    });
-  });
-
   const closeBtn = document.getElementById('serviceModalCloseBtn');
   if (closeBtn) {
     closeBtn.addEventListener('click', closeServiceModal);

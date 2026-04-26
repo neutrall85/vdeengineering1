@@ -144,8 +144,6 @@ class ModalManager {
       // Закрываем через ModalManager если модалка зарегистрирована
       if (modalKey && this.modals.has(modalKey)) {
         this.close(modalKey);
-      } else if (overlayId === 'universalApplicationModalOverlay' && typeof window.closeUniversalApplicationModal === 'function') {
-        window.closeUniversalApplicationModal();
       } else {
         // Fallback для незарегистрированных модалок
         overlay.classList.remove('active');
@@ -153,6 +151,163 @@ class ModalManager {
       }
     };
     document.addEventListener('click', this._boundClickHandler, { capture: false });
+    
+    // Глобальный делегированный обработчик для открытия модалок через data-modal-open
+    this._boundOpenHandler = (e) => {
+      const trigger = e.target.closest('[data-modal-open]');
+      if (!trigger) return;
+      
+      const modalType = trigger.getAttribute('data-modal-open');
+      if (!modalType) return;
+      
+      e.preventDefault();
+      this._handleModalOpen(modalType, trigger);
+    };
+    document.addEventListener('click', this._boundOpenHandler, { capture: false });
+  }
+
+  /**
+   * Централизованная обработка открытия модалок
+   * @param {string} modalType - тип модалки из data-modal-open
+   * @param {HTMLElement} trigger - элемент-триггер
+   */
+  _handleModalOpen(modalType, trigger) {
+    switch (modalType) {
+      case 'proposal':
+      case 'form':
+        this.open('proposal');
+        break;
+        
+      case 'application':
+      case 'universal':
+        this._openUniversalApplication(trigger);
+        break;
+        
+      case 'project':
+        this._openProject(trigger);
+        break;
+        
+      case 'service':
+        this._openService(trigger);
+        break;
+        
+      default:
+        Logger.WARN(`Unknown modal type: ${modalType}`);
+    }
+  }
+
+  /**
+   * Открывает универсальное модальное окно заявки
+   */
+  _openUniversalApplication(trigger) {
+    const vacancyId = trigger ? trigger.getAttribute('data-vacancy-id') : null;
+    const mode = vacancyId ? 'vacancy' : 'application';
+    
+    const modalTitle = document.getElementById('universalApplicationModalTitle');
+    const modalSubtitle = document.getElementById('universalApplicationModalSubtitle');
+    const submitBtnText = document.getElementById('universalSubmitBtnText');
+    const successTitle = document.getElementById('universalSuccessTitle');
+    
+    if (mode === 'application') {
+      if (modalTitle) modalTitle.textContent = 'Отправить заявку';
+      if (submitBtnText) submitBtnText.textContent = 'Отправить информацию';
+      if (successTitle) successTitle.textContent = 'Данные отправлены!';
+    } else {
+      // Режим вакансии — ищем данные в карточке
+      const vacancyCard = trigger?.closest('.vacancy-card');
+      const vacancyTitle = vacancyCard?.querySelector('.vacancy-title')?.textContent || '';
+      const vacancyDepartment = vacancyCard?.querySelector('.vacancy-department')?.textContent || '';
+      
+      if (modalTitle) modalTitle.textContent = `Отклик на вакансию: ${vacancyTitle}`;
+      if (modalSubtitle) modalSubtitle.textContent = vacancyDepartment ? `${vacancyDepartment} — Заполните форму ниже, и мы рассмотрим вашу кандидатуру` : 'Заполните форму ниже, и мы рассмотрим вашу кандидатуру';
+      if (submitBtnText) submitBtnText.textContent = 'Отправить отклик';
+      if (successTitle) successTitle.textContent = 'Отклик отправлен!';
+    }
+    
+    this.open('universal');
+  }
+
+  /**
+   * Открывает модальное окно проекта
+   */
+  _openProject(trigger) {
+    const projectId = trigger?.getAttribute('data-project-id');
+    if (!projectId || !window.projectsData || !window.projectsData[projectId]) {
+      Logger.WARN(`Project with id ${projectId} not found`);
+      return;
+    }
+    
+    const project = window.projectsData[projectId];
+    const modalTitle = document.getElementById('projectModalTitle');
+    const modalContent = document.getElementById('projectModalContent');
+    const modalCategory = document.getElementById('projectModalCategory');
+    const modalImageContainer = document.getElementById('projectModalImageContainer');
+    const modalImage = document.getElementById('projectModalImage');
+    
+    if (!modalTitle || !modalContent || !modalCategory) {
+      Logger.WARN('Элементы модального окна проекта не найдены');
+      return;
+    }
+    
+    const sanitizer = window.Utils?.Sanitizer;
+    modalTitle.textContent = sanitizer ? sanitizer.escapeHtml(project.title) : project.title;
+    modalCategory.textContent = sanitizer ? sanitizer.escapeHtml(project.category) : project.category;
+    
+    modalContent.replaceChildren();
+    const ul = document.createElement('ul');
+    ul.className = 'modal-list-ul';
+    project.details.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'modal-list-li';
+      li.textContent = sanitizer ? sanitizer.escapeHtml(item) : item;
+      ul.appendChild(li);
+    });
+    modalContent.appendChild(ul);
+    
+    // Инициализация галереи
+    if (typeof initProjectGallery === 'function') {
+      initProjectGallery(project.images, modalImageContainer, modalImage);
+    }
+    
+    this.open('project');
+  }
+
+  /**
+   * Открывает модальное окно услуги
+   */
+  _openService(trigger) {
+    const serviceId = trigger?.getAttribute('data-service-id');
+    if (!serviceId || !window.servicesData || !window.servicesData[serviceId]) {
+      Logger.WARN(`Service with id ${serviceId} not found`);
+      return;
+    }
+    
+    const service = window.servicesData[serviceId];
+    const modalTitle = document.getElementById('serviceModalTitle');
+    const modalContent = document.getElementById('serviceModalContent');
+    const modalCategory = document.getElementById('serviceModalCategory');
+    
+    if (!modalTitle || !modalContent) {
+      Logger.WARN('Элементы модального окна услуги не найдены');
+      return;
+    }
+    
+    const sanitizer = window.Utils?.Sanitizer;
+    modalTitle.textContent = sanitizer ? sanitizer.escapeHtml(service.title) : service.title;
+    modalCategory.textContent = sanitizer ? sanitizer.escapeHtml(service.category) : service.category;
+    
+    modalContent.replaceChildren();
+    const ul = document.createElement('ul');
+    ul.className = 'modal-list-ul';
+    service.details.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'modal-list-li';
+      li.textContent = sanitizer ? sanitizer.escapeHtml(item) : item;
+      ul.appendChild(li);
+    });
+    modalContent.appendChild(ul);
+    
+    this.open('service');
   }
 
   open(key, options = {}) {
