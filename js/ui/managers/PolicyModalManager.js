@@ -38,9 +38,29 @@ const PolicyModalManager = {
 
         document.getElementById('policyModalTitle').textContent = policy.title;
         const sanitizer = Utils.Sanitizer || { sanitizeHtml: (html) => html };
-        document.getElementById('policyModalContent').innerHTML = sanitizer.sanitizeHtml(policy.content, {
+        const safeContent = sanitizer.sanitizeHtml(policy.content, {
           allowedTags: ['h2', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'a'],
           allowedAttributes: { 'a': ['href', 'target', 'rel'] }
+        });
+        
+        // Безопасная вставка через DOM API
+        const contentContainer = document.getElementById('policyModalContent');
+        contentContainer.replaceChildren();
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = safeContent;
+        
+        // Переносим узлы по одному с дополнительной проверкой
+        Array.from(tempDiv.childNodes).forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            // Удаляем опасные атрибуты
+            Array.from(node.attributes).forEach(attr => {
+              if (attr.name.startsWith('on') || attr.name.toLowerCase() === 'srcdoc') {
+                node.removeAttribute(attr.name);
+              }
+            });
+          }
+          contentContainer.appendChild(node.cloneNode(true));
         });
 
         // Открываем через ModalManager - все манипуляции со скроллом только через ScrollManager
