@@ -168,8 +168,10 @@ function openServiceModal(title, details, category) {
     // Используем централизованный ModalHelpers
     if (typeof ModalHelpers !== 'undefined') {
       ModalHelpers.open('service');
+    } else if (typeof modalManager !== 'undefined') {
+      modalManager.open('service');
     } else {
-      Logger.WARN('ModalManager not available');
+      console.warn('ModalManager not available');
     }
   }
 }
@@ -178,8 +180,8 @@ function closeServiceModal() {
   // Используем централизованный ModalHelpers
   if (typeof ModalHelpers !== 'undefined') {
     ModalHelpers.close('service');
-  } else {
-    Logger.WARN('ModalManager not available');
+  } else if (typeof modalManager !== 'undefined') {
+    modalManager.close('service');
   }
 }
 
@@ -208,10 +210,8 @@ window.initServicesPage = function() {
   const requestQuoteBtn = document.getElementById('servicesRequestQuoteBtn');
   if (requestQuoteBtn) {
     requestQuoteBtn.addEventListener('click', () => {
-      if (typeof ModalHelpers !== 'undefined') {
-        ModalHelpers.open('form');
-      } else {
-        Logger.WARN('ModalManager not available');
+      if (typeof window.openModal === 'function') {
+        window.openModal();
       }
     });
   }

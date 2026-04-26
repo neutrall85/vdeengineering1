@@ -57,6 +57,8 @@ class FormManager {
     // Используем централизованный ModalHelpers
     if (typeof ModalHelpers !== 'undefined') {
       ModalHelpers.open('form');
+    } else if (typeof modalManager !== 'undefined') {
+      modalManager.open('form');
     } else {
       Logger.ERROR('ModalManager not available');
     }
@@ -545,8 +547,8 @@ class FormManager {
           // Используем централизованный ModalHelpers для закрытия
           if (typeof ModalHelpers !== 'undefined') {
             ModalHelpers.close('form');
-          } else {
-            Logger.WARN('ModalManager not available for form close');
+          } else if (typeof modalManager !== 'undefined') {
+            modalManager.close('form');
           }
           this._resetForm();
         }, window.CONFIG?.ANIMATION?.MODAL_CLOSE_DELAY_MS || 3000);
