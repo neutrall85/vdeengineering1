@@ -48,6 +48,8 @@ const UniversalApplicationModalManager = {
             // Открываем через централизованный ModalHelpers
             if (typeof ModalHelpers !== 'undefined') {
                 ModalHelpers.open('universal');
+            } else if (typeof modalManager !== 'undefined') {
+                modalManager.open('universal');
             } else {
                 Logger.WARN('ModalManager not available for universal application modal');
             }
@@ -57,6 +59,8 @@ const UniversalApplicationModalManager = {
             // Используем централизованный ModalHelpers
             if (typeof ModalHelpers !== 'undefined') {
                 ModalHelpers.close('universal');
+            } else if (typeof modalManager !== 'undefined') {
+                modalManager.close('universal');
             } else {
                 Logger.WARN('ModalManager not available for universal application modal close');
             }
