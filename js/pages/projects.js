@@ -64,7 +64,9 @@ window.initProjectsPage = function() {
   const requestQuoteBtn = document.getElementById('projectsRequestQuoteBtn');
   if (requestQuoteBtn) {
     requestQuoteBtn.addEventListener('click', function() {
-      ModalHelpers.open('universal');
+      if (typeof window.openApplicationModal === 'function') {
+        window.openApplicationModal();
+      }
     });
   }
 };

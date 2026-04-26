@@ -425,7 +425,7 @@ class FormManager {
   _initFloatingButton() {
     const btn = document.querySelector('.floating-cta-btn');
     if (btn) {
-      btn.addEventListener('click', () => ModalHelpers.open('form'));
+      btn.addEventListener('click', () => this.openModal());
     }
   }
 
