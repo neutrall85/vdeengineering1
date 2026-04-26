@@ -44,7 +44,7 @@ const ConsentManager = {
    */
   init() {
     if (!window.Services?.eventBus) {
-      console.error('[ConsentManager] EventBus not available');
+      Logger.ERROR('[ConsentManager] EventBus not available');
       return;
     }
 
@@ -65,7 +65,7 @@ const ConsentManager = {
     // Настройка наблюдения за удалением баннера
     this._setupMutationObserver();
 
-    console.log('[ConsentManager] Initialized with integrated UI');
+    Logger.INFO('[ConsentManager] Initialized with integrated UI');
   },
 
   /**
@@ -137,10 +137,10 @@ const ConsentManager = {
         window.ym(counterId, 'hit', window.location.href, {
           params: { analytics: 'disabled' }
         });
-        console.log('[ConsentManager] Analytics disabled by user');
+        Logger.INFO('[ConsentManager] Analytics disabled by user');
       }
     } catch (error) {
-      console.warn('[ConsentManager] Error disabling analytics:', error.message);
+      Logger.WARN('[ConsentManager] Error disabling analytics:', error.message);
     }
   },
 
@@ -288,15 +288,14 @@ const ConsentManager = {
    * MutationObserver для восстановления баннера при удалении блокировщиком
    */
   _setupMutationObserver() {
-    const self = this;
     const bannerId = 'user-notice-banner';
 
-    this.state.observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        mutation.removedNodes.forEach(function(node) {
+    this.state.observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.removedNodes.forEach((node) => {
           if (node.nodeType === 1 && node.id === bannerId) {
-            console.log('[ConsentManager] Banner removed, scheduling recovery...');
-            self._scheduleRecovery();
+            Logger.INFO('[ConsentManager] Banner removed, scheduling recovery...');
+            this._scheduleRecovery();
           }
         });
       });
@@ -321,7 +320,7 @@ const ConsentManager = {
     this.state.recoveryTimer = setTimeout(() => {
       const consent = this.getConsent(storage);
       if (!consent && !document.getElementById('user-notice-banner')) {
-        console.log('[ConsentManager] Recovering banner...');
+        Logger.INFO('[ConsentManager] Recovering banner...');
         this._render();
       }
     }, 2000);

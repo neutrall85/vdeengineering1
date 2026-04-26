@@ -17,6 +17,19 @@ class NavigationManager {
     this.resizeHandler = null;
     this.touchStartX = 0;
     this.touchCurrentX = 0;
+    // Ссылки на обработчики для последующего удаления
+    this.boundResizeHandler = null;
+    this.boundTouchStartHandler = null;
+    this.boundTouchMoveHandler = null;
+    this.boundTouchEndHandler = null;
+    this.boundClickHandler = null;
+    this.boundKeydownHandler = null;
+    this.boundOverlayClickHandler = null;
+    this.boundMenuClickHandler = null;
+    this.boundLinkClickHandlers = new Map();
+    this.boundPageShowHandler = null;
+    this.boundGlobalClickHandler = null;
+    this.smoothScrollHandler = null;
   }
 
   init() {
@@ -46,7 +59,7 @@ class NavigationManager {
 
   _initSmoothScroll() {
     // Обработчик клика на якорные ссылки для плавной прокрутки
-    document.addEventListener('click', (e) => {
+    this.smoothScrollHandler = (e) => {
       const link = e.target.closest('a[href^="#"]');
       if (!link || !link.hash) return;
 
@@ -62,7 +75,8 @@ class NavigationManager {
           this.closeMobileMenu();
         }
       }
-    });
+    };
+    document.addEventListener('click', this.smoothScrollHandler);
   }
 
   _initScrollHandler() {
@@ -81,12 +95,6 @@ class NavigationManager {
 
     window.addEventListener('scroll', this.scrollHandler, { passive: true });
     window.addEventListener('resize', this.resizeHandler);
-  }
-
-  _handleResize() {
-    if (window.innerWidth > 1048 && this.mobileMenu && this.mobileMenu.classList.contains('active')) {
-      this.closeMobileMenu();
-    }
   }
 
   _handleScroll() {
@@ -115,30 +123,37 @@ class NavigationManager {
     // Инициализация доступности мобильного меню: при закрытом меню ссылки недоступны для Tab
     this._updateMobileMenuAccessibility(false);
 
-    this.mobileMenu.addEventListener('touchstart', (e) => {
+    // Touch handlers
+    this.boundTouchStartHandler = (e) => {
       this.touchStartX = e.touches[0].clientX;
-    }, { passive: true });
+    };
+    this.mobileMenu.addEventListener('touchstart', this.boundTouchStartHandler, { passive: true });
 
-    this.mobileMenu.addEventListener('touchmove', (e) => {
+    this.boundTouchMoveHandler = (e) => {
       this.touchCurrentX = e.touches[0].clientX;
-    }, { passive: true });
+    };
+    this.mobileMenu.addEventListener('touchmove', this.boundTouchMoveHandler, { passive: true });
 
-    this.mobileMenu.addEventListener('touchend', () => {
+    this.boundTouchEndHandler = () => {
       const swipeDistance = this.touchCurrentX - this.touchStartX;
       if (swipeDistance > this.swipeThreshold) {
         this.closeMobileMenu();
       }
       this.touchStartX = 0;
       this.touchCurrentX = 0;
-    });
+    };
+    this.mobileMenu.addEventListener('touchend', this.boundTouchEndHandler);
 
-    window.addEventListener('pageshow', (e) => {
+    // Page show handler
+    this.boundPageShowHandler = (e) => {
       if (e.persisted || this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
       }
-    });
+    };
+    window.addEventListener('pageshow', this.boundPageShowHandler);
 
-    document.addEventListener('click', (e) => {
+    // Global click handler
+    this.boundGlobalClickHandler = (e) => {
       if (e.target.closest('#mobileMenuBtn')) {
         e.stopPropagation();
         this.toggleMobileMenu();
@@ -146,28 +161,35 @@ class NavigationManager {
       if (e.target.id === 'mobileMenuOverlay') {
         this.closeMobileMenu();
       }
-    });
+    };
+    document.addEventListener('click', this.boundGlobalClickHandler);
 
-    document.addEventListener('keydown', (e) => {
+    // Keydown handler
+    this.boundKeydownHandler = (e) => {
       if (e.key === 'Escape' && this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
       }
-    });
+    };
+    document.addEventListener('keydown', this.boundKeydownHandler);
 
+    // Overlay click handler
     if (this.mobileMenuOverlay) {
-      this.mobileMenuOverlay.addEventListener('click', (e) => {
+      this.boundOverlayClickHandler = (e) => {
         e.stopPropagation();
         this.closeMobileMenu();
-      });
+      };
+      this.mobileMenuOverlay.addEventListener('click', this.boundOverlayClickHandler);
     }
 
-    this.mobileMenu.addEventListener('click', (e) => {
+    // Menu click handler (stop propagation)
+    this.boundMenuClickHandler = (e) => {
       e.stopPropagation();
-    });
+    };
+    this.mobileMenu.addEventListener('click', this.boundMenuClickHandler);
 
-    // Обработка кликов по ссылкам мобильного меню (закрытие меню + корректный якорь)
+    // Link click handlers
     this.mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', (e) => {
+      const linkClickHandler = (e) => {
         const href = link.getAttribute('href');
         if (!href) return;
 
@@ -196,14 +218,18 @@ class NavigationManager {
         }
         // Если ссылка на другую страницу – ничего не делаем, браузер выполнит переход
         // (меню уже закрыто, скролл разблокирован)
-      });
+      };
+      link.addEventListener('click', linkClickHandler);
+      this.boundLinkClickHandlers.set(link, linkClickHandler);
     });
 
-    window.addEventListener('resize', () => {
+    // Resize handler for closing menu on desktop
+    this.boundResizeHandler = () => {
       if (window.innerWidth > 1048 && this.mobileMenu.classList.contains('active')) {
         this.closeMobileMenu();
       }
-    });
+    };
+    window.addEventListener('resize', this.boundResizeHandler);
   }
 
   _initScrollToTop() {
@@ -283,9 +309,56 @@ class NavigationManager {
   }
 
   destroy() {
+    // Удаляем обработчики событий
     if (this.scrollHandler) {
       window.removeEventListener('scroll', this.scrollHandler);
     }
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
+    if (this.smoothScrollHandler) {
+      document.removeEventListener('click', this.smoothScrollHandler);
+    }
+    if (this.boundResizeHandler) {
+      window.removeEventListener('resize', this.boundResizeHandler);
+    }
+    if (this.boundTouchStartHandler && this.mobileMenu) {
+      this.mobileMenu.removeEventListener('touchstart', this.boundTouchStartHandler);
+    }
+    if (this.boundTouchMoveHandler && this.mobileMenu) {
+      this.mobileMenu.removeEventListener('touchmove', this.boundTouchMoveHandler);
+    }
+    if (this.boundTouchEndHandler && this.mobileMenu) {
+      this.mobileMenu.removeEventListener('touchend', this.boundTouchEndHandler);
+    }
+    if (this.boundPageShowHandler) {
+      window.removeEventListener('pageshow', this.boundPageShowHandler);
+    }
+    if (this.boundGlobalClickHandler) {
+      document.removeEventListener('click', this.boundGlobalClickHandler);
+    }
+    if (this.boundKeydownHandler) {
+      document.removeEventListener('keydown', this.boundKeydownHandler);
+    }
+    if (this.boundOverlayClickHandler && this.mobileMenuOverlay) {
+      this.mobileMenuOverlay.removeEventListener('click', this.boundOverlayClickHandler);
+    }
+    if (this.boundMenuClickHandler && this.mobileMenu) {
+      this.mobileMenu.removeEventListener('click', this.boundMenuClickHandler);
+    }
+    
+    // Удаляем обработчики кликов по ссылкам
+    this.boundLinkClickHandlers.forEach((handler, link) => {
+      link.removeEventListener('click', handler);
+    });
+    this.boundLinkClickHandlers.clear();
+    
+    // Очищаем ссылки на DOM-элементы для предотвращения утечек памяти
+    this.navbar = null;
+    this.scrollToTopBtn = null;
+    this.mobileMenu = null;
+    this.mobileMenuBtn = null;
+    this.mobileMenuOverlay = null;
   }
 }
 
