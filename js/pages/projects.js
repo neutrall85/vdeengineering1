@@ -97,11 +97,19 @@ function openProjectModal(title, details, image, category) {
     modalContent.appendChild(ul);
 
     // Используем централизованный ModalHelpers
-    ModalHelpers.open('project');
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('project');
+    } else {
+      Logger.WARN('ModalManager not available');
+    }
   }
 }
 
 function closeProjectModal() {
   // Используем централизованный ModalHelpers
-  ModalHelpers.close('project');
+  if (typeof ModalHelpers !== 'undefined') {
+    ModalHelpers.close('project');
+  } else {
+    Logger.WARN('ModalManager not available');
+  }
 }

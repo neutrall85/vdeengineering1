@@ -166,13 +166,21 @@ function openServiceModal(title, details, category) {
     modalContent.appendChild(ul);
 
     // Используем централизованный ModalHelpers
-    ModalHelpers.open('service');
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('service');
+    } else {
+      Logger.WARN('ModalManager not available');
+    }
   }
 }
 
 function closeServiceModal() {
   // Используем централизованный ModalHelpers
-  ModalHelpers.close('service');
+  if (typeof ModalHelpers !== 'undefined') {
+    ModalHelpers.close('service');
+  } else {
+    Logger.WARN('ModalManager not available');
+  }
 }
 
 // Инициализация страницы: назначение обработчиков кнопкам "Подробнее"
@@ -200,7 +208,11 @@ window.initServicesPage = function() {
   const requestQuoteBtn = document.getElementById('servicesRequestQuoteBtn');
   if (requestQuoteBtn) {
     requestQuoteBtn.addEventListener('click', () => {
-      ModalHelpers.open('form');
+      if (typeof ModalHelpers !== 'undefined') {
+        ModalHelpers.open('form');
+      } else {
+        Logger.WARN('ModalManager not available');
+      }
     });
   }
 };

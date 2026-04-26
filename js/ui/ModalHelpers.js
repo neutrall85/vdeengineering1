@@ -55,17 +55,26 @@ const ModalHelpers = {
   },
 
   /**
+   * Получить экземпляр ModalManager
+   * @returns {ModalManager}
+   */
+  _getManager() {
+    return window.modalManager || window.App?.services?.modalManager;
+  },
+
+  /**
    * Открыть модалку по ключу
    * @param {string} key - ключ модалки (form, proposal, news, details, universal, policy, project, service, about)
    * @param {Object} options - опции: { keepParentModal, focusSelector, onOpen }
    * @returns {boolean}
    */
   open(key, options = {}) {
-    if (!window.modalManager) {
+    const manager = this._getManager();
+    if (!manager) {
       Logger.WARN(`ModalManager not available for key: ${key}`);
       return false;
     }
-    return window.modalManager.open(key, options);
+    return manager.open(key, options);
   },
 
   /**
@@ -74,11 +83,12 @@ const ModalHelpers = {
    * @returns {boolean}
    */
   close(key) {
-    if (!window.modalManager) {
+    const manager = this._getManager();
+    if (!manager) {
       Logger.WARN(`ModalManager not available for key: ${key}`);
       return false;
     }
-    return window.modalManager.close(key);
+    return manager.close(key);
   },
 
   /**
@@ -87,15 +97,17 @@ const ModalHelpers = {
    * @returns {boolean}
    */
   isOpen(key = null) {
-    return window.modalManager ? window.modalManager.isOpen(key) : false;
+    const manager = this._getManager();
+    return manager ? manager.isOpen(key) : false;
   },
 
   /**
    * Закрыть все модалки
    */
   closeAll() {
-    if (window.modalManager) {
-      window.modalManager.closeAll();
+    const manager = this._getManager();
+    if (manager) {
+      manager.closeAll();
     }
   }
 };
