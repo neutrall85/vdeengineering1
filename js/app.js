@@ -184,11 +184,10 @@ class Application {
       if (navigationManager) navigationManager.toggleMobileMenu();
     };
     
-    // window.openModal будет определён в initFormManager() после инициализации formManager
-    
-    window.closeModal = () => {
-      if (typeof modalManager !== 'undefined') modalManager.close('form');
-    };
+    // Инициализация ModalHelpers для централизованного управления модалками
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.init();
+    }
     
     window.removeFile = (event, index) => {
       if (event) {
@@ -252,24 +251,6 @@ class Application {
         if (typeof modalManager !== 'undefined') modalManager.open('details');
       }
     };
-    
-    document.addEventListener('click', (e) => {
-      const modalTrigger = e.target.closest('[data-modal-open="proposal"]');
-      if (modalTrigger) {
-        e.preventDefault();
-        if (typeof modalManager !== 'undefined') {
-          modalManager.open('proposal');
-        } else {
-          Logger.WARN('openProposalModal: ModalManager not available');
-        }
-      }
-      
-      const applicationTrigger = e.target.closest('[data-modal-open="application"]');
-      if (applicationTrigger) {
-        e.preventDefault();
-        if (window.openApplicationModal) window.openApplicationModal(applicationTrigger);
-      }
-    });
   }
 
   _hidePageLoader() {
