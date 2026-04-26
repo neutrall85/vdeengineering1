@@ -240,35 +240,7 @@ class Application {
       }
     };
     
-    document.addEventListener('click', (e) => {
-      const modalTrigger = e.target.closest('[data-modal-open="proposal"]');
-      if (modalTrigger) {
-        e.preventDefault();
-        if (typeof modalManager !== 'undefined') {
-          modalManager.open('proposal');
-        } else {
-          Logger.WARN('openProposalModal: ModalManager not available');
-        }
-      }
-      
-      const applicationTrigger = e.target.closest('[data-modal-open="application"]');
-      if (applicationTrigger) {
-        e.preventDefault();
-        if (window.openApplicationModal) window.openApplicationModal(applicationTrigger);
-      }
-      
-      const projectTrigger = e.target.closest('[data-modal-open="project"]');
-      if (projectTrigger) {
-        e.preventDefault();
-        const projectId = projectTrigger.getAttribute('data-project-id');
-        if (projectId && window.projectsData && window.projectsData[projectId]) {
-          const project = window.projectsData[projectId];
-          if (typeof window.openProjectModal === 'function') {
-            window.openProjectModal(project.title, project.details, project.images, project.category);
-          }
-        }
-      }
-    });
+    // Обработчики открытия модалок теперь централизованы в ModalManager через data-modal-open
   }
 
   _hidePageLoader() {
