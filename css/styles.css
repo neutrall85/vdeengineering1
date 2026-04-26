@@ -1357,6 +1357,7 @@ body.app-ready>footer {
 .details-modal-container {
   background: white;
   border-radius: 32px;
+  overflow: hidden;
   width: 100%;
   max-width: 650px;
   max-height: 90vh;
@@ -2242,6 +2243,7 @@ body.app-ready>footer {
   max-height: 80vh;
   padding: 16px;
   position: relative;
+  border-radius: 32px;
 }
 
 .details-modal-body {

@@ -1,14 +1,14 @@
 window.projectsData = {
   1: {
-    title: 'Модернизация Ан-124-100',
-    details: ['Замена авионики на современную', 'Установка новых двигателей', 'Модернизация навигационных систем', 'Обновление системы управления полётом', 'Улучшение топливной эффективности'],
+    title: 'Модернизация',
+    details: ['Реализация 1', 'Реализация 2', 'Реализация 3', 'Реализация 4', 'Реализация 5'],
     images: [
-      'assets/images/An-124-100.webp',
-      'assets/images/airplane_in_the_sky.webp',
-      'assets/images/engine.webp',
-      'assets/images/aiplane_in_the_sky_large.webp'
+      'assets/images/placeholder.jpg',
+      'assets/images/placeholder.jpg',
+      'assets/images/placeholder.jpg',
+      'assets/images/placeholder.jpg'
     ],
-    category: 'Модификация воздушных судов'
+    category: 'Модернизация воздушных судов'
   }
 };
 
