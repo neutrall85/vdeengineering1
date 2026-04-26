@@ -67,7 +67,11 @@ const PolicyModalManager = {
         });
 
         // Открываем через централизованный ModalHelpers
-        ModalHelpers.open('policy', { keepParentModal });
+        if (typeof ModalHelpers !== 'undefined') {
+            ModalHelpers.open('policy', { keepParentModal });
+        } else {
+            Logger.WARN('ModalManager not available for policy modal');
+        }
     },
 
     /**
@@ -75,7 +79,11 @@ const PolicyModalManager = {
      */
     closePolicyModal() {
         // Используем централизованный ModalHelpers
-        ModalHelpers.close('policy');
+        if (typeof ModalHelpers !== 'undefined') {
+            ModalHelpers.close('policy');
+        } else {
+            Logger.WARN('ModalManager not available for policy modal close');
+        }
     },
 
     /**

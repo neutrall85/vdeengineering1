@@ -46,12 +46,20 @@ const UniversalApplicationModalManager = {
             }
 
             // Открываем через централизованный ModalHelpers
-            ModalHelpers.open('universal');
+            if (typeof ModalHelpers !== 'undefined') {
+                ModalHelpers.open('universal');
+            } else {
+                Logger.WARN('ModalManager not available for universal application modal');
+            }
         };
 
         window.closeUniversalApplicationModal = () => {
             // Используем централизованный ModalHelpers
-            ModalHelpers.close('universal');
+            if (typeof ModalHelpers !== 'undefined') {
+                ModalHelpers.close('universal');
+            } else {
+                Logger.WARN('ModalManager not available for universal application modal close');
+            }
         };
     },
 

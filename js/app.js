@@ -185,7 +185,9 @@ class Application {
     };
     
     // Инициализация ModalHelpers для централизованного управления модалками
-    ModalHelpers.init();
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.init();
+    }
     
     window.removeFile = (event, index) => {
       if (event) {
@@ -236,7 +238,9 @@ class Application {
 
     // Обработчик клика по плавающей кнопке - используем централизованный ModalHelpers
     floatingBtn.addEventListener('click', () => {
-      ModalHelpers.open('proposal');
+      if (typeof ModalHelpers !== 'undefined') {
+        ModalHelpers.open('proposal');
+      }
     }, { passive: true });
 
     // Используем IntersectionObserver для управления видимостью кнопки
@@ -448,6 +452,7 @@ function initApp() {
         Utils.Validator
       );
       formManager.init();
+      window.openModal = () => formManager.openModal();
     } catch (err) {
       Logger.ERROR('Failed to initialize FormManager:', err);
     }

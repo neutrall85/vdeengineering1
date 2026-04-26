@@ -55,7 +55,11 @@ class FormManager {
     if (warning) warning.classList.remove('show');
 
     // Используем централизованный ModalHelpers
-    ModalHelpers.open('form');
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('form');
+    } else {
+      Logger.ERROR('ModalManager not available');
+    }
   }
 
   /**
@@ -539,7 +543,11 @@ class FormManager {
 
         setTimeout(() => {
           // Используем централизованный ModalHelpers для закрытия
-          ModalHelpers.close('form');
+          if (typeof ModalHelpers !== 'undefined') {
+            ModalHelpers.close('form');
+          } else {
+            Logger.WARN('ModalManager not available for form close');
+          }
           this._resetForm();
         }, window.CONFIG?.ANIMATION?.MODAL_CLOSE_DELAY_MS || 3000);
       } else {
