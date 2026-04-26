@@ -235,13 +235,21 @@ const ConsentManager = {
     // Ссылка на политику конфиденциальности
     document.getElementById('user-privacy-link')?.addEventListener('click', (e) => {
       e.preventDefault();
-      ModalHelpers.open('policy');
+      if (typeof PolicyModalManager !== 'undefined') {
+        PolicyModalManager.openPolicyModal('privacy');
+      } else {
+        Logger.WARN('PolicyModalManager not available for privacy link');
+      }
     });
 
     // Ссылка на политику в отношении файлов cookie
     document.getElementById('user-cookie-policy-link')?.addEventListener('click', (e) => {
       e.preventDefault();
-      ModalHelpers.open('policy');
+      if (typeof PolicyModalManager !== 'undefined') {
+        PolicyModalManager.openPolicyModal('cookies');
+      } else {
+        Logger.WARN('PolicyModalManager not available for cookies link');
+      }
     });
 
     // Кнопка отзыва согласия
