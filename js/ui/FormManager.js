@@ -3,6 +3,7 @@
  * ООО "Волга-Днепр Инжиниринг"
  * 
  * Использует централизованный модуль FormValidation для валидации
+ * и ModalHelpers для управления модальными окнами
  */
 
 class FormManager {
@@ -53,7 +54,10 @@ class FormManager {
     const warning = document.getElementById('rateLimitWarning');
     if (warning) warning.classList.remove('show');
 
-    if (typeof modalManager !== 'undefined') {
+    // Используем централизованный ModalHelpers
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('form');
+    } else if (typeof modalManager !== 'undefined') {
       modalManager.open('form');
     } else {
       Logger.ERROR('ModalManager not available');
@@ -540,7 +544,10 @@ class FormManager {
         if (successMessage) successMessage.classList.add('show');
 
         setTimeout(() => {
-          if (typeof modalManager !== 'undefined') {
+          // Используем централизованный ModalHelpers для закрытия
+          if (typeof ModalHelpers !== 'undefined') {
+            ModalHelpers.close('form');
+          } else if (typeof modalManager !== 'undefined') {
             modalManager.close('form');
           }
           this._resetForm();

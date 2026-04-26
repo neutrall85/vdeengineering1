@@ -96,10 +96,20 @@ function openProjectModal(title, details, image, category) {
     });
     modalContent.appendChild(ul);
 
-    if (typeof modalManager !== 'undefined') modalManager.open('project');
+    // Используем централизованный ModalHelpers
+    if (typeof ModalHelpers !== 'undefined') {
+      ModalHelpers.open('project');
+    } else if (typeof modalManager !== 'undefined') {
+      modalManager.open('project');
+    }
   }
 }
 
 function closeProjectModal() {
-  if (typeof modalManager !== 'undefined') modalManager.close('project');
+  // Используем централизованный ModalHelpers
+  if (typeof ModalHelpers !== 'undefined') {
+    ModalHelpers.close('project');
+  } else if (typeof modalManager !== 'undefined') {
+    modalManager.close('project');
+  }
 }
