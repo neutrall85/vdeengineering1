@@ -80,15 +80,19 @@ function initProjectGallery(images, container, mainImage) {
   }
   
   // Сбрасываем стили и обработчики основного изображения
-  if (mainImage) {
-    mainImage.src = '';
-    mainImage.alt = '';
-    mainImage.style.cursor = '';
-    mainImage.replaceWith(mainImage.cloneNode(false));
+  let currentMainImage = mainImage;
+  if (currentMainImage) {
+    currentMainImage.src = '';
+    currentMainImage.alt = '';
+    currentMainImage.style.cursor = '';
+    const clonedImage = currentMainImage.cloneNode(false);
+    currentMainImage.replaceWith(clonedImage);
+    currentMainImage = clonedImage;
   }
   
-  const newMainImage = document.getElementById('projectModalImage');
-  const newContainer = document.getElementById('projectModalImageContainer');
+  // Переполучаем ссылки на элементы после замены
+  const newMainImage = currentMainImage || document.getElementById('projectModalImage');
+  const newContainer = container || document.getElementById('projectModalImageContainer');
   
   if (!images || images.length === 0) {
     if (newMainImage) {
@@ -140,7 +144,7 @@ function initProjectGallery(images, container, mainImage) {
   // Оборачиваем изображение
   const imageWrapper = document.createElement('div');
   imageWrapper.className = 'gallery-image-wrapper';
-  if (newMainImage.parentNode) {
+  if (newMainImage && newMainImage.parentNode) {
     newMainImage.parentNode.insertBefore(imageWrapper, newMainImage);
     imageWrapper.appendChild(newMainImage);
   }

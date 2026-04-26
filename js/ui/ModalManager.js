@@ -505,6 +505,9 @@ class ModalManager {
 
 const modalManager = new ModalManager();
 
+// Делаем modalManager доступным глобально для всех скриптов
+window.modalManager = modalManager;
+
 // Экспорт через window.App.services.modalManager будет выполнен в Application
 
 if (typeof module !== 'undefined' && module.exports) {
