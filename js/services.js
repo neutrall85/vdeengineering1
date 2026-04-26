@@ -119,7 +119,7 @@ const Services = (function() {
       if (options.headers && options.headers['X-CSRF-Token']) {
         const csrfToken = options.headers['X-CSRF-Token'];
         // В реальном приложении здесь была бы проверка токена на сервере
-        console.log('CSRF Token received:', csrfToken);
+        Logger.DEBUG('CSRF Token received:', csrfToken);
       }
       
       return { success: true, message: 'Заявка успешно отправлена' };

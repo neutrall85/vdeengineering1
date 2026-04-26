@@ -15,6 +15,7 @@ class ModalManager {
     this.activeModalStack = []; // Стек для хранения родительских модалок
     this.cleanupHandlers = new Map();
     this._boundKeyHandler = null;
+    this._boundFocusTrapHandler = null;
     this._initGlobalHandlers();
   }
 
@@ -60,6 +61,9 @@ class ModalManager {
     overlay.addEventListener('click', clickHandler, { capture: false });
     overlay._clickHandlerAttached = true;
     overlay._clickHandler = clickHandler;
+    
+    // Сохраняем ссылку на обработчик для последующего удаления
+    this.cleanupHandlers.set(key, { overlay, clickHandler });
   }
 
   /**
@@ -192,6 +196,9 @@ class ModalManager {
         setTimeout(() => focusTarget.focus(), 100);
       }
 
+      // Инициализируем focus trap для доступности
+      this._initFocusTrap(overlay);
+
       if (config.onOpen) config.onOpen(overlay);
       if (options.onOpen) options.onOpen(overlay);
 
@@ -211,6 +218,9 @@ class ModalManager {
 
     const overlay = document.getElementById(config.overlayId);
     if (!overlay) return false;
+
+    // Удаляем focus trap перед закрытием
+    this._removeFocusTrap();
 
     overlay.classList.remove('active');
     
@@ -257,6 +267,52 @@ class ModalManager {
   }
   
   /**
+   * Инициализирует focus trap для модального окна
+   * Фокус циклически перемещается внутри модалки при навигации Tab
+   */
+  _initFocusTrap(overlay) {
+    if (!overlay) return;
+    
+    // Находим все фокусируемые элементы внутри модалки
+    const focusableElements = overlay.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    if (focusableElements.length === 0) return;
+    
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    
+    // Обработчик для перехвата Tab
+    this._boundFocusTrapHandler = (e) => {
+      if (e.key !== 'Tab') return;
+      
+      // Если Shift+Tab и мы на первом элементе, переходим к последнему
+      if (e.shiftKey && document.activeElement === firstFocusable) {
+        e.preventDefault();
+        lastFocusable.focus();
+      }
+      // Если просто Tab и мы на последнем элементе, переходим к первому
+      else if (!e.shiftKey && document.activeElement === lastFocusable) {
+        e.preventDefault();
+        firstFocusable.focus();
+      }
+    };
+    
+    document.addEventListener('keydown', this._boundFocusTrapHandler);
+  }
+  
+  /**
+   * Удаляет focus trap
+   */
+  _removeFocusTrap() {
+    if (this._boundFocusTrapHandler) {
+      document.removeEventListener('keydown', this._boundFocusTrapHandler);
+      this._boundFocusTrapHandler = null;
+    }
+  }
+  
+  /**
    * Очистка ресурсов при уничтожении
    */
   destroy() {
@@ -266,6 +322,19 @@ class ModalManager {
     if (this._boundClickHandler) {
       document.removeEventListener('click', this._boundClickHandler);
     }
+    
+    // Удаляем focus trap если активен
+    this._removeFocusTrap();
+    
+    // Удаляем обработчики кликов по overlay
+    this.cleanupHandlers.forEach((handlerData, key) => {
+      const { overlay, clickHandler } = handlerData;
+      if (overlay && clickHandler) {
+        overlay.removeEventListener('click', clickHandler);
+      }
+    });
+    this.cleanupHandlers.clear();
+    
     this.modals.clear();
     this.activeModal = null;
     this.activeModalStack = [];
