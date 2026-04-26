@@ -6,6 +6,12 @@
  * - Клик по кнопке закрытия (.modal-close)
  * - Клик вне области модалки (по overlay)
  * - Нажатие клавиши Escape
+ * 
+ * Унифицированный API:
+ * - modalManager.open(key, options) - открытие модалки
+ * - modalManager.close(key) - закрытие модалки
+ * - modalManager.isOpen(key) - проверка состояния
+ * - modalManager.closeAll() - закрытие всех модалок
  */
 
 class ModalManager {
@@ -19,6 +25,12 @@ class ModalManager {
     this._initGlobalHandlers();
   }
 
+  /**
+   * Регистрация модального окна
+   * @param {string} key - уникальный ключ модалки
+   * @param {Object} config - конфигурация { overlayId, onOpen, onClose, focusSelector }
+   * @returns {ModalManager}
+   */
   register(key, config) {
     this.modals.set(key, {
       overlayId: config.overlayId,
@@ -155,6 +167,12 @@ class ModalManager {
     document.addEventListener('click', this._boundClickHandler, { capture: false });
   }
 
+  /**
+   * Открытие модального окна
+   * @param {string} key - ключ модалки
+   * @param {Object} options - опции { keepParentModal, focusSelector, onOpen }
+   * @returns {boolean}
+   */
   open(key, options = {}) {
     const config = this.modals.get(key);
     if (!config) {
@@ -217,6 +235,11 @@ class ModalManager {
     return true;
   }
 
+  /**
+   * Закрытие модального окна
+   * @param {string} key - ключ модалки
+   * @returns {boolean}
+   */
   close(key) {
     const config = this.modals.get(key);
     if (!config) return false;
@@ -260,6 +283,11 @@ class ModalManager {
     return true;
   }
 
+  /**
+   * Проверка состояния модалки
+   * @param {string|null} key - ключ модалки или null для проверки любой активной
+   * @returns {boolean}
+   */
   isOpen(key = null) {
     if (key) {
       return this.activeModal === key;
@@ -267,6 +295,9 @@ class ModalManager {
     return this.activeModal !== null;
   }
 
+  /**
+   * Закрытие всех модалок
+   */
   closeAll() {
     this.modals.forEach((_, key) => {
       this.close(key);
