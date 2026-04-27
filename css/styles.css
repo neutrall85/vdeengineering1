@@ -1940,6 +1940,7 @@ body.app-ready>footer {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-radius: 32px;
 }
 
 .modal-image {
