@@ -1357,7 +1357,7 @@ body.app-ready>footer {
 .details-modal-container {
   background: white;
   border-radius: 32px;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   max-width: 650px;
   max-height: 90vh;
