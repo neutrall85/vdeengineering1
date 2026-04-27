@@ -4687,7 +4687,6 @@ body.app-ready>footer {
     font-size: 0.85rem;
   }
 
-  /* Адаптация высоты изображения в модалке для мобильных */
   .modal-image-container {
     height: clamp(150px, 25vh, 250px);
   }
