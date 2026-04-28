@@ -8,6 +8,7 @@ class NewsRenderer {
     this.newsData = newsData;
     this.loadedYears = new Set();
     this.cardStaggerMs = window.CONFIG?.ANIMATION?.CARD_STAGGER_MS || 50;
+    this.imageObserver = null;
   }
 
   renderPreview(container, count = 3) {
@@ -257,7 +258,12 @@ class NewsRenderer {
   _lazyLoadImages(container) {
     const images = container.querySelectorAll('.news-card-image img');
     
-    const observer = new IntersectionObserver((entries) => {
+    // Отключаем предыдущий observer, если он существует, чтобы избежать утечки памяти
+    if (this.imageObserver) {
+      this.imageObserver.disconnect();
+    }
+    
+    this.imageObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
@@ -285,12 +291,12 @@ class NewsRenderer {
             img.src = src;
             img.removeAttribute('data-src');
           }
-          observer.unobserve(img);
+          this.imageObserver.unobserve(img);
         }
       });
     }, { threshold: 0.1, rootMargin: '100px' });
     
-    images.forEach(img => observer.observe(img));
+    images.forEach(img => this.imageObserver.observe(img));
   }
 
   _animateCards(container) {
@@ -318,6 +324,12 @@ class NewsRenderer {
   destroy() {
     // Очищаем множество загруженных лет
     this.loadedYears.clear();
+    
+    // Отключаем IntersectionObserver для ленивой загрузки изображений
+    if (this.imageObserver) {
+      this.imageObserver.disconnect();
+      this.imageObserver = null;
+    }
   }
 }
 
