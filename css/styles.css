@@ -3331,8 +3331,6 @@ img:not([src]):not([data-src]) + .image-placeholder {
   fill: currentColor;
 }
 
-.btn-doc { /* Используйте .btn-primary с модификатором */ }
-
 
 
 .btn-view {
